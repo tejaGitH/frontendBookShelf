@@ -1,0 +1,2 @@
+in thunks after axios.post return as respone.data.token
+in slice state.token

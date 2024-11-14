@@ -1,0 +1,126 @@
+srtore.js   
+import {configStore} from "@redux/toolkit";
+import rootReducer from "../reducers/rootReducer";
+
+const store = configStore({
+    reducer: rootReducer,
+});
+rootReducer.js
+import { combineReducers } from "redux";
+import bookReducer from './bookReducers';
+import userReducer from './userReducers';
+
+const rootReducer = combineReducers({
+    books: bookReducer,
+    users: userReducer,
+});
+export default rootReducer;
+bookReducer.js
+import {createReducer, createAction} from '@redux/toolkit'
+import axios from 'axios'
+
+export const getBooks = createAction('GET_BOOKS');
+export const addBook = createAction('ADD_BOOK');
+
+const initialState = [];
+
+const bookReducer = createReducer(initialState,{
+    [getBooks.fulfilled]: (state, action)=>action.payload,
+    [addBook.fulfilled]: (state, action)=>[...state,action.payload],
+});
+
+export default bookReducer;
+bookActions.js
+import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
+
+export const getBooks = createAsyncThunk(
+    'books/getBooks',
+     async()=>{
+        const response = await axios.post('/api/books');
+        return response.data;
+    }
+)
+
+export const addBook = createAsyncThunk(
+    'books/addBook',
+    async(book)=>{
+        const response = await axios.post('/api/books',book);
+        return response.data;
+    }
+)
+
+userActions.js
+import { createAction,createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
+
+export const login = createAsyncThunk(
+    'users/login',
+    async(credentials)=>{
+        const response = await axios.post('/api/login', credentials);
+        return response.data;
+    }
+)
+
+export const register = createAsyncThunk(
+    'users/register',
+    async(userData)=>{
+        const response = await axios.post('/api/register', userData);
+        return response.data;
+    }
+)
+userReducer.js
+import { createAction, createReducer } from "@reduxjs/toolkit";
+import axios from 'axios';
+
+export const login = createAction('LOGIN');
+export const register= createAction('REGISTER');
+
+const initialState = {};
+
+const userReducer = createReducer(initialState, {
+    [login.fulfilled]: (state,action)=>action.payload,
+    [register.fulfilled]: (state,action)=> action.payload,
+});
+
+export default userReducer;
+app.js
+import React from "react";
+import { Provider } from "react-redux";
+import store from "./utils/store";
+import BookShelf from './components/BookShelf';
+
+const App =()=>{
+  retur(
+    <Provider store={store}>
+      <BookShelf />
+    </Provider>
+  );
+};
+
+export default App;
+BookShelf.js
+import React,{useEffect} from "react";
+import  {useSelector,useDispatch} from "react-redux";
+import { getBooks } from "../actions/bookActions";
+
+const BookShelf = ()=>{
+    const books = useSelector((state)=>state.books);
+    const dispatch = useDispatch();
+
+    useEffect(()=>{
+        dispatch(getBooks());
+    },[]);
+
+    return (
+        <div>
+            <h1>BooksShelf</h1>
+            <ul>
+                {books.map((book)=>(
+                    <li key={""}>{book.title}</li>
+                ))}
+            </ul>
+        </div>
+    )
+}
+export default BookShelf;
