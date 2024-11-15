@@ -1,54 +1,41 @@
-// src/components/AddBook.js
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addBook } from '../actions/bookActions';
 
 const AddBook = () => {
-  const [bookData, setBookData] = useState({ title: '', author: '', rating: '' });
   const dispatch = useDispatch();
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setBookData((prev) => ({ ...prev, [name]: value }));
-  };
+  const [title, setTitle] = useState('');
+  const [author, setAuthor] = useState('');
+  const [rating, setRating] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const bookData = { title, author, rating };
     dispatch(addBook(bookData));
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <div>
-        <label>Title:</label>
-        <input
-          type="text"
-          name="title"
-          value={bookData.title}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <div>
-        <label>Author:</label>
-        <input
-          type="text"
-          name="author"
-          value={bookData.author}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <div>
-        <label>Rating:</label>
-        <input
-          type="number"
-          name="rating"
-          value={bookData.rating}
-          onChange={handleChange}
-          required
-        />
-      </div>
+      <input
+        type="text"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        placeholder="Title"
+      />
+      <input
+        type="text"
+        value={author}
+        onChange={(e) => setAuthor(e.target.value)}
+        placeholder="Author"
+      />
+      <input
+        type="number"
+        value={rating}
+        onChange={(e) => setRating(e.target.value)}
+        placeholder="Rating"
+        min="1"
+        max="5"
+      />
       <button type="submit">Add Book</button>
     </form>
   );
@@ -57,9 +44,10 @@ const AddBook = () => {
 export default AddBook;
 
 
+
 // import React, { useState } from "react";
 // import { useDispatch } from "react-redux";
-// import { addBook, getBooks } from "../actions/bookActions"; // Adjust the import path as necessary
+// import { addBook, fetchBooks } from "../actions/bookActions"; // Adjust the import path as necessary
 
 
 // const AddBook = () => {
@@ -76,7 +64,7 @@ export default AddBook;
 //         try {
 //             // Dispatch the addBook action
 //             const resultAction = await dispatch(addBook({ title, author, rating })).unwrap();
-//             dispatch(getBooks());
+//             dispatch(fetchBooks());
 //             console.log("Book added Successfully",resultAction);
 //             setSuccessMessage("Book added successfully!");
 //             setErrorMessage(""); // Clear any previous error messages
@@ -84,7 +72,6 @@ export default AddBook;
 //             setTitle("");
 //             setAuthor("");
 //             setRating("");
-         
 //         } catch (error) {
 //             console.error("Failed to add book:", error);
 //             setErrorMessage(error.response?.data?.message || "Failed to add book");

@@ -1,5 +1,5 @@
 import React from "react";
-import { Provider, useDispatch, useSelector } from "react-redux";
+import { Provider, useSelector } from "react-redux";
 import {BrowserRouter as Router, Route, Navigate, Routes} from "react-router-dom";
 import store from "./utils/store";
 import BookShelf from './components/BookShelf';
@@ -7,6 +7,12 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import BestSellers from './components/BestSellers';
 import BookDetails from "./components/BookDetails";
+import Navbar from "./components/NavBar";
+import LandingPage from "./components/LandingPage";
+
+const PrivateRoute = ({element, isAuthenticated})=>{
+  return isAuthenticated ? element : <Navigate to="/login" />;
+}
 
 const App =()=>{
 
@@ -15,16 +21,15 @@ const App =()=>{
   return(
     <Provider store={store}>
       <Router>
+        {isAuthenticated && <Navbar />} {/*show NavBar if authenticated*/}
         <Routes>
-          {/* <Route path="/login" element={isAuthenticated? <Navigate to="/bookshelf"/>: <Login/>}/>
-          <Route path="/register" element= {isAuthenticated? <Navigate to="/bookshelf"/>: <Register/>}/> */}
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/bookshelf" element={isAuthenticated? <BookShelf /> : <Navigate to="/login" />} />
-          <Route path="/" element={<Navigate to="/bookshelf"/>}/>
-          <Route path="/best-sellers" element={<BestSellers />} />
-          <Route path="/book-details/:isbn" element={<BookDetails />} />
-          <Route path="/books" element={<BookShelf />} />
+            <Route path="/" element={isAuthenticated ? <Navigate to="/bookshelf" /> : <LandingPage />} /> 
+            <Route path="/login" element={isAuthenticated ? <Navigate to="/bookshelf" /> : <Login /> } />
+            <Route path="/register" element={isAuthenticated ? <Navigate to="/bookShelf" /> : <Register />} />
+            <Route path="/bookshelf" element={<PrivateRoute isAuthenticated={isAuthenticated} element={<BookShelf />} />} />               
+            {/* //<Route path="/" element={<Navigate to="/bookshelf" />} /> */}
+            <Route path="/best-sellers" element={<PrivateRoute isAuthenticated={isAuthenticated} element={<BestSellers />} />} />
+            <Route path="/book-details/:isbn" element={<PrivateRoute isAuthenticated={isAuthenticated} element={<BookDetails />} />} />
         </Routes>
       </Router>
     </Provider>
@@ -34,7 +39,15 @@ const App =()=>{
 export default App;
 
 
-
+//  {/* <Route path="/login" element={isAuthenticated? <Navigate to="/bookshelf"/>: <Login/>}/>
+//           <Route path="/register" element= {isAuthenticated? <Navigate to="/bookshelf"/>: <Register/>}/> */}
+//           <Route path="/login" element={<Login />} />
+//           <Route path="/register" element={<Register />} />
+//           <Route path="/bookshelf" element={isAuthenticated? <BookShelf /> : <Navigate to="/login" />} />
+//           <Route path="/" element={<Navigate to="/bookshelf"/>}/>
+//           <Route path="/best-sellers" element={<BestSellers />} />
+//           <Route path="/book-details/:isbn" element={<BookDetails />} />
+//           <Route path="/books" element={<BookShelf />} />
 
 
 

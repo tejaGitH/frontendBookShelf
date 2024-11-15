@@ -65,6 +65,11 @@ const Register = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if(!username || !email || !password){
+            setErrorMessage("All fields are required");
+            return;
+        }
+        setLoading(true);
         try {
             setLoading(true);
             // Dispatch the register action and wait for it to complete
@@ -76,36 +81,42 @@ const Register = () => {
             console.error("Registration failed:", error);
             // Set error message based on the response
             setErrorMessage(error.response?.data?.message || "Registration failed");
+        } finally{
+            setLoading(false);
         }
     };
 
     return (
+        <div>
+        <h2>Create a New Account</h2>
         <form onSubmit={handleSubmit}>
-            <input 
-                type="text" 
-                value={username} 
-                onChange={(e) => setUsername(e.target.value)} 
-                placeholder="Username" 
-                required 
+            <input
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Username"
+                required
             />
-            <input 
-                type="email" 
-                value={email} 
-                onChange={(e) => setEmail(e.target.value)} 
+            <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder="Email"
-                autoComplete="true" 
-                required 
+                autoComplete="true"
+                required
             />
-            <input 
-                type="password" 
-                value={password} 
-                onChange={(e) => setPassword(e.target.value)} 
-                placeholder="Password" 
-                required 
+            <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Password"
+                required
             />
-            <button type="submit">Register</button>
-            {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>} {/* Display error message */}
+            <button type="submit" disabled={loading}>Register</button>
         </form>
+        {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+    </div>
+ 
     );
 };
 

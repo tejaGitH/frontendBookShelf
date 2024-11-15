@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { addReview } from '../actions/reviewActions';
 
 const AddReview = ({ bookId, onReviewSubmit }) => {
     const [reviewText, setReviewText] = useState('');
@@ -7,9 +8,14 @@ const AddReview = ({ bookId, onReviewSubmit }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Implement addReview action and dispatch it here
-        // dispatch(addReview({ bookId, reviewText }));
-        setReviewText('');
+        dispatch(addReview({ bookId, reviewText}))
+        .then(()=>{
+            setReviewText('');
+            onReviewSubmit();
+        })
+        .catch((error)=>{
+            console.error('Review Submission failed');
+        })
     };
 
     return (

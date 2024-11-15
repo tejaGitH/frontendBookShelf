@@ -46,7 +46,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../actions/userActions';
 import { useNavigate } from "react-router-dom";
-import Cookies from 'js-cookie';
+// import Cookies from 'js-cookie';
 // import { useRouter } from "next/router";
 // import Link from "next/link"
 
@@ -58,18 +58,27 @@ const Login = () => {
     const [errorMessage, setErrorMessage] = useState('');
     // const {isAuthenticated}= useSelector((state)=> state.users);
     
+    const { isAuthenticated, loading, error} =useSelector((state)=>state.users);
 
-     const { isAuthenticated, loading, error} =useSelector((state)=>state.users);
-
+    //Handle form submission
     const handleSubmit =(e)=>{
         e.preventDefault();
+        if(!email || !password){
+            setErrorMessage('please fill in both the fields');
+            return;
+        }
         dispatch(login({email,password}));
     }
+
+    //Handle Navigation on Successfull login
     useEffect(()=>{
         if (isAuthenticated){
             navigate('/bookshelf');
         }
-    }, [isAuthenticated,navigate,error])
+        if(error){
+            setErrorMessage(error);
+        }
+    }, [isAuthenticated,error,navigate])
   
 
     return (
