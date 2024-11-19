@@ -1,0 +1,16 @@
+.combined-data-page {
+    padding: 20px;  
+}
+
+.bestseller-list,
+.user-book-list {
+    display: flex;  
+    flex-wrap: wrap;  
+}
+
+.bestseller-item,
+.update-card {
+    margin: 10px;  
+    padding: 10px;  
+    border: 1px solid #ccc;  
+}

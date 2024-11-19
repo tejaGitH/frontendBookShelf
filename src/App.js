@@ -1,82 +1,55 @@
+// src/App.js
+// import React from "react";
+// import { Provider } from "react-redux";
+// import { BrowserRouter as Router, Route, Navigate, Routes } from "react-router-dom";
+// import store from "./utils/store";
+// import Navbar from "./components/common/NavBar";
+// import LandingPage from "./containers/LandingPage";
+// import LoginPage from "./containers/LoginPage";
+// import RegisterPage from "./containers/RegisterPage";
+// import Dashboard from "./containers/Dashboard";
+// import CombinedDataPage from "./containers/CombineDataPage"; // New import for combined data
+// import FriendUpdates from "./containers/FriendUpdates"; // Ensure this exists
+// import Profile from "./containers/Profile" ;// Ensure this exists
+// import ErrorBoundary from "./components/common/ErrorBoundary"; // Import ErrorBoundary
+// import PrivateRoute from "./components/common/PrivateRoute"; // Import PrivateRoute
 import React from "react";
-import { Provider, useSelector } from "react-redux";
-import {BrowserRouter as Router, Route, Navigate, Routes} from "react-router-dom";
-import store from "./utils/store";
-import BookShelf from './components/BookShelf';
-import Login from "./components/Login";
-import Register from "./components/Register";
-import BestSellers from './components/BestSellers';
-import BookDetails from "./components/BookDetails";
-import Navbar from "./components/NavBar";
+import { BrowserRouter as Router, Routes, Navigate, Route } from "react-router-dom";
+import { Provider } from "react-redux";
+import store from "./utils/store"; // Adjust path to your store file
 import LandingPage from "./components/LandingPage";
+import DashBoard from "./components/DashBoard";
+import PrivateRoute from "./components/PrivateRoute";
+import ErrorBoundary from "./components/common/ErrorBoundary";
 
-const PrivateRoute = ({element, isAuthenticated})=>{
-  return isAuthenticated ? element : <Navigate to="/login" />;
-}
 
-const App =()=>{
+const App = () => {
 
-  const {isAuthenticated }= useSelector((state)=>state.users);
-
-  return(
-    <Provider store={store}>
-      <Router>
-        {isAuthenticated && <Navbar />} {/*show NavBar if authenticated*/}
-        <Routes>
-            <Route path="/" element={isAuthenticated ? <Navigate to="/bookshelf" /> : <LandingPage />} /> 
-            <Route path="/login" element={isAuthenticated ? <Navigate to="/bookshelf" /> : <Login /> } />
-            <Route path="/register" element={isAuthenticated ? <Navigate to="/bookShelf" /> : <Register />} />
-            <Route path="/bookshelf" element={<PrivateRoute isAuthenticated={isAuthenticated} element={<BookShelf />} />} />               
-            {/* //<Route path="/" element={<Navigate to="/bookshelf" />} /> */}
-            <Route path="/best-sellers" element={<PrivateRoute isAuthenticated={isAuthenticated} element={<BestSellers />} />} />
-            <Route path="/book-details/:isbn" element={<PrivateRoute isAuthenticated={isAuthenticated} element={<BookDetails />} />} />
-        </Routes>
-      </Router>
-    </Provider>
+  return (
+      <Provider store={store}>
+          <Router>
+              <ErrorBoundary> {/* Wrap your app with ErrorBoundary
+                  {/* <Navbar /> */} 
+                  <Routes>
+                    <Route path="/" element={<LandingPage />} />
+                    {/* <Route path="/login" element={<LoginPage />} /> */}
+                    <Route path="/dashboard" element={<PrivateRoute element={<DashBoard />}/>} />
+                    <Route path="*" element={<Navigate to ="/" />} />
+                      {/* <Route path="/" element={<LandingPage />} />
+                      <Route path="/login" element={<LoginPage />} />
+                      <Route path="/register" element={<RegisterPage />} /> */}
+                      {/* Protecting routes with PrivateRoute */}
+                      {/* <Route path="/dashboard" element={<PrivateRoute element={<Dashboard />} />} /> */}
+                      {/* Use CombinedDataPage for combined data view */}
+                      {/* <Route path="/combined-data" element={<PrivateRoute element={<CombinedDataPage />} />} />   */}
+                      {/* Other routes... */}
+                      {/* Redirect unknown routes */}
+                      {/* <Route path="*" element={<Navigate to="/" />} /> */}
+                  </Routes>
+              </ErrorBoundary>
+          </Router>
+      </Provider>
   );
 };
 
 export default App;
-
-
-//  {/* <Route path="/login" element={isAuthenticated? <Navigate to="/bookshelf"/>: <Login/>}/>
-//           <Route path="/register" element= {isAuthenticated? <Navigate to="/bookshelf"/>: <Register/>}/> */}
-//           <Route path="/login" element={<Login />} />
-//           <Route path="/register" element={<Register />} />
-//           <Route path="/bookshelf" element={isAuthenticated? <BookShelf /> : <Navigate to="/login" />} />
-//           <Route path="/" element={<Navigate to="/bookshelf"/>}/>
-//           <Route path="/best-sellers" element={<BestSellers />} />
-//           <Route path="/book-details/:isbn" element={<BookDetails />} />
-//           <Route path="/books" element={<BookShelf />} />
-
-
-
-  //const dispatch = useDispatch;
- // const[isAuthenticated, setIsAuthenticated]=useState(false);
-  // const isAuthenticated =useSelector((state)=> state.users.isAuthenticated);
-  // const =>{
-  //   // let tokenExist = Cookies.get("token");
-  //    console.log(localStorage.getItem("token")?true:false);
-  //   // return tokenExist?true:false;
-  // const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem("token"));
-
-
-
-  // // Function to handle setting authentication, e.g., after login
-  // const checkAuthentication = () => {
-  //     const token = localStorage.getItem('token');
-  //     setIsAuthenticated(!!token);
-  // };
-
-  // // Use effect to listen to any changes in authentication status
-  // useEffect(() => {
-  //     // Set initial auth state on component mount
-  //     checkAuthentication();
-  //     // Optional: Add an event listener for changes in localStorage (useful if other tabs change auth status)
-  //     const handleStorageChange = () => checkAuthentication();
-  //     window.addEventListener('storage', handleStorageChange);
-  //     // Cleanup on component unmount
-  //     return () => {
-  //         window.removeEventListener('storage', handleStorageChange);
-  //     };
-  // }, []);

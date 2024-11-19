@@ -1,38 +1,32 @@
-import React, {useEffect} from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchFriends, fetchPendingRequests } from "../actions/friendshipActions";
+// src/components/Dashboard.js
 
-const Dashboard =()=>{
-    const dispatch = useDispatch();
-    const {friends, pendingRequests, loading} = useSelector((state)=> state.friendship);
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {logout} from "../actions/userActions";
 
-    useEffect(()=>{
-        dispatch(fetchFriends());
-        dispatch(fetchPendingRequests());
-    },[dispatch]);
+const Dashboard = () => {
+  const { userInfo } = useSelector((state) => state.users); // Get user info from Redux
+  const dispatch = useDispatch();
+  console.log(userInfo);
 
-    return(
-         <div>
-            <h2>Dashboard</h2>
-            {loading && <p>Loading...</p>}
-            <section>
-                <h3>Currently Reading</h3>
-                {/* Map over the user's currently reading books */}
-            </section>
-            <section>
-                <h3>Friend Activity</h3>
-                {friends.map((friend) => (
-                    <p key={friend.id}>{friend.name} is currently reading...</p>
-                ))}
-            </section>
-            <section>
-                <h3>Pending Friend Requests</h3>
-                {pendingRequests.map((request) => (
-                    <p key={request.id}>{request.name} sent a friend request.</p>
-                ))}
-            </section>
+  const handleLogout = () =>{
+    dispatch(logout());
+  };
+
+  return (
+    <div>
+      <h1>Welcome to your Dashboard</h1>
+      {userInfo ? (
+        <div>
+          <p>Hello, {userInfo.name}</p>
+          <button onClick={handleLogout}>Logout</button>
+          {/* You can add more user-specific data here */}
         </div>
-    )
-}
+      ) : (
+        <p>Loading user data...</p>
+      )}
+    </div>
+  );
+};
 
 export default Dashboard;

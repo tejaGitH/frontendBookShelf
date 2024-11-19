@@ -1,0 +1,13 @@
+.register-page {
+    max-width: 400px;  
+    margin: auto;  
+ }
+ 
+ form {
+    display: flex;  
+    flex-direction: column;  
+ }
+ 
+ input {
+    margin-bottom: 10px;  
+ }
