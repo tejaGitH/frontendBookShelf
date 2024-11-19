@@ -17,16 +17,25 @@ axiosInstance.interceptors.request.use(
     (error) => Promise.reject(error)
 )
 
-//Response Interceptor for centra;ized error handling
+//Response Interceptor for centralized error handling
 axiosInstance.interceptors.response.use(
     (response)=>response,
     (error)=>{
         const status = error.response?.status;
-        if(status ===401){
-            console.error("Unauthorized -redirecting to login");
-        }else if(status === 500){
-            console.error("server error");
-        }
+        if (status === 401) {
+            console.error("Unauthorized - redirecting to login");
+            // Optionally, you can add logic here to log out the user
+            // and redirect to the login page
+          } else if (status === 500) {
+            console.error("Server error - please try again later");
+          } else if (status === 404) {
+            console.error("Requested resource not found");
+          } else if (status === 403) {
+            console.error("Forbidden - you don't have permission");
+          } else {
+            console.error("An unexpected error occurred:", error);
+          }
+          
         return Promise.reject(error);
     }
 

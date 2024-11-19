@@ -29,7 +29,11 @@ export const fetchBooks = createApiAction(
   
   export const addBook = createApiAction(
     "books/addBook",
-    (bookData) => axiosInstance.post("/books", bookData)
+    async(bookData) =>{
+      const response = await axiosInstance.post("/books/add", bookData);
+      console.log('Add Book Response:', response);
+      return response.data;
+    } //axiosInstance.post("/books/add", bookData)
   );
   
   export const updateBook = createApiAction(

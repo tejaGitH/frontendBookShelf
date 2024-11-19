@@ -10,7 +10,9 @@ import {
 
 const initialState = {
   books: [],
+  bestSellers: [],
   selectedBook: null,
+  searchResults: [],
   loading: false,
   error: null,
 };
@@ -42,7 +44,19 @@ const bookSlice = createSlice({
         state.selectedBook = action.payload;
       })
       .addCase(addBook.fulfilled, (state, action) => {
-        state.books.push(action.payload);
+        console.log('Add Book Fulfilled Payload:', action.payload);
+        if (action.payload) {
+          state.books.push(action.payload);
+          // state.books.push({
+          //   _id: action.payload.bookId,
+          //   ...action.meta.arg //use input data from the actions mets
+          // });
+        }
+      })
+      .addCase(addBook.rejected,(state, action)=>{
+        state.error = action.error.message || "Failed to add book";
+        console.error('Error adding book', action.error);
+        console.log('Action payload:', action.payload);
       })
       .addCase(updateBook.fulfilled, (state, action) => {
         const index = state.books.findIndex(
@@ -66,12 +80,13 @@ const bookSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchBestSellers.fulfilled, (state, action) => {
+        console.log('BestSellers:', action.payload);
         state.loading = false;
-        state.bestSellers = action.payload;
+        state.bestSellers = action.payload?.results?.books || [];
       })
       .addCase(fetchBestSellers.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload;
+        state.error = action.payload||"error fetching best sellers";
       })
 
       // Fetch Book Details

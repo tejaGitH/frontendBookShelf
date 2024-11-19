@@ -21,6 +21,7 @@ import LandingPage from "./components/LandingPage";
 import DashBoard from "./components/DashBoard";
 import PrivateRoute from "./components/PrivateRoute";
 import ErrorBoundary from "./components/common/ErrorBoundary";
+import BestSellersPage from "./components/BestSellersPage";
 
 
 const App = () => {
@@ -33,7 +34,8 @@ const App = () => {
                   <Routes>
                     <Route path="/" element={<LandingPage />} />
                     {/* <Route path="/login" element={<LoginPage />} /> */}
-                    <Route path="/dashboard" element={<PrivateRoute element={<DashBoard />}/>} />
+                    <Route path="/dashboard" element={<PrivateRoute element={<DashBoard />} />} />
+                    <Route path="/best-sellers" element={<PrivateRoute element={<BestSellersPage />} />} />
                     <Route path="*" element={<Navigate to ="/" />} />
                       {/* <Route path="/" element={<LandingPage />} />
                       <Route path="/login" element={<LoginPage />} />
