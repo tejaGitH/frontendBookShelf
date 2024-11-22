@@ -6,12 +6,16 @@ import {
   removeFriend,
   getFriendUpdates,
   getPendingRequests,
+  fetchAvailableUsers,
 } from "../actions/friendshipActions";
 
 const initialState = {
   friends: [],
   pendingRequests: [],
   friendUpdates: [],
+  availableUsers: [],
+  sendingRequest: false,
+  hasMoreUsers: true, //to track if more users are avavilable
   loading: false,
   error: null,
 };
@@ -24,14 +28,14 @@ const friendshipSlice = createSlice({
     builder
       // Send Friend Request
       .addCase(sendFriendRequest.pending, (state) => {
-        state.loading = true;
+        state.sendingRequest = true; //set loading state when request is pending
       })
       .addCase(sendFriendRequest.fulfilled, (state, action) => {
-        state.loading = false;
+        state.sendingRequest = false; //reset after success
         // Optionally, update pendingRequests or friends list after sending request
       })
       .addCase(sendFriendRequest.rejected, (state, action) => {
-        state.loading = false;
+        state.sendingRequest = false; //reset after failure
         state.error = action.payload || "Failed to send friend request";
       })
 
@@ -102,7 +106,22 @@ const friendshipSlice = createSlice({
       .addCase(getPendingRequests.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload || "Failed to fetch pending requests";
-      });
+      })
+      .addCase(fetchAvailableUsers.pending, (state) => {
+        state.loading = true; // Set loading to true when the request starts
+      })
+      .addCase(fetchAvailableUsers.fulfilled, (state, action) => {
+        state.loading = false; // Set loading to false when the request finishes
+        if (action.payload.length > 0) {
+          state.availableUsers = [...state.availableUsers, ...action.payload];
+        } else {
+          state.hasMoreUsers = false;
+        }
+      })
+      .addCase(fetchAvailableUsers.rejected, (state, action) => {
+        state.loading = false; // Set loading to false when the request fails
+        state.error = action.payload || 'Failed to fetch available users';
+      })
   },
 });
 

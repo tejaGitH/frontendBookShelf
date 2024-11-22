@@ -1,16 +1,18 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createAsyncThunk, current } from "@reduxjs/toolkit";
 import axiosInstance from "../utils/axiosInstance";
 
 //send friend request
 export const sendFriendRequest = createAsyncThunk(
     'friendships/sendFriendRequest',
-    async(friendId, { rejectWithValue })=>{
+    async({userId,friendId}, { rejectWithValue })=>{
         try{
-            const response = await axiosInstance.post('/friend-requests',{friendId});
+            const response = await axiosInstance.post('/friendships/friend-requests',{userId, friendId});
+            console.log("Sending Friend Request with:", { userId, friendId });
             return response.data;
         }catch(error){
-        return rejectWithValue(error.response?.data || 'Failed to send friend request');
-     }
+          console.error("Error sending friend request:", error);
+          return rejectWithValue(error.response?.data || 'Failed to send friend request');
+        }
     }
 )
 
@@ -78,3 +80,35 @@ export const getFriends = createAsyncThunk(
       }
     }
   );
+
+  //Get available users
+  // export const fetchAvailableUsers = createAsyncThunk(
+  //   'friendships/fetchAvailableUsers',
+  //   async ({ limit = 6, offset = 0,currentUserId }, { rejectWithValue }) => {
+  //     try {
+  //       const response = await axiosInstance.get(`/friendships/getUsers?limit=${limit}&offset=${offset}`);
+  //       const filteredUsers = response.data.filter(user => user._id !== currentUserId)//filter out loggedin user
+  //       return filteredUsers;
+  //     } catch (error) {
+  //       return rejectWithValue(error.response?.data || 'Failed to fetch available users');
+  //     }
+  //   }
+  // );
+
+export const fetchAvailableUsers = createAsyncThunk(
+  'friendships/fetchAvailableUsers',
+  async ({ limit = 6, offset = 0, currentUserId }, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.get(`/friendships/getUsers?limit=${limit}&offset=${offset}`);
+      
+      // Filter users by friendship status before returning the data
+      const filteredUsers = response.data.filter(user => {
+        return user._id !== currentUserId && user.friendshipStatus !== "accepted" && user.friendshipStatus !== "pending";
+      });
+
+      return filteredUsers;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || 'Failed to fetch available users');
+    }
+  }
+);

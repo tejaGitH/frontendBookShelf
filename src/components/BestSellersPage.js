@@ -10,10 +10,10 @@ const BestSellersPage = () => {
   const { bestSellers, loading, error } = useSelector((state) => state.books);
 
   useEffect(() => {
-    if(!bestSellers.length){ //check if best-sellers is empty
+    if(!bestSellers){ //check if best-sellers is empty
         dispatch(fetchBestSellers());
     } 
-  }, [dispatch, bestSellers.length]);
+  }, [dispatch, bestSellers]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
