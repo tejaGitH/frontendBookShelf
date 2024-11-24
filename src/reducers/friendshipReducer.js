@@ -6,16 +6,17 @@ import {
   removeFriend,
   getFriendUpdates,
   getPendingRequests,
-  fetchAvailableUsers,
+  fetchEligibleUsers,
 } from "../actions/friendshipActions";
 
 const initialState = {
   friends: [],
   pendingRequests: [],
   friendUpdates: [],
-  availableUsers: [],
+  eligibleUsers: [],
   sendingRequest: false,
-  hasMoreUsers: true, //to track if more users are avavilable
+  hasMoreUsers: true, // to track if more users are available
+  totalUsers: 0,
   loading: false,
   error: null,
 };
@@ -28,14 +29,16 @@ const friendshipSlice = createSlice({
     builder
       // Send Friend Request
       .addCase(sendFriendRequest.pending, (state) => {
-        state.sendingRequest = true; //set loading state when request is pending
+        state.sendingRequest = true; // Set loading state when request is pending
       })
       .addCase(sendFriendRequest.fulfilled, (state, action) => {
-        state.sendingRequest = false; //reset after success
-        // Optionally, update pendingRequests or friends list after sending request
+        state.sendingRequest = false; // Reset after success
+        // Optionally update pendingRequests or friends list after sending request
+        // Remove user information from eligible users after successful request
+        state.eligibleUsers = state.eligibleUsers.filter((user) => user._id !== action.payload.friendId);
       })
       .addCase(sendFriendRequest.rejected, (state, action) => {
-        state.sendingRequest = false; //reset after failure
+        state.sendingRequest = false; // Reset after failure
         state.error = action.payload || "Failed to send friend request";
       })
 
@@ -107,21 +110,24 @@ const friendshipSlice = createSlice({
         state.loading = false;
         state.error = action.payload || "Failed to fetch pending requests";
       })
-      .addCase(fetchAvailableUsers.pending, (state) => {
-        state.loading = true; // Set loading to true when the request starts
+
+      // Fetch Eligible Users
+      .addCase(fetchEligibleUsers.pending, (state) => {
+        state.loading = true;
       })
-      .addCase(fetchAvailableUsers.fulfilled, (state, action) => {
-        state.loading = false; // Set loading to false when the request finishes
-        if (action.payload.length > 0) {
-          state.availableUsers = [...state.availableUsers, ...action.payload];
-        } else {
-          state.hasMoreUsers = false;
-        }
+      .addCase(fetchEligibleUsers.fulfilled, (state, action) => {
+        // console.log("Eligible Users Payload:", action.payload);
+        const { users, hasMore, total } = action.payload;
+        state.loading = false;
+        // If it's the first page, replace the array, otherwise append to it
+        state.eligibleUsers = users;
+        state.hasMoreUsers = hasMore;
+        state.totalUsers = total;
       })
-      .addCase(fetchAvailableUsers.rejected, (state, action) => {
-        state.loading = false; // Set loading to false when the request fails
-        state.error = action.payload || 'Failed to fetch available users';
-      })
+      .addCase(fetchEligibleUsers.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload || "Failed to fetch eligible users";
+      });
   },
 });
 

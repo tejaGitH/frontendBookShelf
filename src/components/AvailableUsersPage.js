@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAvailableUsers, sendFriendRequest } from "../actions/friendshipActions";
+import { fetchEligibleUsers, sendFriendRequest } from "../actions/friendshipActions";
 import { useLocation, useNavigate } from "react-router-dom"; 
 
 const AvailableUsersPage = () => {
@@ -18,7 +18,7 @@ const AvailableUsersPage = () => {
 
   useEffect(() => {
     if (location.pathname === "/available-users") {
-      dispatch(fetchAvailableUsers({ limit, offset, currentUserId: userInfo._id }));
+      dispatch(fetchEligibleUsers({ limit, offset, currentUserId: userInfo._id }));
     }
   }, [dispatch, offset, location.pathname, userInfo._id]);
 
@@ -42,7 +42,7 @@ const AvailableUsersPage = () => {
 
     dispatch(sendFriendRequest({ userId: userInfo.id, friendId }))
       .then(() => {
-        dispatch(fetchAvailableUsers({ limit, offset, currentUserId: userInfo.id }));
+        dispatch(fetchEligibleUsers({ limit, offset, currentUserId: userInfo.id }));
       })
       .catch(error => {
         console.error("Error sending friend request:", error);

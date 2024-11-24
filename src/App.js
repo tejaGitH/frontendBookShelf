@@ -18,7 +18,7 @@ import { BrowserRouter as Router, Routes, Navigate, Route } from "react-router-d
 import { Provider } from "react-redux";
 import store from "./utils/store"; // Adjust path to your store file
 import LandingPage from "./components/LandingPage";
-import DashBoard from "./components/DashBoard";
+import Dashboard from "./components/Dashboard";
 import PrivateRoute from "./components/PrivateRoute";
 import ErrorBoundary from "./components/common/ErrorBoundary";
 import BestSellersPage from "./components/BestSellersPage";
@@ -38,7 +38,7 @@ const App = () => {
                     {/* <Route path="/login" element={<LoginPage />} /> */}
 
                     {/* protected routes */}
-                    <Route path="/dashboard" element={<PrivateRoute element={<DashBoard />} />} />
+                    <Route path="/dashboard" element={<PrivateRoute element={<Dashboard />} />} />
                     <Route path="/best-sellers" element={<PrivateRoute element={<BestSellersPage />} />} />
                     <Route path="/available-users" element={<PrivateRoute element={<AvailableUsersPage />} />} />
                     

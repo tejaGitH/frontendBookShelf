@@ -25,13 +25,14 @@ const userSlice = createSlice({
                 state.error = null;
             })
             .addCase(login.fulfilled, (state, action) => {
-                console.log("Login Payload:", action.payload);
+                // console.log("Login Payload:", action.payload);
                 state.loading = false;
                 state.userInfo = action.payload.user;
                 state.token = action.payload.token;
                 state.isAuthenticated = true;
                 localStorage.setItem("userInfo", JSON.stringify(action.payload.user));
                 localStorage.setItem("token", action.payload.token);
+                console.log("Login Payload:",JSON.stringify(action.payload.user));
             })
             .addCase(login.rejected, (state, action) => {
                 state.loading = false;
