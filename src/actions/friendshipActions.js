@@ -131,3 +131,25 @@ export const fetchEligibleUsers = createAsyncThunk(
       }
   }
 );
+
+
+// fetchSocialUpdates.js
+let isFetching = false;
+
+export const fetchSocialUpdates = createAsyncThunk(
+    'friendships/fetchSocialUpdates',
+    async (_, { rejectWithValue }) => {
+        if (isFetching) return; // Prevent duplicate requests
+        isFetching = true;
+        try {
+            const response = await axiosInstance.get('/friendships/updates');
+            isFetching = false;
+            console.log('SocialUpdates',response.data);
+            return response.data;
+        } catch (error) {
+            isFetching = false;
+            console.error('Error fetching social updates:', error);
+            return rejectWithValue(error.response?.data || 'Failed to fetch social updates');
+        }
+    }
+);

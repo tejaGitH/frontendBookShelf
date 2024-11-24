@@ -7,6 +7,7 @@ import {
   getFriendUpdates,
   getPendingRequests,
   fetchEligibleUsers,
+  fetchSocialUpdates,
 } from "../actions/friendshipActions";
 
 const initialState = {
@@ -14,12 +15,14 @@ const initialState = {
   pendingRequests: [],
   friendUpdates: [],
   eligibleUsers: [],
+  updates: [],
   sendingRequest: false,
   hasMoreUsers: true, // to track if more users are available
   totalUsers: 0,
   loading: false,
   error: null,
 };
+
 
 const friendshipSlice = createSlice({
   name: "friendships",
@@ -33,8 +36,6 @@ const friendshipSlice = createSlice({
       })
       .addCase(sendFriendRequest.fulfilled, (state, action) => {
         state.sendingRequest = false; // Reset after success
-        // Optionally update pendingRequests or friends list after sending request
-        // Remove user information from eligible users after successful request
         state.eligibleUsers = state.eligibleUsers.filter((user) => user._id !== action.payload.friendId);
       })
       .addCase(sendFriendRequest.rejected, (state, action) => {
@@ -116,10 +117,8 @@ const friendshipSlice = createSlice({
         state.loading = true;
       })
       .addCase(fetchEligibleUsers.fulfilled, (state, action) => {
-        // console.log("Eligible Users Payload:", action.payload);
         const { users, hasMore, total } = action.payload;
         state.loading = false;
-        // If it's the first page, replace the array, otherwise append to it
         state.eligibleUsers = users;
         state.hasMoreUsers = hasMore;
         state.totalUsers = total;
@@ -127,7 +126,20 @@ const friendshipSlice = createSlice({
       .addCase(fetchEligibleUsers.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload || "Failed to fetch eligible users";
-      });
+      })
+
+      // Fetch Social Updates
+      .addCase(fetchSocialUpdates.pending, (state) => {
+        state.loading = true;
+    })
+    .addCase(fetchSocialUpdates.fulfilled, (state, action) => {
+        state.loading = false;
+        state.updates = action.payload;
+    })
+    .addCase(fetchSocialUpdates.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+    });
   },
 });
 
