@@ -1,6 +1,6 @@
 import { createApiAction } from "../utils/createApiAction";
 import axiosInstance from "../utils/axiosInstance";
-
+import { createAsyncThunk } from '@reduxjs/toolkit';
 
 export const fetchBestSellers = createApiAction(
     'books/fetchBestSellers',
@@ -55,4 +55,53 @@ export const fetchBooks = createApiAction(
     payload: bookId,
 });
 
+// export const fetchCurrentBooks = createApiAction(
+//   "books/fetchCurrentBooks",
+//   (_,{rejectWithValue})=>axiosInstance.get(`books/readingBooks`)
 
+// )
+// export const fetchReadingProgress = createApiAction(
+//   "books/fetchReadingProgress",
+//   (bookId,{rejectWithValue})=>axiosInstance.get(`/progress/${bookId}`)
+// )
+
+// export const updateReadingProgress = createApiAction(
+//   "books/updateReadingProgress",
+//   ({bookId, progress, comments},{rejectWithValue})=>axiosInstance.put(`/books/progress/${bookId}`,{progress,comments})
+// )
+export const fetchCurrentBooks = createAsyncThunk(
+  'readingProgress/fetchCurrentBooks',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.get('books/readingBooks');
+      console.log('Api Response:', response.data);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || 'Failed to fetch currently reading books');
+    }
+  }
+);
+
+export const fetchReadingProgress = createAsyncThunk(
+  'readingProgress/fetchReadingProgress',
+  async (bookId, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.get(`books/progress/${bookId}`);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || 'Failed to fetch reading progress');
+    }
+  }
+);
+
+export const updateReadingProgress = createAsyncThunk(
+  'readingProgress/updateReadingProgress',
+  async ({ bookId, progress, comments }, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.put(`books/progress/${bookId}`, { progress, comments });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || 'Failed to update reading progress');
+    }
+  }
+);

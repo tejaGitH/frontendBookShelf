@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 import {
   fetchBooks,
   fetchBookById,
@@ -6,13 +6,16 @@ import {
   updateBook,
   deleteBook,
   fetchBestSellers,fetchBookDetails,searchBooks,
+  fetchCurrentBooks,fetchReadingProgress,updateReadingProgress,
 } from "../actions/bookActions";
 
 const initialState = {
   books: [],
   bestSellers: [],
-  selectedBook: null,
   searchResults: [],
+  currentlyReading:[],
+  selectedBook: null,
+  readingProgress:{},
   loading: false,
   error: null,
 };
@@ -115,6 +118,46 @@ const bookSlice = createSlice({
       .addCase(searchBooks.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+      .addCase(fetchCurrentBooks.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchCurrentBooks.fulfilled, (state, action) => {
+  state.loading = false;
+
+  // Only update state if the data has changed
+  if (JSON.stringify(state.currentlyReading) !== JSON.stringify(action.payload)) {
+    state.currentlyReading = action.payload;
+  }
+})
+      .addCase(fetchCurrentBooks.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload || 'Failed to fetch currently reading books';
+      })
+      .addCase(fetchReadingProgress.pending, (state) => {
+         state.loading = true;
+      }) 
+      .addCase(fetchReadingProgress.fulfilled, (state, action) => {
+         state.loading = false; state.readingProgress[action.payload.book._id] = action.payload; 
+      }) 
+      .addCase(fetchReadingProgress.rejected, (state, action) => {
+         state.loading = false; state.error = action.payload; 
+      })
+      .addCase(updateReadingProgress.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateReadingProgress.fulfilled, (state, action) => {
+        state.loading = false;
+        const { bookId, progress, comments } = action.payload;
+        const book = state.currentlyReading.find((book) => book._id === bookId);
+        if (book) {
+          book.progress = progress;
+          book.comments = comments;
+        }
+      })
+      .addCase(updateReadingProgress.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload || 'Failed to update reading progress';
       });
   },
 });

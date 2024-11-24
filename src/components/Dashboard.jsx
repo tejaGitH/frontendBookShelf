@@ -109,6 +109,21 @@
 //  export default Dashboard;
 
 
+// // Dashboard.js
+// import React, { useEffect, useState } from 'react';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { fetchBooks, deleteBook, updateBook } from '../actions/bookActions';
+// import { logout } from '../actions/userActions';
+// import { fetchEligibleUsers, sendFriendRequest } from '../actions/friendshipActions';
+// import { useNavigate } from 'react-router-dom';
+// import AddBook from './AddBook';
+// import BookshelfTable from './BookshelfTable';
+// import EligibleUsers from './EligibleUsers';
+// import Pagination from 'react-paginate';
+// import SocialUpdates from './SocialUpdates'; // Import the SocialUpdates component
+// import CurrentlyReading from './CurrentlyReading'; // Import the CurrentlyReading component
+// import './Dashboard.css'; // Import the CSS file for styling
+
 // Dashboard.js
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -117,11 +132,12 @@ import { logout } from '../actions/userActions';
 import { fetchEligibleUsers, sendFriendRequest } from '../actions/friendshipActions';
 import { useNavigate } from 'react-router-dom';
 import AddBook from './AddBook';
-import BookshelfTable from './BookshelfTable';
+// import BookshelfTable from './BookshelfTable';
 import EligibleUsers from './EligibleUsers';
 import Pagination from 'react-paginate';
-import SocialUpdates from './SocialUpdates'; // Import the SocialUpdates component
-import './Dashboard.css'; // Import the CSS file for styling
+import SocialUpdates from './SocialUpdates';
+// import CurrentlyReading from './CurrentlyReading';
+import './Dashboard.css';
 
 const Dashboard = () => {
     const dispatch = useDispatch();
@@ -133,12 +149,12 @@ const Dashboard = () => {
 
     const [localOffset, setLocalOffset] = useState(0);
     const [limit, setLimit] = useState(5);
-    const [currentPage, setCurrentPage] = useState(0); // Track the current page
+    const [currentPage, setCurrentPage] = useState(0);
 
     useEffect(() => {
         if (userInfo) {
-            dispatch(fetchBooks());
-            dispatch(fetchEligibleUsers({ limit, offset: localOffset }));
+            dispatch(fetchBooks()).catch(err => console.error('Error fetching books:', err));
+            dispatch(fetchEligibleUsers({ limit, offset: localOffset })).catch(err => console.error('Error fetching users:', err));
         }
     }, [dispatch, userInfo, localOffset]);
 
@@ -157,7 +173,7 @@ const Dashboard = () => {
     const handlePageChange = ({ selected }) => {
         const newOffset = selected * limit;
         setLocalOffset(newOffset);
-        setCurrentPage(selected); // Update the current page
+        setCurrentPage(selected);
         dispatch(fetchEligibleUsers({ limit, offset: newOffset }));
     };
 
@@ -173,14 +189,14 @@ const Dashboard = () => {
                 </div>
             )}
 
-            <div>
+            {/* <div>
                 <h2>My Books</h2>
                 <BookshelfTable
                     books={books}
                     onEdit={(bookId, updatedData) => dispatch(updateBook(bookId, updatedData))}
                     onDelete={(bookId) => dispatch(deleteBook(bookId))}
                 />
-            </div>
+            </div> */}
 
             <div>
                 <h2>People You May Know</h2>
@@ -194,7 +210,7 @@ const Dashboard = () => {
                         previousLabel='Previous'
                         nextLabel='Next'
                         pageCount={Math.ceil(totalUsers / limit)}
-                        forcePage={currentPage} // Force the selected page
+                        forcePage={currentPage}
                         onPageChange={handlePageChange}
                         containerClassName='pagination'
                         pageClassName='page-item'
@@ -210,12 +226,18 @@ const Dashboard = () => {
                 )}
             </div>
 
+            {/* <div>
+                <h2>Currently Reading</h2>
+                <CurrentlyReading />
+            </div> */}
+
             <div>
                 <h2>Social Updates</h2>
-                <SocialUpdates /> {/* Add SocialUpdates component */}
+                <SocialUpdates />
             </div>
         </div>
     );
 };
 
 export default Dashboard;
+
