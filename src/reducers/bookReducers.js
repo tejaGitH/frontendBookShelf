@@ -123,13 +123,11 @@ const bookSlice = createSlice({
         state.loading = true;
       })
       .addCase(fetchCurrentBooks.fulfilled, (state, action) => {
-  state.loading = false;
-
-  // Only update state if the data has changed
-  if (JSON.stringify(state.currentlyReading) !== JSON.stringify(action.payload)) {
-    state.currentlyReading = action.payload;
-  }
-})
+        state.loading = false;
+        // Only update state if the data has changed
+        // if (JSON.stringify(state.currentlyReading) !== JSON.stringify(action.payload)) {
+        state.currentlyReading = action.payload || {};
+      })
       .addCase(fetchCurrentBooks.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload || 'Failed to fetch currently reading books';
@@ -138,7 +136,8 @@ const bookSlice = createSlice({
          state.loading = true;
       }) 
       .addCase(fetchReadingProgress.fulfilled, (state, action) => {
-         state.loading = false; state.readingProgress[action.payload.book._id] = action.payload; 
+         state.loading = false;
+         state.readingProgress[action.payload.book._id] = action.payload; 
       }) 
       .addCase(fetchReadingProgress.rejected, (state, action) => {
          state.loading = false; state.error = action.payload; 

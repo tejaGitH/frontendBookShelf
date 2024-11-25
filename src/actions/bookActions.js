@@ -75,8 +75,9 @@ export const fetchCurrentBooks = createAsyncThunk(
     try {
       const response = await axiosInstance.get('books/readingBooks');
       console.log('Api Response:', response.data);
-      return response.data;
+      return response.data || [];
     } catch (error) {
+      console.error('API error', error);
       return rejectWithValue(error.response?.data || 'Failed to fetch currently reading books');
     }
   }
