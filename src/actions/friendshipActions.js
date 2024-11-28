@@ -116,22 +116,46 @@ export const getFriends = createAsyncThunk(
 // );
 
 // friendshipActions.js
-export const fetchEligibleUsers = createAsyncThunk(
-  'friendships/fetchEligibleUsers',
-  async ({ limit, offset }, { rejectWithValue }) => {
-      try {
-          // Log the limit and offset values to ensure they are defined
-          console.log('Fetching eligible users with limit:', limit, 'offset:', offset);
+// export const fetchEligibleUsers = createAsyncThunk(
+//   'friendships/fetchEligibleUsers',
+//   async ({ limit, offset }, { getState, rejectWithValue }) => {
+            // const {friendships} = getState();
+            // if(friendships.isFetching) return; //prevent duplicate requests
+//       try {
+//           // Log the limit and offset values to ensure they are defined
+//           console.log('Fetching eligible users with limit:', limit, 'offset:', offset);
 
-          const response = await axiosInstance.get(`friendships/getUsers?limit=${limit}&offset=${offset}`);
-          return response.data; // { users, hasMore }
+//           const response = await axiosInstance.get(`friendships/getUsers?limit=${limit}&offset=${offset}`);
+//           return response.data; // { users, hasMore }
+//       } catch (error) {
+//           console.error('Error fetching eligible users:', error);
+//           return rejectWithValue(error.response?.data || 'Failed to fetch eligible users');
+//       }
+//   }
+// );
+//import { createAsyncThunk } from "@reduxjs/toolkit";
+//import axiosInstance from "../utils/axiosInstance"; // Replace with your Axios instance path
+
+export const fetchEligibleUsers = createAsyncThunk(
+  "friendships/fetchEligibleUsers",
+  async ({ limit, offset }, { getState, rejectWithValue }) => {
+      const { friendships } = getState();
+      if (friendships.isFetching) return; // Prevent duplicate requests
+
+      try {
+          console.log("Fetching eligible users with limit:", limit, "offset:", offset);
+          const response = await axiosInstance.get(
+              `friendships/getUsers?limit=${limit}&offset=${offset}`
+          );
+          const { users = [], hasMore = false } = response.data || {}; // Ensure structure
+          console.log("Eligible users fetched:", { users, hasMore });
+          return { users, hasMore }; // Return formatted payload
       } catch (error) {
-          console.error('Error fetching eligible users:', error);
-          return rejectWithValue(error.response?.data || 'Failed to fetch eligible users');
+          console.error("Error fetching eligible users:", error);
+          return rejectWithValue(error.response?.data || "Failed to fetch eligible users");
       }
   }
 );
-
 
 // fetchSocialUpdates.js
 let isFetching = false;

@@ -1,3 +1,6 @@
+//SocialCard
+//edit //delete //addbook
+
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -11,13 +14,15 @@ import {
     sendFriendRequest,
     fetchEligibleUsers
 } from "../actions/friendshipActions";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation, useAsyncValue } from "react-router-dom";
 import AddBook from "./AddBook";
 import EditBookModal from "./EditBookModal";
 import BookshelfTable from "./BookshelfTable";
 import EligibleUsers from "./EligibleUsers";
+import Pagination from "react-paginate";
 import SocialUpdates from "./SocialUpdates";
 import "./Dashboard.css";
+
 
 const Dashboard = () => {
     const dispatch = useDispatch();
@@ -33,6 +38,7 @@ const Dashboard = () => {
         eligibleUsersLoading,
         eligibleUsersError,
         totalUsers,
+        hasMoreUsers,
         sendingRequest,
     } = useSelector((state) => state.friendships);
 
@@ -129,17 +135,32 @@ const Dashboard = () => {
                     onDelete={handleDelete}
                 />
             </div>
-            
             <div>
                 <h2>People You May Know</h2>
                 <EligibleUsers
                     availableUsers={eligibleUsers}
                     handleSendFriendRequest={handleSendFriendRequest}
                     sendingRequest={sendingRequest}
-                    totalUsers={totalUsers}
-                    currentPage={currentPage}
-                    onPageChange={handlePageChange}
                 />
+                {hasMoreUsers && totalUsers > 0 && (
+                    <Pagination
+                        previousLabel='Previous'
+                        nextLabel='Next'
+                        pageCount={pageCount}
+                        forcePage={currentPage < pageCount ? currentPage : 0}
+                        onPageChange={handlePageChange}
+                        containerClassName='pagination'
+                        pageClassName='page-item'
+                        pageLinkClassName='page-link'
+                        previousClassName='page-item'
+                        previousLinkClassName='page-link'
+                        nextClassName='page-item'
+                        nextLinkClassName='page-link'
+                        breakClassName='page-item'
+                        breakLinkClassName='page-link'
+                        activeClassName='active'
+                    />
+                )}
             </div>
 
             <div>

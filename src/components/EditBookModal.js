@@ -4,7 +4,9 @@ const EditBookModal = ({ isVisible, onClose, bookId, bookData, onUpdate }) => {
     const [formData, setFormData] = useState(bookData || {});
 
     useEffect(() => {
-        setFormData(bookData || {});
+        if (bookData) {
+            setFormData(bookData);
+        }
     }, [bookData]);
 
     const handleChange = (e) => {
