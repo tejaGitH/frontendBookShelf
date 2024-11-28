@@ -1,20 +1,20 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchSocialUpdates } from '../actions/friendshipActions';
 
 const SocialUpdates = () => {
     const dispatch = useDispatch();
-    const hasFetchedUpdates = useRef(false); // Ref to track if updates have been fetched
 
-    // Safely extract data from the Redux state
-    const { updates = [], loading, error } = useSelector((state) => state.friendships || {});
+    const { updates = [], socialUpdatesLoading: loading, error } = useSelector((state) => state.friendships);
 
     useEffect(() => {
-        if (!loading && !hasFetchedUpdates.current && updates.length === 0) {
-            hasFetchedUpdates.current = true;
+        if (!loading && (!updates || updates.length === 0)) {
+            console.log("Dispatching fetchSocialUpdates...");
             dispatch(fetchSocialUpdates());
         }
-    }, [dispatch, loading, updates]);
+    }, [dispatch, loading, updates.length]);
+
+    console.log("SocialUpdates Component Rendered", { updates, loading, error });
 
     if (loading) {
         return <p>Loading social updates...</p>;
@@ -27,7 +27,7 @@ const SocialUpdates = () => {
     return (
         <div>
             <h2>Social Updates</h2>
-            {updates.length > 0 ? (
+            {updates && updates.length > 0 ? (
                 <ul>
                     {updates.map((update) => (
                         <li key={update._id} className="social-card">

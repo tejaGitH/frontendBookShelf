@@ -158,22 +158,27 @@ export const fetchEligibleUsers = createAsyncThunk(
 );
 
 // fetchSocialUpdates.js
-let isFetching = false;
-
 export const fetchSocialUpdates = createAsyncThunk(
-    'friendships/fetchSocialUpdates',
-    async (_, { rejectWithValue }) => {
-        if (isFetching) return; // Prevent duplicate requests
-        isFetching = true;
-        try {
-            const response = await axiosInstance.get('/friendships/updates');
-            isFetching = false;
-            console.log('SocialUpdates',response.data);
-            return response.data;
-        } catch (error) {
-            isFetching = false;
-            console.error('Error fetching social updates:', error);
-            return rejectWithValue(error.response?.data || 'Failed to fetch social updates');
-        }
-    }
+  'friendships/fetchSocialUpdates',
+  async (_, { rejectWithValue }) => {
+      try {
+          console.log("Fetching social updates...");
+          const response = await axiosInstance.get('/friendships/updates');
+          console.log('SocialUpdates:', response.data);
+          if (Array.isArray(response.data)) {
+              return response.data; // Ensure this returns an array
+          } else {
+              console.error("Expected an array but received:", response.data);
+              return rejectWithValue("Unexpected response format");
+          }
+      } catch (error) {
+          console.error('Error fetching social updates:', error);
+          return rejectWithValue(error.response?.data || 'Failed to fetch social updates');
+      }
+  }
 );
+
+
+
+
+

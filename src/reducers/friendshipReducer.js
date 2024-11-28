@@ -23,6 +23,7 @@ const initialState = {
   eligibleUsersLoading: false,
   friendsLoading: false,
   friendUpdatesLoading: false,
+  socialUpdatesLoading: false,
   error: null,
 };
 
@@ -46,22 +47,18 @@ const friendshipSlice = createSlice({
         state.sendingRequest = false;
         state.error = action.payload || "Failed to send friend request";
       })
-
-      // **Get Friends**
       .addCase(getFriends.pending, (state) => {
         state.friendsLoading = true;
       })
       .addCase(getFriends.fulfilled, (state, action) => {
         state.friendsLoading = false;
         state.friends = action.payload.friends;
-        state.hasMore = action.payload.hasMore; // Update general pagination for friends
+        state.hasMore = action.payload.hasMore;
       })
       .addCase(getFriends.rejected, (state, action) => {
-        state.friendsLoading= false;
+        state.friendsLoading = false;
         state.error = action.payload || "Failed to fetch friends";
       })
-
-      // **Update Friendship Status**
       .addCase(updateFriendshipStatus.pending, (state) => {
         state.loading = true;
       })
@@ -77,8 +74,6 @@ const friendshipSlice = createSlice({
         state.loading = false;
         state.error = action.payload || "Failed to update friendship status";
       })
-
-      // **Remove Friend**
       .addCase(removeFriend.pending, (state) => {
         state.loading = true;
       })
@@ -92,8 +87,6 @@ const friendshipSlice = createSlice({
         state.loading = false;
         state.error = action.payload || "Failed to remove friend";
       })
-
-      // **Get Friend Updates**
       .addCase(getFriendUpdates.pending, (state) => {
         state.friendUpdatesLoading = true;
       })
@@ -105,8 +98,6 @@ const friendshipSlice = createSlice({
         state.friendUpdatesLoading = false;
         state.error = action.payload || "Failed to fetch friend updates";
       })
-
-      // **Get Pending Requests**
       .addCase(getPendingRequests.pending, (state) => {
         state.loading = true;
       })
@@ -118,49 +109,37 @@ const friendshipSlice = createSlice({
         state.loading = false;
         state.error = action.payload || "Failed to fetch pending requests";
       })
-
-      // **Fetch Eligible Users**
-      // .addCase(fetchEligibleUsers.pending, (state) => {
-      //   state.isFetching = true; // Distinguish this from `loading` for clarity
-      // })
-      // .addCase(fetchEligibleUsers.fulfilled, (state, action) => {
-      //   const { users, hasMore, total } = action.payload;
-      //   state.isFetching = false;
-      //   state.eligibleUsers = [...state.eligibleUsers, ...users]; // Append to current list
-      //   state.hasMoreUsers = hasMore; // Pagination for eligible users
-      //   state.totalUsers = total;
-      // })
-      // .addCase(fetchEligibleUsers.rejected, (state, action) => {
-      //   state.isFetching = false;
-      //   state.error = action.payload || "Failed to fetch eligible users";
-      // })
-  // **Fetch Eligible Users**
-.addCase(fetchEligibleUsers.pending, (state) => {
-  // state.isFetching = true;
-  state.eligibleUsersLoading= true;
-})
-.addCase(fetchEligibleUsers.fulfilled, (state, action) => {
-  const { users = [], hasMore = false } = action.payload || {}; // Fallback values
-  // state.isFetching = false;
-  state.eligibleUsers = [...state.eligibleUsers, ...users]; // Append users
-  state.hasMoreUsers = hasMore; // Update pagination state
-  state.eligibleUsersLoading= false;
-})
-.addCase(fetchEligibleUsers.rejected, (state, action) => {
-  // state.isFetching = false;
-  state.eligibleUsersLoading= false;
-  state.error = action.payload || "Failed to fetch eligible users";
-})
-      // **Fetch Social Updates**
+      .addCase(fetchEligibleUsers.pending, (state) => {
+        state.eligibleUsersLoading= true;
+      })
+      .addCase(fetchEligibleUsers.fulfilled, (state, action) => {
+        const { users = [], hasMore = false } = action.payload || {};
+        state.eligibleUsers = [...state.eligibleUsers, ...users];
+        state.hasMoreUsers = hasMore;
+        state.eligibleUsersLoading= false;
+      })
+      .addCase(fetchEligibleUsers.rejected, (state, action) => {
+        state.eligibleUsersLoading= false;
+        state.error = action.payload || "Failed to fetch eligible users";
+      })
       .addCase(fetchSocialUpdates.pending, (state) => {
-        state.loading = true;
+        console.log("fetchSocialUpdates pending");
+        state.socialUpdatesLoading = true;
       })
       .addCase(fetchSocialUpdates.fulfilled, (state, action) => {
-        state.loading = false;
-        state.updates = action.payload;
+        console.log("fetchSocialUpdates fulfilled");
+        const updates = action.payload;
+        if (Array.isArray(updates)) {
+          state.updates = updates;
+          console.log("updated state with social updates:", updates);
+        } else {
+          console.error("Expected an array for social updates but received:", updates);
+        }
+        state.socialUpdatesLoading = false;
       })
       .addCase(fetchSocialUpdates.rejected, (state, action) => {
-        state.loading = false;
+        console.log("fetchSocialUpdates rejected");
+        state.socialUpdatesLoading = false;
         state.error = action.payload || "Failed to fetch social updates";
       });
   },
