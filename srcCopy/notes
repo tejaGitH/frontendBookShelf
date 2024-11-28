@@ -1,0 +1,106 @@
+in thunks after axios.post return as respone.data.token
+in slice state.token
+
+
+
+AddBook
+BookCard
+Bookshelf
+ReviewForm
+BookDetails
+
+Page Designs and Components
+1. Landing Page
+Components:
+Welcome message
+Brief description of Bookshelf
+Call-to-action buttons for Login and Register
+Design Elements:
+Attractive background image related to books
+Simple navigation bar at the top
+2. Login Page
+Components:
+Email input field
+Password input field
+Login button
+Link to Register page
+Option for social login (e.g., Google, Facebook)
+Design Elements:
+Clear error messages for invalid login attempts
+Remember me checkbox
+3. Register Page
+Components:
+Username input field
+Email input field
+Password input field
+Confirm password input field
+Register button
+Design Elements:
+Validation messages for required fields
+Link to Login page
+4. Dashboard
+Components:
+Navigation menu (My Bookshelf, Best Sellers, Friend Updates)
+Currently Reading section with progress tracking
+Recently added books or reviews from friends
+Design Elements:
+Card layout for displaying currently reading books with progress bars
+5. My Bookshelf Page
+Components:
+Search bar to find books using Google Books API
+Table displaying added books with:
+Thumbnail cover image
+Title and author
+Average rating
+Rating meter and review text area (with edit/remove options)
+Design Elements:
+Responsive table layout for different screen sizes
+6. Best Sellers Page
+Components:
+List of best-selling books fetched from the API
+Design Elements:
+Grid layout with book covers and titles
+7. Book Details Page
+Components:
+Detailed view of the selected book including:
+Cover image, title, author, description, and ratings
+Review section with user reviews and a form to add a new review
+Design Elements:
+Tabbed interface for switching between details and reviews
+8. Friend Updates Page
+Components:
+List of recent activities by friends (reviews, ratings)
+Design Elements:
+Social cards displaying friend activities with options to comment or like
+9. Profile Page
+Components:
+User information (username, email)
+List of friends and pending friend requests
+Design Elements:
+Edit button for updating user information
+Additional Components
+Navigation Bar Component
+A reusable navigation component that appears on all authenticated pages.
+Links to Home, My Bookshelf, Best Sellers, Friend Updates, Profile, and Logout.
+Book Card Component
+A reusable component to display book information in a card format.
+Includes props for thumbnail image, title, author, average rating, and actions (add to bookshelf, rate).
+Review Component
+A reusable component to display individual reviews.
+Includes props for reviewer name, rating, review text, and timestamp.
+Styling Considerations
+Use a consistent color palette that reflects a cozy reading environment (e.g., warm tones).
+Ensure typography is legible and aesthetically pleasing.
+Implement responsive design principles to ensure usability on mobile devices.
+
+
+
+components created
+DashBoard(navigations, sections for currently reading, friend activities, pending requests)
+BookShelf allows to add books displays ther collection
+BestSellers best-selling
+Friend Updates recent activities of friends
+profile user info friends and pending requests
+Navbar 
+
+

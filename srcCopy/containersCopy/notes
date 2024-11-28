@@ -1,0 +1,36 @@
+Components Overview
+Common Components:
+NavBar: Navigation bar for the application.
+Bookshelf Components:
+AddBook: Form to add a new book to the user's bookshelf.
+BookCard: Displays individual book details (title, author, rating).
+MyBookshelf: Displays the user's collection of books.
+Reviews Components:
+ReviewForm: Form for users to submit reviews for books.
+Dashboard Components:
+Dashboard: Displays user activities, currently reading books, friend activities, and pending requests.
+Best Sellers Components:
+BestSellers: Lists best-selling books fetched from an API.
+Book Details Components:
+BookDetails: Shows detailed information about a specific book and its reviews.
+Friend Updates Components:
+FriendUpdates: Displays recent activities by friends.
+Profile Components:
+Profile: Displays user information and lists friends and pending requests.
+Containers:
+CombinedDataPage: Fetches and displays data for best sellers, user books, and friend updates in one view.
+LandingPage: The landing page with welcome messages and call-to-action buttons.
+LoginPage: The login form for users to authenticate.
+RegisterPage: The registration form for new users.
+Dashboard: A container that may also serve as a dashboard view if needed.
+Additional Components to Consider
+ErrorBoundary Component:
+A higher-order component that catches JavaScript errors in child components and displays a fallback UI instead of crashing the whole app.
+Loading Spinner Component:
+A reusable loading spinner that can be displayed while data is being fetched.
+Pagination Component:
+If you have lists that may grow large (like books or reviews), consider implementing pagination to improve performance and usability.
+Search Component:
+A search bar that allows users to filter through their bookshelf or best sellers.
+Settings Component:
+A page where users can update their profile information or preferences.

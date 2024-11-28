@@ -1,0 +1,16 @@
+.navbar {
+    display: flex;  
+    justify-content: space-between;  
+    align-items: center;  
+    background-color: #333; /* Dark background */
+ }
+ 
+ .nav-links li {
+    list-style-type: none;  
+ }
+ 
+ .nav-links a {
+    color: white;  
+    text-decoration: none;  
+    padding: 15px;  
+ }
