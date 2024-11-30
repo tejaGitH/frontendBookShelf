@@ -85,10 +85,11 @@ const friendshipSlice = createSlice({
         state.loading = true;
       })
       .addCase(removeFriend.fulfilled, (state, action) => {
-        state.loading = false;
-        state.friends = state.friends.filter(
-          (friend) => friend._id !== action.payload._id
-        );
+       const {friendshipId} = action.meta.arg;
+        // state.friends = state.friends.filter(
+        //   (friend) => friend._id !== action.payload._id
+        // );
+         state.friends = state.friends.filter(friend => friend._id !== friendshipId);
       })
       .addCase(removeFriend.rejected, (state, action) => {
         state.loading = false;

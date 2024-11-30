@@ -51,9 +51,11 @@ export const getFriends = createAsyncThunk(
     'friendships/removeFriend',
     async (friendshipId, { rejectWithValue }) => {
       try {
+        console.log("Removing friend with ID (action)", friendshipId);
         const response = await axiosInstance.delete(`friendships/friends/${friendshipId}`);
+             //console.log("remove friend", response.data);
         return response.data;
-        console.log("remove friend", response.data);
+        // console.log("remove friend", response.data);
       } catch (error) {
         return rejectWithValue(error.response?.data || 'Failed to remove friend');
       }

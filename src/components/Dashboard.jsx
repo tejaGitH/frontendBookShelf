@@ -10,7 +10,9 @@ import {
     getFriendUpdates,
     sendFriendRequest,
     fetchEligibleUsers,
-    fetchSocialUpdates
+    fetchSocialUpdates,
+    removeFriend,
+    getFriends,
 } from "../actions/friendshipActions";
 import { useNavigate } from "react-router-dom";
 import AddBook from "./AddBook";
@@ -96,6 +98,15 @@ const Dashboard = () => {
         });
     };
 
+    const handleRemoveFriend = (friendId) => { 
+    dispatch(removeFriend({ friendId }))
+    .then(() => {
+         dispatch(getFriends()); // Update friends list after removal 
+    }) 
+    .catch((error) => { 
+    console.error("Error removing friend:", error); 
+  });
+}
     const handlePageChange = ({ selected }) => {
         //if (selected < 0 || (!hasMoreUsers && selected > currentPage)) return; // Prevent invalid page changes
         const newOffset = selected * limit;
@@ -169,7 +180,7 @@ const Dashboard = () => {
                 <h2>Social Updates</h2>
                 <SocialUpdates updates={updates} />
             </div> */}
-            <div> <h2>Friendship Overview</h2> <FriendshipOverview /> </div>
+            <div> <h2>Friendship Overview</h2> <FriendshipOverview onRemoveFriend={handleRemoveFriend} /> </div>
 
             <EditBookModal
                 isVisible={isEditModalOpen}
