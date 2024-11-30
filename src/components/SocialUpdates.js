@@ -12,7 +12,7 @@ const SocialUpdates = () => {
             console.log("Dispatching fetchSocialUpdates...");
             dispatch(fetchSocialUpdates());
         }
-    }, [dispatch, loading, updates.length]);
+    }, [dispatch]);
 
     console.log("SocialUpdates Component Rendered", { updates, loading, error });
 

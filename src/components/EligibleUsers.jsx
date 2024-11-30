@@ -15,6 +15,7 @@ const EligibleUsers = ({
     return (
         <div>
             <h2>Our Community</h2>
+            {console.log("availab;eUsers",availableUsers)}
             <ul>
                 {availableUsers.map((user) => (
                     <li key={user._id}>
