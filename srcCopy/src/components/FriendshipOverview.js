@@ -4,24 +4,22 @@ import { getFriends, getPendingRequests } from '../actions/friendshipActions';
 import FriendsList from './FriendsList';
 import PendingRequests from './PendingRequests';
 
-const FriendshipOverview = ({ onRemoveFriend }) => {
+const FriendshipOverview = () => {
     const dispatch = useDispatch();
     const [view, setView] = useState('friends');
-    const [initialFetch, setInitialFetch] = useState(true);
 
     const {
         friends = [],
         pendingRequests = [],
         friendsLoading,
-        pendingRequestsLoading
+        pendingRequestsLoading,
     } = useSelector((state) => state.friendships);
 
     useEffect(() => {
-        if (view === 'friends' && initialFetch && friends.length === 0 && !friendsLoading) {
+        if (view === 'friends' && !friendsLoading && friends.length === 0) {
             dispatch(getFriends());
-            setInitialFetch(false);
         }
-    }, [view, initialFetch, dispatch, friendsLoading, friends.length]);
+    }, [view, dispatch, friendsLoading, friends.length]);
 
     useEffect(() => {
         if (view === 'pendingRequests' && !pendingRequestsLoading && pendingRequests.length === 0) {
@@ -36,13 +34,10 @@ const FriendshipOverview = ({ onRemoveFriend }) => {
                 <button onClick={() => setView('pendingRequests')} className={view === 'pendingRequests' ? 'active' : ''}>Pending Requests</button>
             </div>
 
-            {view === 'friends' && friendsLoading && <p>Loading friends...</p>}
-            {view === 'friends' && !friendsLoading && friends.length === 0 && <p>No friends to display.</p>}
-            {view === 'friends' && !friendsLoading && friends.length > 0 && <FriendsList friends={friends} onRemoveFriend={onRemoveFriend} />}
+            {view === 'friends' && !friendsLoading && <FriendsList friends={friends} />}
+            {view === 'pendingRequests' && !pendingRequestsLoading && <PendingRequests pendingRequests={pendingRequests} />}
 
-            {view === 'pendingRequests' && pendingRequestsLoading && <p>Loading pending requests...</p>}
-            {view === 'pendingRequests' && !pendingRequestsLoading && pendingRequests.length === 0 && <p>No pending requests to display.</p>}
-            {view === 'pendingRequests' && !pendingRequestsLoading && pendingRequests.length > 0 && <PendingRequests pendingRequests={pendingRequests} />}
+            {(friendsLoading || pendingRequestsLoading) && <p>Loading...</p>}
         </div>
     );
 };

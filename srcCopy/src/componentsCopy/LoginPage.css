@@ -1,0 +1,17 @@
+.login-page {
+    max-width: 400px;
+    margin: auto;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+input {
+    margin-bottom: 10px;
+}
+
+.social-login button {
+    margin-top: 10px;
+}

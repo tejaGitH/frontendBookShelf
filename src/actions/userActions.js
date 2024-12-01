@@ -18,7 +18,7 @@ export const login = createAsyncThunk('users/login', async ({ email, password },
            // If the response does not include the required token or user, reject the action
            return rejectWithValue("Invalid response format");
         }
-        console.log('token',token);
+        console.log('token user Action',token);
         console.log(JSON.stringify(user));
         // Store user data and token in localStorage
         localStorage.setItem('token', token);

@@ -1,0 +1,21 @@
+/* SocialUpdates.css */
+.social-updates {
+    padding: 20px;
+}
+
+.social-card {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.social-card h3 {
+    margin: 0;
+    font-size: 1.2em;
+}
+
+.social-card p {
+    margin: 5px 0;
+    color: #555;
+}

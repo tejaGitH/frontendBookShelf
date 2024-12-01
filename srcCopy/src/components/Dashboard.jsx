@@ -7,15 +7,19 @@ import {
 } from "../actions/bookActions";
 import { logout } from "../actions/userActions";
 import {
+    getFriendUpdates,
     sendFriendRequest,
     fetchEligibleUsers,
-    removeFriend, getFriends,
+    fetchSocialUpdates,
+    removeFriend,
+    getFriends,
 } from "../actions/friendshipActions";
 import { useNavigate } from "react-router-dom";
 import AddBook from "./AddBook";
 import EditBookModal from "./EditBookModal";
 import BookshelfTable from "./BookshelfTable";
 import EligibleUsers from "./EligibleUsers";
+import SocialUpdates from "./SocialUpdates";
 import FriendshipOverview from "./FriendshipOverview";
 import "./Dashboard.css";
 
@@ -26,16 +30,19 @@ const Dashboard = () => {
     const { userInfo } = useSelector((state) => state.users);
     const { books, loading: booksLoading, error: booksError } = useSelector((state) => state.books);
     const {
-        friendUpdates = [],
+        friendUpdates,
         friendUpdatesLoading,
         friendUpdatesError,
-        eligibleUsers = [],
+        eligibleUsers,
         eligibleUsersLoading,
         eligibleUsersError,
         totalUsers,
         hasMoreUsers,
         sendingRequest,
-        successMessage
+        successMessage,
+        updates,
+        socialUpdatesLoading,
+        error: socialUpdatesError
     } = useSelector((state) => state.friendships);
 
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -51,6 +58,8 @@ const Dashboard = () => {
             console.log("Fetching books and eligible users");
             dispatch(fetchBooks());
             dispatch(fetchEligibleUsers({ limit, offset: localOffset }));
+            dispatch(getFriendUpdates());
+            //dispatch(fetchSocialUpdates());
             setInitialLoad(false);
         }
     }, [dispatch, userInfo, localOffset, limit, initialLoad]);
@@ -81,8 +90,8 @@ const Dashboard = () => {
             return;
         }
         dispatch(sendFriendRequest({ userId: userInfo.id, friendId }))
-        .then(() => {
-            dispatch(fetchEligibleUsers({ limit, offset: localOffset }));
+        .then(()=>{
+            dispatch(fetchEligibleUsers({limit, offset: localOffset}))
         })
         .catch((error) => {
             console.error("Error sending friend request:", error);
@@ -90,16 +99,16 @@ const Dashboard = () => {
     };
 
     const handleRemoveFriend = (friendId) => { 
-        dispatch(removeFriend({ friendId }))
-        .then(() => {
-            dispatch(getFriends()); // Update friends list after removal 
-        }) 
-        .catch((error) => { 
-            console.error("Error removing friend:", error); 
-        });
-    };
-
+    dispatch(removeFriend({ friendId }))
+    .then(() => {
+         dispatch(getFriends()); // Update friends list after removal 
+    }) 
+    .catch((error) => { 
+    console.error("Error removing friend:", error); 
+  });
+}
     const handlePageChange = ({ selected }) => {
+        //if (selected < 0 || (!hasMoreUsers && selected > currentPage)) return; // Prevent invalid page changes
         const newOffset = selected * limit;
         setLocalOffset(newOffset);
         setCurrentPage(selected);
@@ -114,14 +123,14 @@ const Dashboard = () => {
 
     const pageCount = Math.ceil(totalUsers / limit);
 
-    if (booksLoading || friendUpdatesLoading || eligibleUsersLoading) {
+    if (booksLoading || friendUpdatesLoading || eligibleUsersLoading || socialUpdatesLoading) {
         console.log("Loading state detected");
         return <div>Loading...</div>;
     }
 
-    if (booksError || friendUpdatesError || eligibleUsersError) {
-        console.log("Error state detected", booksError, friendUpdatesError, eligibleUsersError);
-        return <div>Error: {booksError?.message || friendUpdatesError?.message || eligibleUsersError?.message}</div>;
+    if (booksError || friendUpdatesError || eligibleUsersError || socialUpdatesError) {
+        console.log("Error state detected", booksError, friendUpdatesError, eligibleUsersError, socialUpdatesError);
+        return <div>Error: {booksError?.message || friendUpdatesError?.message || eligibleUsersError?.message || socialUpdatesError?.message}</div>;
     }
 
     return (
@@ -152,29 +161,26 @@ const Dashboard = () => {
 
             <div>
                 <h2>People You May Know</h2>
-                {filteredEligibleUsers.length === 0 ? (
-                    <p>No available users to display.</p>
-                ) : (
-                    <EligibleUsers
-                        availableUsers={filteredEligibleUsers}
-                        handleSendFriendRequest={handleSendFriendRequest}
-                        sendingRequest={sendingRequest}
-                        totalUsers={totalUsers}
-                        currentPage={currentPage}
-                        onPageChange={handlePageChange}
-                    />
-                )}
+                <EligibleUsers
+                    availableUsers={filteredEligibleUsers}
+                    handleSendFriendRequest={handleSendFriendRequest}
+                    sendingRequest={sendingRequest}
+                    totalUsers={totalUsers}
+                    
+                    // currentPage={currentPage}
+                    // onPageChange={handlePageChange}
+                />
                 {successMessage && <div className="alert-success">{successMessage}</div>}
                 <div className="pagination-buttons"> 
-                    <button onClick={() => handlePageChange({ selected: currentPage - 1 })} disabled={currentPage === 0}>Previous</button>
-                    <button onClick={() => handlePageChange({ selected: currentPage + 1 })} disabled={!hasMoreUsers}>Next</button> 
-                </div>
+                    <button onClick={() => handlePageChange({selected: currentPage-1})} disabled={currentPage === 0}>Previous
+                    </button> <button onClick={() => handlePageChange({selected: currentPage + 1})} disabled={!hasMoreUsers}>Next</button> </div>
             </div>
 
-            <div>
-                <h2>Friendship Overview</h2>
-                <FriendshipOverview onRemoveFriend={handleRemoveFriend} />
-            </div>
+            {/* <div>
+                <h2>Social Updates</h2>
+                <SocialUpdates updates={updates} />
+            </div> */}
+            <div> <h2>Friendship Overview</h2> <FriendshipOverview onRemoveFriend={handleRemoveFriend} /> </div>
 
             <EditBookModal
                 isVisible={isEditModalOpen}
@@ -188,11 +194,6 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-
-
-
-
-
 // import React, { useEffect, useState } from "react";
 // import { useDispatch, useSelector } from "react-redux";
 // import {
