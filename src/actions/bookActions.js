@@ -69,11 +69,13 @@ export const fetchBooks = createApiAction(
 //   "books/updateReadingProgress",
 //   ({bookId, progress, comments},{rejectWithValue})=>axiosInstance.put(`/books/progress/${bookId}`,{progress,comments})
 // )
+
+
 export const fetchCurrentBooks = createAsyncThunk(
   'readingProgress/fetchCurrentBooks',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.get('books/readingBooks');
+      const response = await axiosInstance.get('books/currently-reading');
       console.log('Api Response:', response.data);
       return response.data || [];
     } catch (error) {
@@ -106,3 +108,28 @@ export const updateReadingProgress = createAsyncThunk(
     }
   }
 );
+
+export const markBookAsFinished = createAsyncThunk(
+  'readingProgress/markBookAsFinished',
+  async (bookId, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.put(`books/finish/${bookId}`);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || 'Failed to mark book as finished');
+    }
+  }
+);
+
+export const markBookAsCurrentlyReading = createAsyncThunk(
+  'readingProgress/markBookAsCurrentlyReading',
+  async (bookId, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.put(`books/mark-as-reading/${bookId}`);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || 'Failed to mark book as currently reading');
+    }
+  }
+);
+

@@ -7,6 +7,8 @@ import {
   deleteBook,
   fetchBestSellers,fetchBookDetails,searchBooks,
   fetchCurrentBooks,fetchReadingProgress,updateReadingProgress,
+  markBookAsFinished,
+  markBookAsCurrentlyReading,
 } from "../actions/bookActions";
 
 const initialState = {
@@ -121,26 +123,32 @@ const bookSlice = createSlice({
       })
       .addCase(fetchCurrentBooks.pending, (state) => {
         state.loading = true;
+        console.log("current Pending");
       })
       .addCase(fetchCurrentBooks.fulfilled, (state, action) => {
         state.loading = false;
         // Only update state if the data has changed
-        // if (JSON.stringify(state.currentlyReading) !== JSON.stringify(action.payload)) {
-        state.currentlyReading = action.payload || {};
+         if (JSON.stringify(state.currentlyReading) !== JSON.stringify(action.payload)) {
+        state.currentlyReading = action.payload || [];
+      }
       })
       .addCase(fetchCurrentBooks.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload || 'Failed to fetch currently reading books';
+        console.log("current rejected", state.error);
       })
       .addCase(fetchReadingProgress.pending, (state) => {
          state.loading = true;
+         
       }) 
       .addCase(fetchReadingProgress.fulfilled, (state, action) => {
          state.loading = false;
          state.readingProgress[action.payload.book._id] = action.payload; 
+         console.log("fetchCureentReducere",action.payload);
       }) 
       .addCase(fetchReadingProgress.rejected, (state, action) => {
-         state.loading = false; state.error = action.payload; 
+         state.loading = false; 
+         state.error = action.payload; 
       })
       .addCase(updateReadingProgress.pending, (state) => {
         state.loading = true;
@@ -157,6 +165,36 @@ const bookSlice = createSlice({
       .addCase(updateReadingProgress.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload || 'Failed to update reading progress';
+      })
+      .addCase(markBookAsFinished.pending,(state)=>{
+        state.loading= true;
+      })
+      .addCase(markBookAsFinished.fulfilled,(state,action)=>{
+        state.loading=false;
+        const {_id: bookId} = action.payload;
+        const bookIndex = state.currentlyReading.findIndex((book)=>book._id ===bookId);
+        if(bookIndex !== -1){
+          state.currentlyReading.splice(bookIndex, 1);
+        } 
+      })
+      .addCase(markBookAsFinished.rejected,(state,action)=>{
+        state.loading=false;
+        state.error = action.payload || 'failed to mark book as finished'
+      })
+      .addCase(markBookAsCurrentlyReading.pending,(state)=>{
+        state.loading= true;
+      })
+      .addCase(markBookAsCurrentlyReading.fulfilled,(state,action)=>{
+        state.loading=false;
+        const updatedBook = action.payload;
+        const existingBook = state.currentlyReading.find((book)=>book._id ===updatedBook._id);
+        if(!existingBook){
+          state.currentlyReading.push(updatedBook);
+        } 
+      })
+      .addCase(markBookAsCurrentlyReading.rejected,(state,action)=>{
+        state.loading=false;
+        state.error = action.payload || 'failed to mark book as currently reading'
       });
   },
 });
