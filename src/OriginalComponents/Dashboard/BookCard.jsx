@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchBooks, deleteBook, updateBook } from '../actions/bookActions';
-import { logout } from '../actions/userActions';
-import { fetchEligibleUsers, sendFriendRequest } from '../actions/friendshipActions';
+import { fetchBooks, deleteBook, updateBook } from '../../actions/bookActions';
+import { logout } from '../../actions/userActions';
+import { fetchEligibleUsers, sendFriendRequest } from '../../actions/friendshipActions';
 import { useNavigate } from 'react-router-dom';
 import AddBook from './AddBook';
 import BookshelfTable from './BookshelfTable';
-import EligibleUsers from './EligibleUsers';
+import EligibleUsers from '../EligibleUsers';
 import Pagination from 'react-paginate';
 import SocialUpdates from './SocialUpdates'; // Import the SocialUpdates component
-import './Dashboard.css'; // Import the CSS file for styling
+import '../../styles/Dashboard.css'; // Import the CSS file for styling
 
 const Dashboard = () => {
     const dispatch = useDispatch();

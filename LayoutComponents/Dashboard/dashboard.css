@@ -1,0 +1,52 @@
+/* components/Dashboard/dashboard.css */
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+  }
+  
+  .dashboard-content {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    width: 80%;
+    margin: 0 auto;
+  }
+  
+  .first-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .my-progress-container {
+    width: 65%;
+  }
+  
+  .search-container {
+    width: 35%;
+  }
+  
+  .second-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .friends-container {
+    width: 25%;
+  }
+  
+  .social-updates-container {
+    width: 75%;
+  }
+  
+  .third-row {
+    margin-top: 20px;
+  }
+  
+  .about-container {
+    width: 100%;
+  }
+  

@@ -1,0 +1,30 @@
+.books-list {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto; /* Enable scrolling */
+    padding: 5px 0;
+}
+
+.book-card {
+    width: 100%;
+    margin-bottom: 5px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 5px;
+    background-color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.book-card img {
+    width: 50px; /* Adjust size as needed */
+    height: auto;
+    border-radius: 8px;
+    margin-right: 10px;
+}
+
+.book-info p {
+    margin: 0;
+    font-size: 12px;
+}

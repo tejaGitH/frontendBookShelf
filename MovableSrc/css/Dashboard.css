@@ -1,0 +1,80 @@
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+}
+
+.first-row {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.second-row {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.my-progress {
+    width: 65%;
+}
+
+.search {
+    width: 35%;
+}
+
+.friends {
+    width: 20%;
+}
+
+.social-updates {
+    width: 80%;
+}
+
+.about {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-around;
+    background-color: #f4f4f4;
+    padding: 10px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+.navbar button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.navbar button:hover {
+    background-color: #0056b3;
+}
+
+.book-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.book-list div {
+    background-color: #f8f8f8;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.book-list div:hover {
+    background-color: #e0e0e0;
+}

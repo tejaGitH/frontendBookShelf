@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getFriends, getPendingRequests } from '../actions/friendshipActions';
-import FriendsList from './FriendsList';
-import PendingRequests from './PendingRequests';
+import { getFriends, getPendingRequests } from '../../actions/friendshipActions';
+import FriendsList from '../FriendsList';
+import PendingRequests from '../PendingRequests';
 
 const FriendshipOverview = ({ onRemoveFriend }) => {
     const dispatch = useDispatch();

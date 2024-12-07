@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchSocialUpdates } from '../actions/friendshipActions';
+import { fetchSocialUpdates } from '../../actions/friendshipActions';
 
 const SocialUpdates = () => {
     const dispatch = useDispatch();

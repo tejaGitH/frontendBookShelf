@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCurrentBooks, updateReadingProgress, markBookAsFinished } from '../actions/bookActions';
+import { fetchCurrentBooks, updateReadingProgress, markBookAsFinished } from '../../actions/bookActions';
 
 
 const CurrentlyReading = () => {

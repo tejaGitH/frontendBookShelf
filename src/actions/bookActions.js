@@ -71,6 +71,23 @@ export const fetchBooks = createApiAction(
 // )
 
 
+
+
+// Fetch Current Books
+// export const fetchCurrentBooks = createApiAction(
+//     "books/fetchCurrentBooks",
+//     () => axiosInstance.get("/books/currently-reading")
+// );
+
+// // Fetch Finished Books
+// export const fetchFinishedBooks = createApiAction(
+//     "books/fetchFinishedBooks",
+//     () => axiosInstance.get("/books/finished")
+// );
+
+
+
+
 export const fetchCurrentBooks = createAsyncThunk(
   'readingProgress/fetchCurrentBooks',
   async (_, { rejectWithValue }) => {
@@ -129,6 +146,18 @@ export const markBookAsCurrentlyReading = createAsyncThunk(
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || 'Failed to mark book as currently reading');
+    }
+  }
+);
+
+export const fetchFinishedBooks = createAsyncThunk(
+  'books/fetchFinishedBooks',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.get('books/finished');
+      return response.data || [];
+    } catch (error) {
+      return rejectWithValue(error.response?.data || 'Failed to fetch finished books');
     }
   }
 );

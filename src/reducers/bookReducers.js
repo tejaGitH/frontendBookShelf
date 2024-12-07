@@ -9,13 +9,16 @@ import {
   fetchCurrentBooks,fetchReadingProgress,updateReadingProgress,
   markBookAsFinished,
   markBookAsCurrentlyReading,
+  fetchFinishedBooks,
 } from "../actions/bookActions";
+import { act } from "react";
 
 const initialState = {
   books: [],
   bestSellers: [],
   searchResults: [],
   currentlyReading:[],
+  finishedBooks: [],
   selectedBook: null,
   readingProgress:{},
   loading: false,
@@ -128,9 +131,13 @@ const bookSlice = createSlice({
       .addCase(fetchCurrentBooks.fulfilled, (state, action) => {
         state.loading = false;
         // Only update state if the data has changed
-         if (JSON.stringify(state.currentlyReading) !== JSON.stringify(action.payload)) {
-        state.currentlyReading = action.payload || [];
-      }
+        //  if (JSON.stringify(state.currentlyReading) !== JSON.stringify(action.payload)) {
+      // state.currentlyReading = action.payload || [];
+        //state.books= action.payload;
+       state.currentlyReading = action.payload.filter((book)=> book.currentlyReading)
+      // state.currentlyReading = action.payload.filter(book=> book.status === 'currentlyReading')
+       console.log('Currently Reading Books loaded into state:', state.currentlyReading)
+     // }
       })
       .addCase(fetchCurrentBooks.rejected, (state, action) => {
         state.loading = false;
@@ -195,7 +202,19 @@ const bookSlice = createSlice({
       .addCase(markBookAsCurrentlyReading.rejected,(state,action)=>{
         state.loading=false;
         state.error = action.payload || 'failed to mark book as currently reading'
-      });
+      })
+      .addCase(fetchFinishedBooks.pending,(state)=>{
+        state.loading = true;
+        state.error= null;
+      })
+      .addCase(fetchFinishedBooks.fulfilled,(state,action)=>{
+        state.loading = false;
+        state.finishedBooks = action.payload;
+      })
+      .addCase(fetchFinishedBooks.rejected,(state,action)=>{
+        state.loading= false;
+        state.error=action.payload;
+      })
   },
 });
 

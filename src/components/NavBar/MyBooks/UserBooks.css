@@ -1,0 +1,47 @@
+.user-books {
+    padding: 5px; /* Reduced padding */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    height: 300px; /* Adjusted height to fit in new layout */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.books-list {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    max-height: calc(100% - 30px); /* Adjusted height */
+    padding: 5px 0;
+}
+
+h3 {
+    margin: 0; /* Reduced margin */
+    font-size: 16px; /* Adjusted font size */
+}
+
+.book-card {
+    width: 100%;
+    margin-bottom: 5px; /* Reduced margin */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 5px; /* Reduced padding */
+    background-color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.book-card img {
+    width: 50px; /* Smaller size */
+    height: auto;
+    border-radius: 8px;
+    margin-right: 10px;
+}
+
+.book-info p {
+    margin: 0;
+    font-size: 12px;
+}

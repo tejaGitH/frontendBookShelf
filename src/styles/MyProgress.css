@@ -1,0 +1,77 @@
+.my-progress {
+    margin: 20px 0;
+    height: 100%; /* Ensure MyProgress takes the full height of its container */
+}
+
+.sections {
+    display: flex;
+    width: 100%;
+    height: 100%; /* Ensure the sections take the full height of MyProgress */
+}
+
+.ongoing-books-section,
+.finished-books-section {
+    margin-right: 10px;
+    overflow-y: auto; /* Enable vertical scrolling */
+}
+
+.book-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.single-row {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.book-title, .book-author, .book-progress, .book-review, .book-rating {
+    display: flex;
+    align-items: center;
+}
+
+.book-title p,
+.book-author p,
+.book-progress p {
+    margin: 0;
+    font-size: 14px;
+}
+
+.book-review p {
+    margin: 0;
+    font-size: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.book-rating .rating {
+    display: flex;
+}
+
+.book-rating .star {
+    color: #ccc;
+}
+
+.book-rating .star.filled {
+    color: #ffd700;
+}
+
+.mark-finished-button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.mark-finished-button:hover {
+    background-color: #218838;
+}

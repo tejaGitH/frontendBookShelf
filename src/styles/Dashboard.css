@@ -1,0 +1,59 @@
+.dashboard {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden; /* Ensure no overflow issues */
+  }
+  
+  .content-container {
+    width: 85%;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    height: 100vh; /* Ensure it fills the height of the viewport */
+    box-sizing: border-box; /* Include padding and border in the height and width */
+  }
+  
+  .navbar-container {
+    width: 15%;
+    background-color: #f4f4f4;
+    padding: 10px;
+    overflow-y: auto; /* Ensure the navbar is scrollable if content overflows */
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .first-row,
+  .second-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    flex-grow: 1; /* Ensure rows take up available space */
+  }
+  
+  .box {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 10px;
+    flex-grow: 1;
+  }
+  
+  .my-progress-container {
+    width: 65%;
+  }
+  
+  .search-container {
+    width: 35%;
+  }
+  
+  .friends-container {
+    width: 25%;
+  }
+  
+  .social-updates-container {
+    width: 75%;
+  }
+  

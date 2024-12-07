@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { markBookAsCurrentlyReading, fetchCurrentBooks } from "../actions/bookActions";
+import { markBookAsCurrentlyReading, fetchCurrentBooks } from "../../actions/bookActions";
 
 const BookshelfTable = ({ books = [], onEdit, onDelete }) => {
     const dispatch = useDispatch();
