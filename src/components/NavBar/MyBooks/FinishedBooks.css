@@ -10,7 +10,7 @@
     margin-bottom: 5px;
     border: 1px solid #ddd;
     border-radius: 8px;
-
+    padding: 5px;
     background-color: #fff;
     cursor: pointer;
     display: flex;

@@ -8,7 +8,8 @@ export const sendFriendRequest = createAsyncThunk(
     async ({ userId, friendId }, { rejectWithValue }) => {
         try {
             const response = await axiosInstance.post('/friendships/friend-requests', { userId, friendId });
-            //console.log("Friend request POST response:", response);  // Log response
+            console.log("Friend request POST response:", response);
+            console.log("Friend request POST response:", userId,friendId);   // Log response
             return response.data;
             //  return { friendId, message: response.data.message };
         } catch (error) {
