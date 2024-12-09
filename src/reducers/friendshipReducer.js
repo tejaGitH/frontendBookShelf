@@ -9,6 +9,7 @@ import {
   fetchEligibleUsers,
   fetchSocialUpdates,
 } from "../actions/friendshipActions";
+import SocialUpdates from "../components/NavBar/SocialUpdates/SocialUpdates";
 
 const initialState = {
   friends: [],
@@ -16,6 +17,7 @@ const initialState = {
   friendUpdates: [],
   eligibleUsers: [],
   updates: [],
+  socialUpdates: [],
   sendingRequest: false,
   hasMoreUsers: true,
   hasMore: true,
@@ -136,27 +138,65 @@ const friendshipSlice = createSlice({
         state.eligibleUsersLoading= false;
         state.error = action.payload || "Failed to fetch eligible users";
       })
-      .addCase(fetchSocialUpdates.pending, (state) => {
-        console.log("fetchSocialUpdates pending");
-        state.socialUpdatesLoading = true;
+    //   .addCase(fetchSocialUpdates.pending, (state) => {
+    //     console.log("fetchSocialUpdates pending");
+    //     state.socialUpdatesLoading = true;
+    //   })
+    //   .addCase(fetchSocialUpdates.fulfilled, (state, action) => { state.socialUpdates = action.payload; })
+    //   // .addCase(fetchSocialUpdates.fulfilled, (state, action) => {
+    //   //   console.log("fetchSocialUpdates fulfilled");
+    //   //   const updates = action.payload;
+    //   //   if (Array.isArray(updates)) {
+    //   //     state.updates = updates;
+    //   //     console.log("updated state with social updates:", updates);
+    //   //   } else {
+    //   //     console.error("Expected an array for social updates but received:", updates);
+    //   //     state.error= "unexpectexpectec response format"
+    //   //   }
+    //   //   state.socialUpdatesLoading = false;
+    //   // })
+    //   .addCase(fetchSocialUpdates.rejected, (state, action) => {
+    //     console.log("fetchSocialUpdates rejected");
+    //     state.socialUpdatesLoading = false;
+    //     state.error = action.payload || "Failed to fetch social updates";
+    //   });
+    // //   .addCase(fetchSocialUpdates.pending, (state) => {
+    // //     state.loading = true;
+    // // });
+    // // .addCase(fetchSocialUpdates.fulfilled, (state, action) => {
+    // //     state.loading = false;
+    // //     state.socialUpdates = action.payload;
+    // // })
+    // // .addCase(fetchSocialUpdates.rejected, (state, action) => {
+    // //     state.loading = false;
+    // //     state.error = action.payload;
+    // // })
+        // Fetch Social Updates
+        .addCase(fetchSocialUpdates.pending, (state) => {
+          state.socialUpdatesLoading = true;
       })
       .addCase(fetchSocialUpdates.fulfilled, (state, action) => {
-        console.log("fetchSocialUpdates fulfilled");
-        const updates = action.payload;
-        if (Array.isArray(updates)) {
-          state.updates = updates;
-          console.log("updated state with social updates:", updates);
-        } else {
-          console.error("Expected an array for social updates but received:", updates);
-        }
-        state.socialUpdatesLoading = false;
+          state.socialUpdatesLoading = false;
+          if (Array.isArray(action.payload)) {
+              state.socialUpdates = action.payload;
+          } else {
+              state.error = "Unexpected response format";
+          }
       })
       .addCase(fetchSocialUpdates.rejected, (state, action) => {
-        console.log("fetchSocialUpdates rejected");
-        state.socialUpdatesLoading = false;
-        state.error = action.payload || "Failed to fetch social updates";
+          state.socialUpdatesLoading = false;
+          state.error = action.payload || "Failed to fetch social updates";
       });
+
+
   },
 });
 
 export default friendshipSlice.reducer;
+
+
+
+
+
+
+          

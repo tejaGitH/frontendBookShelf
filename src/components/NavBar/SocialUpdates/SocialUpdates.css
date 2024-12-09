@@ -1,0 +1,134 @@
+.social-updates {
+    margin: 0 auto;
+    max-width: 600px;
+    padding: 10px;
+}
+
+.updates-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.update-item {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.update-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px; /* Reduced padding */
+}
+
+.profile-img-small {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.username {
+    font-weight: bold;
+    margin: 0;
+}
+
+.timestamp {
+    font-size: 0.8rem;
+    color: #555;
+    margin: 0; /* Reduced margin */
+}
+
+.update-content {
+    display: flex;
+    gap: 10px;
+}
+
+.book-img-small {
+    width: 100px;
+    height: auto;
+    border-radius: 4px;
+}
+
+.review-content {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex: 1; /* Ensure it takes up remaining space */
+}
+
+.rating-stars {
+    color: #FFD700;
+}
+
+.update-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+}
+
+.like-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #555;
+}
+
+.comment-box {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-grow: 1; /* Stretch comments box */
+}
+
+.comment-box input {
+    flex: 1;
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.comment-box button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #007BFF;
+    font-size: 1rem;
+}
+
+.recent-comments {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+}
+
+.comment {
+    display: flex;
+    justify-content: space-between; /* Align comment and read more in one line */
+    align-items: center;
+}
+
+.read-more-comments {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #007BFF;
+    font-size: 0.9rem;
+    text-align: left;
+    padding: 0;
+}

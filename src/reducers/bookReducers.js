@@ -10,6 +10,8 @@ import {
   markBookAsFinished,
   markBookAsCurrentlyReading,
   fetchFinishedBooks,
+  fetchFriendsBooks,
+  addFriendBookToUser,
 } from "../actions/bookActions";
 import { act } from "react";
 
@@ -17,6 +19,8 @@ const initialState = {
   books: [],
   bestSellers: [],
   searchResults: [],
+  userBooks:[],
+  friendsBooks: [],
   currentlyReading:[],
   finishedBooks: [],
   selectedBook: null,
@@ -38,11 +42,12 @@ const bookSlice = createSlice({
       .addCase(fetchBooks.pending, (state) => {
         state.loading = true;
       })
-      .addCase(fetchBooks.fulfilled, (state, action) => {
-        state.loading = false;
-        state.books = action.payload;
-        console.log('Books loaded into state:', action.payload); 
-      })
+      // .addCase(fetchBooks.fulfilled, (state, action) => {
+      //   state.loading = false;
+      //   state.books = action.payload;
+      //   console.log('Books loaded into state:', action.payload); 
+      // })
+      .addCase(fetchBooks.fulfilled, (state, action) => { state.loading = false; state.friendsBooks = action.payload.friendsBooks || []; state.userBooks = action.payload.userBooks || []; })
       .addCase(fetchBooks.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
@@ -215,7 +220,32 @@ const bookSlice = createSlice({
         state.loading= false;
         state.error=action.payload;
       })
+      .addCase(fetchFriendsBooks.pending, (state) => {
+        state.loading = true;
+    })
+    .addCase(fetchFriendsBooks.fulfilled, (state, action) => {
+        state.loading = false;
+        state.friendsBooks = action.payload;
+        console.log("friendsBooks",action.payload);
+    })
+    .addCase(fetchFriendsBooks.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+    })
+    .addCase(addFriendBookToUser.fulfilled, (state, action) => {
+      console.log("addfriendsBooks",action.payload);
+       if (action.payload) { 
+        state.userBooks.push({...action.payload, isFriendBook: true}); 
+      } 
+    });
   },
 });
 
 export default bookSlice.reducer;
+
+
+
+      
+           
+
+

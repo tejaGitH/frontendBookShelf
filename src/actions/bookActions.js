@@ -162,3 +162,35 @@ export const fetchFinishedBooks = createAsyncThunk(
   }
 );
 
+
+export const fetchFriendsBooks = createAsyncThunk(
+    'friendships/fetchFriendsBooks',
+    async (_, { rejectWithValue }) => {
+        try {
+            const response = await axiosInstance.get('/books/friends-books');
+            if (Array.isArray(response.data)) {
+                return response.data;
+            } else {
+                return rejectWithValue("Unexpected response format");
+            }
+        } catch (error) {
+            return rejectWithValue(error.response?.data || 'Failed to fetch friends books');
+        }
+    }
+);
+
+
+
+
+export const addFriendBookToUser = createAsyncThunk(
+    "books/addFriendBookToUser",
+    async (bookId, { rejectWithValue }) => {
+        try {
+            const response = await axiosInstance.post(`/books/friends-books/${bookId}/add`);
+            return response.data;
+        } catch (error) {
+            return rejectWithValue(error.response?.data || 'Failed to add friend\'s book');
+        }
+    }
+);
+
