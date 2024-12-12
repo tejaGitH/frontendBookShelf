@@ -38,13 +38,13 @@ const SocialUpdates = () => {
                     socialUpdates.length === 0 ? (
                         <p>No social updates available.</p>
                     ) : (
-                        socialUpdates.map((update) => (
-                            <div key={update._id} className="update-item">
+                        socialUpdates.map((update, index) => (
+                            <div key={update._id || index} className="update-item">
                                 <div className="update-header">
                                     <img src="https://via.placeholder.com/40" alt={update.user?.username || 'User'} className="profile-img-small" />
                                     <div className="user-info">
                                         <p className="username">{update.user?.username}</p>
-                                        <p className="timestamp">Just now</p>
+                                        <p className="timestamp">{new Date(update.createdAt).toLocaleString()}</p>
                                     </div>
                                 </div>
                                 <div className="update-content">
@@ -84,19 +84,19 @@ const SocialUpdates = () => {
                                 </div>
                                 <div className="recent-comments">
                                     {update.comments.slice(0, 1).map((comment, index) => (
-                                        <div key={index} className="comment">
+                                        <p key={index} className="comment">
                                             <strong>{comment.user?.username}:</strong> {comment.comment}
-                                        </div>
+                                            {update.comments.length > 1 && (
+                                                <button className="read-more-comments">Read more comments</button>
+                                            )}
+                                        </p>
                                     ))}
-                                    {update.comments.length > 1 && (
-                                        <button className="read-more-comments">Read more comments</button>
-                                    )}
                                 </div>
                             </div>
-                        ))
+                        )).reverse() // Reverse the updates to show the newest on top
                     )
                 )}
-                {error && <p className="error">{error.message}</p>} {/* Render error.message if error is an object */}
+                {error && <p className="error">{error}</p>}
             </div>
         </div>
     );

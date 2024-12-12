@@ -1,13 +1,11 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import NavBar from '../NavBar';
-import { fetchSocialUpdates  } from '../../../actions/friendshipActions';
-import {fetchFriendsBooks, fetchBooks} from '../../../actions/bookActions'
+import { fetchSocialUpdates } from '../../../actions/friendshipActions';
+import { fetchFriendsBooks } from '../../../actions/bookActions';
 import SocialUpdates from './SocialUpdates';
 import Books from './Books';
 import './SocialUpdatesPage.css';
-
-
 
 const SocialUpdatesPage = () => {
     const dispatch = useDispatch();
@@ -15,7 +13,6 @@ const SocialUpdatesPage = () => {
     useEffect(() => {
         dispatch(fetchSocialUpdates());
         dispatch(fetchFriendsBooks());
-        dispatch(fetchBooks());
     }, [dispatch]);
 
     return (

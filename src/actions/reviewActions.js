@@ -17,20 +17,36 @@ import { fetchSocialUpdates } from './friendshipActions';
 
 
 
+// export const addReview = createAsyncThunk(
+//   'reviews/addReview',
+//   async ({ bookId, reviewData }, { dispatch, rejectWithValue }) => {
+//     try {
+//       const response = await axiosInstance.post(`/reviews/${bookId}/reviews`, reviewData);
+//       if (response.data && response.data.updates) {
+//           dispatch(fetchSocialUpdates(response.data.updates)); // Fetch social updates after adding a review
+//       }
+//       return response.data;
+//     } catch (error) {
+//       return rejectWithValue(error.response?.data || 'Failed to add review');
+//     }
+//   }
+// );
+
+
+// Add a review for a book
 export const addReview = createAsyncThunk(
   'reviews/addReview',
   async ({ bookId, reviewData }, { dispatch, rejectWithValue }) => {
     try {
       const response = await axiosInstance.post(`/reviews/${bookId}/reviews`, reviewData);
-      if (response.data && response.data.updates) {
-          dispatch(fetchSocialUpdates(response.data.updates)); // Fetch social updates after adding a review
-      }
+      await dispatch(fetchSocialUpdates()); // Fetch social updates after adding a review
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || 'Failed to add review');
     }
   }
 );
+
 
 // Other actions remain unchanged
 

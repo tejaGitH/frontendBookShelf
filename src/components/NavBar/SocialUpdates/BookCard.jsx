@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addReview } from '../../../actions/reviewActions';
+import { fetchSocialUpdates } from '../../../actions/friendshipActions';
 import './BookCard.css';
 
 const BookCard = ({ book, handleClose }) => {
@@ -22,6 +23,7 @@ const BookCard = ({ book, handleClose }) => {
         const reviewData = { rating, review };
         dispatch(addReview({ bookId: book._id, reviewData })).then(() => {
             alert('Post added successfully.');
+            dispatch(fetchSocialUpdates()); // Update social updates after adding review
             handleClose();
         });
     };
@@ -29,7 +31,7 @@ const BookCard = ({ book, handleClose }) => {
     return (
         <div className="book-card">
             <button className="close-button" onClick={handleClose}>X</button>
-            <img src="https://via.placeholder.com/200x250" alt={book.title} className="book-card-img" />
+            <img src="https://via.placeholder.com/150x200" alt={book.title} className="book-card-img" />
             <div className="book-card-info">
                 <h3>{book.title}</h3>
                 <p>by {book.author}</p>
