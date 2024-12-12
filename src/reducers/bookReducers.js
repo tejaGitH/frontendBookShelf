@@ -47,7 +47,13 @@ const bookSlice = createSlice({
       //   state.books = action.payload;
       //   console.log('Books loaded into state:', action.payload); 
       // })
-      .addCase(fetchBooks.fulfilled, (state, action) => { state.loading = false; state.friendsBooks = action.payload.friendsBooks || []; state.userBooks = action.payload.userBooks || []; })
+      .addCase(fetchBooks.fulfilled, (state, action) => {
+        state.loading = false; 
+        state.friendsBooks = action.payload.friendsBooks || [];
+        console.log('fetchBooksReducer',action.payload);
+        console.log('fetchuserBooksReducer',action.payload.userBooks);
+        console.log('fetchFriendsBooksReducer',action.payload.friendsBooks);
+        state.userBooks = action.payload.userBooks || []; })
       .addCase(fetchBooks.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
@@ -60,6 +66,7 @@ const bookSlice = createSlice({
         console.log('Add Book Fulfilled Payload:', action.payload);
         if (action.payload) {
           state.books.push(action.payload);
+          state.userBooks = [action.payload, ...state.userBooks]; // Add new book to the top
           // state.books.push({
           //   _id: action.payload.bookId,
           //   ...action.meta.arg //use input data from the actions mets

@@ -1,0 +1,29 @@
+.current-books {
+    margin: 20px 0;
+}
+
+.books-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.book-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.book-img {
+    width: 50px;
+    height: auto;
+}
+
+.book-info {
+    display: flex;
+    flex-direction: column;
+}

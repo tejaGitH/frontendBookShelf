@@ -3,7 +3,11 @@
     flex-direction: column;
     overflow-y: auto; /* Enable scrolling */
     padding: 5px 0;
-}
+    height: calc(50vh - 200px); /* Adjust the height as needed */
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
 
 .book-card {
     width: 100%;

@@ -1,52 +1,80 @@
-/* components/Dashboard/dashboard.css */
 .dashboard {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    width: 100vw;
-  }
-  
-  .dashboard-content {
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-    width: 80%;
-    margin: 0 auto;
-  }
-  
-  .first-row {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-  }
-  
-  .my-progress-container {
-    width: 65%;
-  }
-  
-  .search-container {
-    width: 35%;
-  }
-  
-  .second-row {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-  }
-  
-  .friends-container {
-    width: 25%;
-  }
-  
-  .social-updates-container {
-    width: 75%;
-  }
-  
-  .third-row {
-    margin-top: 20px;
-  }
-  
-  .about-container {
-    width: 100%;
-  }
-  
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden; /* Ensure no overflow issues */
+}
+
+.dashboard .content-container {
+  display: flex;
+  flex-direction: column;
+  width: 85%;
+  padding: 10px;
+  height: 100vh; /* Ensure it fills the height of the viewport */
+  box-sizing: border-box; /* Include padding and border in the height and width */
+}
+
+.dashboard .navbar-container {
+  width: 15%;
+  background-color: #f4f4f4;
+  padding: 10px;
+  overflow-y: auto; /* Ensure the navbar is scrollable if content overflows */
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard .first-row,
+.dashboard .second-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  flex-grow: 1; /* Ensure rows take up available space */
+}
+
+.dashboard .progress-container {
+  width: 65%;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin: 10px;
+  overflow-y: auto;
+  flex-grow: 1;
+}
+
+.dashboard .search-box {
+  width: 35%;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin: 10px;
+  overflow-y: auto;
+  flex-grow: 1;
+}
+
+.dashboard .friends-box {
+  width: 25%;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin: 10px;
+  overflow-y: auto;
+  flex-grow: 1;
+}
+
+.dashboard .updates-box {
+  width: 75%;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin: 10px;
+  overflow-y: auto;
+  flex-grow: 1;
+}

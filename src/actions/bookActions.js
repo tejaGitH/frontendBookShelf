@@ -17,10 +17,25 @@ export const searchBooks = createApiAction(
     (query)=> axiosInstance.get(`/books/search/${query}`)
 )
 
-export const fetchBooks = createApiAction(
-    "books/fetchUserBooks",
-    () => axiosInstance.get("/books/user-books")
-  );
+// export const fetchBooks = createApiAction(
+//     "books/fetchUserBooks",
+//     () => axiosInstance.get("/books/user-books")
+//   );
+
+
+export const fetchBooks = createAsyncThunk(
+    "books/fetchBooks",
+    async () => {
+        const response = await axiosInstance.get("/books/user-books");
+        // Assuming the API returns an array of books
+        const userBooks = response.data.filter(book => !book.isFriendBook);
+        const friendsBooks = response.data.filter(book => book.isFriendBook);
+        return { userBooks, friendsBooks };
+    }
+);
+
+// Other action creators...
+
   
   export const fetchBookById = createApiAction(
     "books/fetchBookById",
