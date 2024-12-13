@@ -1,0 +1,76 @@
+.dashboard-add-book {
+    background-color: #fafafa;
+    padding: 5px 10px 8px 10px; /* Reduced top padding to bring closer to the top */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 450px;
+    margin: 0 auto 30px auto; /* Removed top margin to reduce gap */
+}
+
+.dashboard-add-book h3 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.add-book-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.input-field,
+.textarea-field {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background-color: #fff;
+    width: 100%;
+}
+
+.input-field:focus,
+.textarea-field:focus {
+    outline: none;
+    border-color: #5c8dff;
+}
+
+.textarea-field {
+    height: 100px;
+    resize: none;
+}
+
+.submit-btn {
+    background-color: #5c8dff;
+    color: white;
+    padding: 8px 12px;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.submit-btn:hover {
+    background-color: #4a7bd2;
+}
+
+.submit-btn:active {
+    background-color: #3967a3;
+}
+
+@media (max-width: 768px) {
+    .dashboard-add-book {
+        padding: 15px;
+        margin: 20px;
+    }
+
+    .dashboard-add-book h3 {
+        font-size: 20px;
+    }
+
+    .submit-btn {
+        font-size: 14px;
+    }
+}

@@ -1,34 +1,40 @@
 import React from 'react';
 import NavBar from '../NavBar/NavBar';
 import MyProgress from './MyProgress/MyProgress';
-import Friends from './Friends/Friends';
-import SocialUpdates from './SocialUpdates/SocialUpdates';
-import Search from './Search/Search';
+import DashBoardFriendList from './DashBoardFriendList/DashBoardFriendList';
+import DashBoardSocialUpdates from './DashBoardSocialUpdates/DashBoardSocialUpdates.jsx';
+import Profile from './Profile/Profile';
+import DashBoardAddBook from './DashBoardAddBook/DashBoardAddBook.jsx';
 import './Dashboard.css';
 
 const Dashboard = () => {
+    const handleBookSelect = (book) => {
+        console.log('Selected book:', book);
+        // Add your logic here to handle book selection
+    };
+
     return (
         <div className="dashboard">
+            <div className="navbar-container">
+                <NavBar />
+            </div>
             <div className="content-container">
                 <div className="first-row">
                     <div className="progress-container">
-                        <MyProgress />
+                        <MyProgress onSelectBook={handleBookSelect} />
                     </div>
-                    <div className="search-box">
-                        <Search />
+                    <div className="profile-box">
+                        <DashBoardAddBook />
                     </div>
                 </div>
                 <div className="second-row">
                     <div className="friends-box">
-                        <Friends />
+                        <DashBoardFriendList />
                     </div>
                     <div className="updates-box">
-                        <SocialUpdates />
+                        <DashBoardSocialUpdates />
                     </div>
                 </div>
-            </div>
-            <div className="navbar-container">
-                <NavBar />
             </div>
         </div>
     );

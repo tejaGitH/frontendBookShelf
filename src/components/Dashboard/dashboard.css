@@ -2,60 +2,54 @@
   display: flex;
   height: 100vh;
   width: 100vw;
-  overflow: hidden; /* Ensure no overflow issues */
+  overflow: hidden;
 }
 
 .dashboard .content-container {
   display: flex;
   flex-direction: column;
-  width: 85%;
+  width: 80%;
   padding: 10px;
-  height: 100vh; /* Ensure it fills the height of the viewport */
-  box-sizing: border-box; /* Include padding and border in the height and width */
+  height: 100vh;
+  box-sizing: border-box;
 }
 
 .dashboard .navbar-container {
-  width: 15%;
-  background-color: #f4f4f4;
+  width: 20%;
+  background-color: #ffef00; /* Canary Yellow */
   padding: 10px;
-  overflow-y: auto; /* Ensure the navbar is scrollable if content overflows */
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100vh;
+}
+
+.dashboard .first-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  flex-grow: 1;
+  height: 45%;
+}
+
+.dashboard .progress-container {
+  width: 55%;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin: 10px;
+  overflow-y: auto;
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
 }
 
-.dashboard .first-row,
-.dashboard .second-row {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
-  flex-grow: 1; /* Ensure rows take up available space */
-}
-
-.dashboard .progress-container {
-  width: 65%;
-  background-color: #ffffff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  margin: 10px;
-  overflow-y: auto;
-  flex-grow: 1;
-}
-
-.dashboard .search-box {
-  width: 35%;
-  background-color: #ffffff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  margin: 10px;
-  overflow-y: auto;
-  flex-grow: 1;
-}
-
-.dashboard .friends-box {
+.dashboard .profile-box {
   width: 25%;
   background-color: #ffffff;
   border: 1px solid #ddd;
@@ -67,8 +61,16 @@
   flex-grow: 1;
 }
 
-.dashboard .updates-box {
-  width: 75%;
+.dashboard .second-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  flex-grow: 1;
+  height: 65%;
+}
+
+.dashboard .friends-box {
+  width: 40%;
   background-color: #ffffff;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -77,4 +79,17 @@
   margin: 10px;
   overflow-y: auto;
   flex-grow: 1;
+}
+
+.dashboard .updates-box {
+  width: 60%;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin: 10px;
+  overflow-y: auto;
+  flex-grow: 1;
+  position: center ;
 }

@@ -1,0 +1,37 @@
+.current-books-section {
+  height: 100%;
+}
+
+.current-books-list {
+  display: flex;
+  flex-direction: column; /* Arrange book cards in a column */
+  overflow-y: auto;
+  padding: 5px;
+  height: 100%;
+}
+
+.current-book-card {
+  display: flex; /* Align image and text in a row */
+  align-items: flex-start;
+  padding: 10px;
+  border: 1px solid #007bff; /* Border color for Current Books */
+  border-radius: 8px;
+  background-color: #e7f3ff; /* Light blue background for Current Books */
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.current-book-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.current-book-info {
+  margin-left: 10px; /* Space between image and book info */
+}
+
+.current-book-info p {
+  margin: 2px 0;
+  font-size: 14px;
+}

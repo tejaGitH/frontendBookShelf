@@ -1,0 +1,48 @@
+.dashboard-profile {
+    margin: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+  }
+  
+  .profile-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    justify-content: space-between;
+  }
+  
+  .profile-img-container {
+    flex-shrink: 0;
+  }
+  
+  .profile-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ddd;
+  }
+  
+  .profile-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .profile-info h2 {
+    margin: 0;
+    font-size: 22px;
+    color: #333;
+  }
+  
+  .profile-info p {
+    font-size: 16px;
+    color: #555;
+  }
+  
+  .error {
+    color: red;
+    font-size: 16px;
+    font-weight: bold;
+  }

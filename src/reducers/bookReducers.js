@@ -131,15 +131,11 @@ const bookSlice = createSlice({
       })
       .addCase(fetchCurrentBooks.fulfilled, (state, action) => {
         state.loading = false;
-        // Only update state if the data has changed
-        //  if (JSON.stringify(state.currentlyReading) !== JSON.stringify(action.payload)) {
-      // state.currentlyReading = action.payload || [];
-        //state.books= action.payload;
-       state.currentlyReading = action.payload.filter((book)=> book.currentlyReading)
-      // state.currentlyReading = action.payload.filter(book=> book.status === 'currentlyReading')
-       console.log('Currently Reading Books loaded into state:', state.currentlyReading)
-     // }
-      })
+        console.log("Payload for currently reading books:", action.payload);
+    
+        state.currentlyReading = action.payload?.filter((book) => book.currentlyReading) || [];
+        console.log("Filtered currently reading books:", state.currentlyReading);
+    })
       .addCase(fetchCurrentBooks.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload || 'Failed to fetch currently reading books';
@@ -225,6 +221,7 @@ const bookSlice = createSlice({
       })
       .addCase(fetchFinishedBooks.fulfilled,(state,action)=>{
         state.loading = false;
+        console.log("finishedbooksReducer",action.payload);
         state.finishedBooks = action.payload;
       })
       .addCase(fetchFinishedBooks.rejected,(state,action)=>{

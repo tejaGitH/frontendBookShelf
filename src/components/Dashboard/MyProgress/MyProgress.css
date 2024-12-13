@@ -1,19 +1,15 @@
 .my-progress {
-    margin: 20px 0;
-}
-
-.books-container {
     display: flex;
-    flex-direction: row;
-    gap: 20px;
-    height: 400px; /* Set a fixed height for the container */
+    gap: 16px; /* Space between columns */
+    height: 100%;
 }
 
-.book-section {
+.current-books-container,
+.finished-books-container {
     flex: 1;
-    overflow-y: auto; /* Enable vertical scrolling */
-    padding: 10px;
-    background-color: #fff;
+    overflow-y: auto; /* Scrollable content */
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 16px;
 }

@@ -1,21 +1,16 @@
-import React, { useState } from 'react';
-import CurrentBooks from './CurrentBooks';
-import FinishedBooks from './FinishedBooks';
+import React from 'react';
+import DashBoardCurrentBooks from './DashBoardCurrentBooks';
+import DashBoardFinishedBooks from './DashBoardFinishedBooks';
 import './MyProgress.css';
 
-
-
-const MyProgress = () => {
+const MyProgress = ({ onSelectBook }) => {
     return (
         <div className="my-progress">
-            <h2>My Progress</h2>
-            <div className="books-container">
-                <div className="book-section">
-                    <CurrentBooks />
-                </div>
-                <div className="book-section">
-                    <FinishedBooks />
-                </div>
+            <div className="current-books-container">
+                <DashBoardCurrentBooks onSelect={onSelectBook} />
+            </div>
+            <div className="finished-books-container">
+                <DashBoardFinishedBooks />
             </div>
         </div>
     );

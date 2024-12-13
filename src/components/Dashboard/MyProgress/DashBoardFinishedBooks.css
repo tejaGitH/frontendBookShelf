@@ -1,0 +1,44 @@
+.finished-books-section {
+  height: 100%;
+}
+
+.finished-books-list {
+  display: flex;
+  flex-direction: column; /* Arrange book cards in a column */
+  overflow-y: auto;
+  padding: 5px;
+  height: 100%;
+}
+
+.finished-book-card {
+  display: flex; /* Align image and text in a row */
+  align-items: flex-start;
+  padding: 10px;
+  border: 1px solid #28a745; /* Border color for Finished Books */
+  border-radius: 8px;
+  background-color: #f0fff4; /* Light green background for Finished Books */
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.finished-book-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.finished-book-info {
+  margin-left: 10px; /* Space between image and book info */
+}
+
+.finished-book-info p {
+  margin: 5px 0px;
+  font-size: 14px;
+  
+}
+
+.rating-stars {
+  margin: 25px;
+  color: #FFD700;
+ 
+}

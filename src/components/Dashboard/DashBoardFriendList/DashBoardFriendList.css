@@ -1,0 +1,70 @@
+.friends-list-container {
+    margin: 20px 0;
+    padding: 10px;
+    background-color: #f7f7f7;
+    border-radius: 8px;
+  }
+  
+  .friends-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .user-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #fff;
+    transition: background-color 0.3s;
+  }
+  
+  .user-item:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .profile-img {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    margin-right: 15px;
+  }
+  
+  .user-info {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .user-info p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  .user-info strong {
+    color: #007bff;
+  }
+  
+  button {
+    margin-top: 10px;
+    background-color: #a6ff47;
+    color: white;
+    padding: 5px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  button:hover {
+    background-color: #d33a3a;
+  }
+  
+  .error {
+    color: #ff0000;
+    font-size: 14px;
+    margin-top: 10px;
+  }
