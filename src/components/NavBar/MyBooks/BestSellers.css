@@ -21,18 +21,18 @@
     margin-bottom: 20px;
 }
 
-.search-container {
+.best-sellers .search-container {
     display: flex;
     gap: 10px;
 }
 
-.search-bar {
+.best-sellers .search-bar {
     padding: 8px;
     border: 1px solid #ddd;
     border-radius: 4px;
 }
 
-.search-button {
+.best-sellers .search-button {
     padding: 8px;
     background-color: #007BFF;
     color: white;
@@ -41,11 +41,11 @@
     cursor: pointer;
 }
 
-.search-button:hover {
+.best-sellers .search-button:hover {
     background-color: #0056b3;
 }
 
-.books-list {
+.best-sellers .books-list {
     flex: 1; /* Make the books list take all remaining space */
     display: flex;
     flex-direction: column; /* Stack books vertically */
@@ -56,7 +56,7 @@
     width: 100%; /* Full width for the list */
 }
 
-.book-card {
+.best-sellers .book-card {
     display: flex;
     flex-direction: row; /* Align image and text side by side */
     align-items: flex-start; /* Align items at the top */
@@ -72,23 +72,23 @@
     gap: 10px; /* Reduced space between image and text */
 }
 
-.book-info {
+.best-sellers .book-info {
     display: flex;
     flex-direction: column;
     justify-content: space-between; /* Use space-between to fill vertical space */
     flex: 1; /* Let the text section take the remaining space */
 }
 
-.book-title-author {
+.best-sellers .book-title-author {
     display: flex;
     flex-direction: column; /* Stack title and author vertically */
 }
 
-.book-card:hover {
+.best-sellers .book-card:hover {
     transform: scale(1.02); /* Slight hover effect for interactivity */
 }
 
-.book-image {
+.best-sellers .book-image {
     width: 150px;
     height: 200px;
     border-radius: 8px;
@@ -97,19 +97,19 @@
     transition: transform 0.3s ease-in-out; /* Smooth transition for zoom effect */
 }
 
-.book-image:hover {
+.best-sellers .book-image:hover {
     transform: scale(1.2); /* Magnify the image on hover */
     z-index: 1; /* Ensure it appears above other content */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a shadow for emphasis */
 }
 
-.book-title {
+.best-sellers .book-title {
     font-size: 18px;
     font-weight: bold;
     margin-bottom: 5px;
 }
 
-.book-author {
+.best-sellers .book-author {
     font-size: 14px;
     color: #666;
     margin-bottom: 5px;
@@ -120,7 +120,7 @@ h3 {
     font-size: 16px;
 }
 
-.book-info p {
+.best-sellers .book-info p {
     margin: 0;
     font-size: 12px;
 }

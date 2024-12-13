@@ -192,14 +192,29 @@ const bookSlice = createSlice({
       .addCase(markBookAsCurrentlyReading.pending,(state)=>{
         state.loading= true;
       })
-      .addCase(markBookAsCurrentlyReading.fulfilled,(state,action)=>{
-        state.loading=false;
-        const updatedBook = action.payload;
-        const existingBook = state.currentlyReading.find((book)=>book._id ===updatedBook._id);
-        if(!existingBook){
-          state.currentlyReading.push(updatedBook);
-        } 
-      })
+      // .addCase(markBookAsCurrentlyReading.fulfilled,(state,action)=>{
+      //   state.loading=false;
+      //   const updatedBook = action.payload;
+      //   const existingBook = state.currentlyReading.find((book)=>book._id ===updatedBook._id);
+      //   console.log("outsideif",existingBook)
+      //   console.log("outsideifupdated",updatedBook)
+
+      //   if(!existingBook){
+      //     console.log("insideif",updatedBook)
+      //     state.currentlyReading.push(updatedBook);
+      //   } 
+      // })
+      .addCase(markBookAsCurrentlyReading.fulfilled, (state, action) => {
+         state.loading = false;
+          const updatedBook = action.payload.book;
+           const existingBook = state.currentlyReading.find((book) => book._id === updatedBook._id);
+            if (!existingBook) { 
+              state.currentlyReading.push(updatedBook); 
+            } else { 
+              // Update the existing book details if needed 
+              Object.assign(existingBook, updatedBook); 
+            }
+           })
       .addCase(markBookAsCurrentlyReading.rejected,(state,action)=>{
         state.loading=false;
         state.error = action.payload || 'failed to mark book as currently reading'
