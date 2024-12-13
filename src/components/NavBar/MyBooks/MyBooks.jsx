@@ -31,7 +31,6 @@ const MyBooks = () => {
                             {showAddBook ? 'Hide Add Book' : 'Add Book'}
                         </button>
                         {showAddBook && <AddBook />}
-                        <input type="text" className="search-bar" placeholder="Search Books..." />
                         <BestSellers onSelectBook={handleSelectBook} />
                     </div>
                     <div className="column">

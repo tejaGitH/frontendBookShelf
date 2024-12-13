@@ -5,7 +5,7 @@ import {
   addBook,
   updateBook,
   deleteBook,
-  fetchBestSellers,fetchBookDetails,searchBooks,
+  fetchBestSellers,fetchBookDetails,searchBooks,searchUserBooks,
   fetchCurrentBooks,fetchReadingProgress,updateReadingProgress,
   markBookAsFinished,
   markBookAsCurrentlyReading,
@@ -18,8 +18,9 @@ import { act } from "react";
 const initialState = {
   books: [],
   bestSellers: [],
-  searchResults: [],
-  userBooks:[],
+  //searchResults: [],
+  bestSellersSearchResults: [],
+  userBooksSearchResults: [],
   friendsBooks: [],
   currentlyReading:[],
   finishedBooks: [],
@@ -35,30 +36,30 @@ const bookSlice = createSlice({
   reducers: {
     removeBookFromState: (state, action) => {
       state.books = state.books.filter((book) => book._id !== action.payload);
-    },
+    }, clearBestSellersSearchResults: (state) => {
+            state.bestSellersSearchResults = [];
+        },
+        clearUserBooksSearchResults: (state) => {
+            state.userBooksSearchResults = [];
+        },
+    
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchBooks.pending, (state) => {
-        state.loading = true;
-      })
-      // .addCase(fetchBooks.fulfilled, (state, action) => {
-      //   state.loading = false;
-      //   state.books = action.payload;
-      //   console.log('Books loaded into state:', action.payload); 
+      // .addCase(fetchBooks.pending, (state) => {
+      //   state.loading = true;
       // })
-      .addCase(fetchBooks.fulfilled, (state, action) => {
-        state.loading = false; 
-        state.friendsBooks = action.payload.friendsBooks || [];
-        console.log('fetchBooksReducer',action.payload);
-        console.log('fetchuserBooksReducer',action.payload.userBooks);
-        console.log('fetchFriendsBooksReducer',action.payload.friendsBooks);
-        state.userBooks = action.payload.userBooks || []; })
-      .addCase(fetchBooks.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-        console.error('Error loading books:', action.payload); 
-      })
+      // // .addCase(fetchBooks.fulfilled, (state, action) => {
+      // //   state.loading = false;
+      // //   state.books = action.payload;
+      // //   console.log('Books loaded into state:', action.payload); 
+      // // })
+      
+      // .addCase(fetchBooks.rejected, (state, action) => {
+      //   state.loading = false;
+      //   state.error = action.error.message;
+      //   console.error('Error loading books:', action.error.message);
+      // })
       .addCase(fetchBookById.fulfilled, (state, action) => {
         state.selectedBook = action.payload;
       })
@@ -123,19 +124,7 @@ const bookSlice = createSlice({
         state.error = action.payload;
       })
 
-      // Search Books
-      .addCase(searchBooks.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(searchBooks.fulfilled, (state, action) => {
-        state.loading = false;
-        state.searchResults = action.payload;
-      })
-      .addCase(searchBooks.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      })
+     
       .addCase(fetchCurrentBooks.pending, (state) => {
         state.loading = true;
         console.log("current Pending");
@@ -244,15 +233,72 @@ const bookSlice = createSlice({
        if (action.payload) { 
         state.userBooks.push({...action.payload, isFriendBook: true}); 
       } 
-    });
+    })
+   
+    .addCase(fetchBooks.pending, (state) => {
+      state.loading = true;
+  })
+  .addCase(fetchBooks.fulfilled, (state, action) => {
+      state.loading = false;
+      state.userBooks = action.payload.userBooks || [];
+      state.friendsBooks = action.payload.friendsBooks || [];
+  })
+  .addCase(fetchBooks.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.error.message;
+  })
+  .addCase(searchUserBooks.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+  })
+  .addCase(searchUserBooks.fulfilled, (state, action) => {
+      state.loading = false;
+      // Ensure both userBooks and friendsBooks are arrays before combining
+      state.userBooksSearchResults = [
+          ...Array.isArray(action.payload.userBooks) ? action.payload.userBooks : [],
+          ...Array.isArray(action.payload.friendsBooks) ? action.payload.friendsBooks : []
+      ];
+  })
+  .addCase(searchUserBooks.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.error.message;
+  })
+  .addCase(searchBooks.pending, (state) => {
+    state.loading = true;
+    state.error = null;
+  })
+  .addCase(searchBooks.fulfilled, (state, action) => {
+    state.loading = false;
+    state.bestSellersSearchResults = action.payload;
+  })
+  .addCase(searchBooks.rejected, (state, action) => {
+    state.loading = false;
+    state.error = action.payload;
+  });
   },
 });
+
+
+export const { clearBestSellersSearchResults, clearUserBooksSearchResults } = bookSlice.actions;
 
 export default bookSlice.reducer;
 
 
 
-      
-           
 
+
+
+
+
+// //export const searchUserBooks = createAsyncThunk(
+//   "books/searchUserBooks",
+//   async (query) => {
+//       const response = await axiosInstance.get(`/books/search/books/${query}`);
+//       // Ensure that response.data contains userBooks and friendsBooks
+//       return {
+//           userBooks: Array.isArray(response.data.userBooks) ? response.data.userBooks : [],
+//           friendsBooks: Array.isArray(response.data.friendsBooks) ? response.data.friendsBooks : []
+//       };
+//   }
+// );
 

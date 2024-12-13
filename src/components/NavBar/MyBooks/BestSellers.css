@@ -1,47 +1,123 @@
-.best-sellers-column {
-    flex: 1; /* Take full height */
+.best-sellers {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    height: 100%; /* Full height to contain the book list */
+    width: 100%; /* Full width of the parent container */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.header-container {
+    display: flex;
+    width: 100%;
+    justify-content: space-between; /* Spread items across the row */
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.search-container {
+    display: flex;
     gap: 10px;
 }
 
-.best-sellers {
-    flex: 1; /* Take remaining space in the column */
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto; /* Enable scrolling */
+.search-bar {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.search-button {
+    padding: 8px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.search-button:hover {
+    background-color: #0056b3;
 }
 
 .books-list {
     flex: 1; /* Make the books list take all remaining space */
     display: flex;
+    flex-direction: column; /* Stack books vertically */
+    gap: 20px; /* Space between individual book cards */
+    padding: 10px;
+    overflow-y: auto; /* Enable vertical scrolling */
+    height: 100%; /* Allow the list to take up available height */
+    width: 100%; /* Full width for the list */
+}
+
+.book-card {
+    display: flex;
+    flex-direction: row; /* Align image and text side by side */
+    align-items: flex-start; /* Align items at the top */
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    width: 100%; /* Book card takes up full width of the list */
+    max-width: 100%; /* Prevent any overflow */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+    cursor: pointer;
+    gap: 10px; /* Reduced space between image and text */
+}
+
+.book-info {
+    display: flex;
     flex-direction: column;
-    overflow-y: auto;
-    padding: 5px 0;
+    justify-content: space-between; /* Use space-between to fill vertical space */
+    flex: 1; /* Let the text section take the remaining space */
+}
+
+.book-title-author {
+    display: flex;
+    flex-direction: column; /* Stack title and author vertically */
+}
+
+.book-card:hover {
+    transform: scale(1.02); /* Slight hover effect for interactivity */
+}
+
+.book-image {
+    width: 150px;
+    height: 200px;
+    border-radius: 8px;
+    object-fit: cover;
+    flex-shrink: 0; /* Prevent the image from shrinking */
+    transition: transform 0.3s ease-in-out; /* Smooth transition for zoom effect */
+}
+
+.book-image:hover {
+    transform: scale(1.2); /* Magnify the image on hover */
+    z-index: 1; /* Ensure it appears above other content */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a shadow for emphasis */
+}
+
+.book-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.book-author {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 5px;
 }
 
 h3 {
     margin: 0;
     font-size: 16px;
-}
-
-.book-card {
-    width: 100%;
-    margin-bottom: 5px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 5px;
-    background-color: #fff;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-}
-
-.book-card img {
-    width: 50px;
-    height: auto;
-    border-radius: 8px;
-    margin-right: 10px;
 }
 
 .book-info p {

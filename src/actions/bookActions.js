@@ -209,3 +209,36 @@ export const addFriendBookToUser = createAsyncThunk(
     }
 );
 
+
+
+export const searchUserBooks = createAsyncThunk(
+    "books/searchUserBooks",
+    async (query) => {
+        const response = await axiosInstance.get(`/books/search/books/${query}`);
+        // Ensure that response.data contains userBooks and friendsBooks
+        return {
+            userBooks: Array.isArray(response.data.userBooks) ? response.data.userBooks : [],
+            friendsBooks: Array.isArray(response.data.friendsBooks) ? response.data.friendsBooks : []
+        };
+    }
+);
+
+
+
+
+// export const searchBooks = createAsyncThunk(
+//   "books/searchBooks",
+
+// )
+//   async (req, res) => {
+//     const query = req.params.query;
+//     try {
+//         const data = await api.searchBooks(query);
+//         res.json(data);
+//     } catch (error) {
+//         console.error('Error searching books:', error); // Log error details
+//         res.status(500).json({ message: 'Error searching books' });
+//     }
+// };
+
+
