@@ -57,12 +57,13 @@ h3 {
 }
 
 .current-books .book-image {
-    width: 50px;
-    height: 75px;
-    border-radius: 8px;
-    object-fit: cover;
-    flex-shrink: 0;
-    transition: transform 0.3s ease-in-out;
+    width: 100%; /* Ensure it spans the full width of the container */
+    height: auto; /* Maintain aspect ratio */
+    max-width: 150px; /* Limit maximum width to avoid overly large images */
+    max-height: 500px; /* Limit maximum height to avoid overly tall images */
+    object-fit: contain; /* Ensures the image fits within the container without distortion */
+    border-radius: 8px; /* Optional: Add rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Add a slight shadow for aesthetics */
 }
 
 .current-books .book-image:hover {

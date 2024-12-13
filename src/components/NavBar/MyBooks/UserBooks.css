@@ -1,124 +1,101 @@
 .user-books {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    height: 100%; /* Changed to auto to fit content */
-    width:100%; /* Adjusted for padding */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
+    gap: 10px;
 }
 
-.header {
-    font-size: 24px;
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-.user-books .search-input {
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    width: calc(80% - 16px); /* Adjusted for padding */
-    margin-bottom: 20px;
-}
-
-.user-books .books-list {
-    flex: 1;
+.books-list {
     display: flex;
-    flex-direction: column; /* Stack book cards vertically */
-    gap: 10px; /* Space between cards */
-    padding: 10px;
-    overflow-y: auto; /* Allow vertical scrolling only */
-    height:100%;
-    width:100%;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .user-books .book-card {
-    display: flex; /* Use flexbox for layout */
-    flex-direction: row; /* Stack items vertically */
-    align-items: flex-start;
-    padding: 10px; /* Adjust padding as needed */
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    flex:1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
     background-color: #fff;
-    width: 100%; /* Full width of the parent */
-    max-width: none; /* Remove max-width to prevent overflow */
+    border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease-in-out;
     cursor: pointer;
-    gap: 10px; /* Reduced space between image and text */
+    transition: transform 0.2s;
 }
 
-
-
+.user-books .book-card:hover {
+    transform: scale(1.02);
+}
 
 .user-books .book-image {
-    width: 150px;
-    height: 30px;
-    border-radius: 8px;
+    width: 50px;
+    height: 50px;
     object-fit: cover;
-    flex-shrink: 0; /* Prevent the image from shrinking */
-    transition: transform 0.3s ease-in-out; /* Smooth transition for zoom effect */
+    border-radius: 4px;
+    margin-right: 10px;
 }
 
 .user-books .book-info {
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Use space-between to fill vertical space */
-    flex: 1; /* Let the text section take the remaining space */
-}
-
-.user-books .book-title-author {
-    display: flex;
-    flex-direction: column; /* Stack title and author vertically */
+    gap: 5px;
 }
 
 .user-books .book-title {
-    font-size: 14px;
     font-weight: bold;
-    margin-bottom: 2px; /* Reduced margin for tighter spacing */
 }
 
-.user-books .book-author {
-   font-size: 12px;
-   color: #666;
-   margin-bottom: 2px; /* Reduced margin to bring it closer to rating */
+.book-author {
+    color: gray;
+    font-size: 0.9em;
 }
 
-.user-books .book-rating { 
-   font-size:.9rem; 
-   font-weight:bold; 
-   color:#666; 
-   text-align:right; 
-   margin-top: -2px; /* Optional negative margin to reduce space further */
+.book-card-details {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    max-width: 400px;
+    text-align: center;
 }
 
-.user-books .book-about {
-    margin-top: 5px; /* Space above about section */
-    font-size: 12px; /* Adjust font size as needed */
+.book-card-image {
+    width: 100px;
+    margin-bottom: 15px;
 }
 
-.user-books .rating-stars { 
-   display:flex; 
-   align-items:center; 
-   justify-content:flex-end; 
+.book-card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
-.user-books .rating-star { 
-   font-size:.9rem; 
-   color:#ffd700; 
-   margin-right:.2rem; 
+.mark-as-reading-button,
+.remove-book-button {
+    padding: 8px;
+    margin: 5px 0;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
-.user-books .mark-as-reading-button { 
-   padding:.2rem .5rem; 
-   background-color:#28a745; 
-   color:white; 
-   border:none; 
-   border-radius:.2rem; 
+.remove-book-button {
+    background-color: #FF4D4D;
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 16px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
 }

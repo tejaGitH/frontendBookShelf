@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux'; 
 import NavBar from '../NavBar';
 import AddBook from './AddBook';
 import BestSellers from './BestSellers';
 import UserBooks from './UserBooks';
 import CurrentBooks from './CurrentBooks';
 import FinishedBooks from './FinishedBooks';
+import { markBookAsCurrentlyReading } from '../../../actions/bookActions';
 import './MyBooks.css';
 import './BestSellers.css'; // Import BestSellers CSS separately
 
 const MyBooks = () => {
+    const dispatch = useDispatch(); 
     const [selectedBook, setSelectedBook] = useState(null);
     const [showCurrentBooks, setShowCurrentBooks] = useState(true);
     const [showAddBook, setShowAddBook] = useState(false);
@@ -21,8 +24,15 @@ const MyBooks = () => {
         setSelectedBook(null);
     };
 
+    const handleMarkAsCurrentlyReading = (bookId) => {
+        // Here you can dispatch the action to mark the book as "currently reading"
+        dispatch(markBookAsCurrentlyReading(bookId));
+        handleClearSelection();
+    };
+
     return (
-        <div className="my-books">
+        <div className='navbar-component'>
+            <div className="my-books">
             <div className="content-container">
                 <h2>My Books</h2>
                 <div className={`book-sections ${selectedBook ? 'blur-background' : ''}`}>
@@ -59,6 +69,14 @@ const MyBooks = () => {
                                 <p><strong>Author:</strong> {selectedBook.author}</p>
                                 <p><strong>Rating:</strong> {selectedBook.rating}</p>
                                 <p>{selectedBook.about}</p>
+                                {!selectedBook.currentlyReading && (
+                                    <button
+                                        className="mark-as-reading-button"
+                                        onClick={() => handleMarkAsCurrentlyReading(selectedBook._id)}
+                                    >
+                                        Mark as Currently Reading
+                                    </button>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -68,6 +86,8 @@ const MyBooks = () => {
                 <NavBar />
             </div>
         </div>
+        </div>
+        
     );
 };
 

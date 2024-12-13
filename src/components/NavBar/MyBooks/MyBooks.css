@@ -43,20 +43,21 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
-    gap: 10px; /* Add a little gap between components */
-    }
-    
-    .large-column > div {
-        flex: 1;
-        overflow-y: auto;
-        background-color: #fff;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a shadow effect */
-        padding: 10px;
-        margin-bottom: 0px; /* Add a gap between components */
-      }
+    overflow-y: auto;
+    overflow-x: hidden;
+  /* Add a little gap between components */
+}
+
+.large-column > div {
+    flex: 1;
+    overflow-y: auto;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a shadow effect */
+    padding: 10px;
+    margin-bottom: 0px; /* Add a gap between components */
+}
 
 .custom-button {
     padding: 8px;
@@ -113,34 +114,34 @@
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 1000;
-    max-width: 60%;
+    max-width: 80%;  /* Adjust width to fit the page */
     display: flex;
-    align-items: center;
-}
-
-.selected-book-content {
-    display: flex;
-    align-items: center;
+    align-items: center;  /* Align image and text horizontally */
+    gap: 20px;  /* Space between the image and book details */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .selected-book img {
-    width: 150px;
+    width: 200px;  /* Image size adjusted to fit neatly */
     border-radius: 8px;
-    margin-right: 20px;
+    object-fit: cover;  /* Ensure the image covers its container */
 }
 
 .book-details {
-    max-width: 400px;
+    flex: 1;  /* Make sure the details take up available space */
+    display: flex;
+    flex-direction: column;
+    gap: 15px;  /* Space between the title, author, rating, and description */
 }
 
 .book-details h4 {
     margin-top: 0;
-    font-size: 24px;
+    font-size: 28px;  /* Larger font size for book title */
 }
 
 .book-details p {
     margin: 5px 0;
-    font-size: 16px;
+    font-size: 18px;  /* Adjusted font size for readability */
 }
 
 .close-button {
@@ -151,6 +152,7 @@
     border: none;
     font-size: 20px;
     cursor: pointer;
+    color: #333;
 }
 
 .books-list {
@@ -245,6 +247,7 @@
     margin: 0;
     font-size: 14px; /* Increased font size for better readability */
 }
+
 .search-button {
     padding: 8px;
     background-color: #007BFF;
@@ -293,4 +296,11 @@
 .search-results .book-info p {
     margin: 0;
     font-size: 14px; /* Increased font size for better readability */
+}
+.navbar-component {
+    background-color: #FFF36D; /* Lemon Yellow */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    margin-bottom: 16px;
 }
