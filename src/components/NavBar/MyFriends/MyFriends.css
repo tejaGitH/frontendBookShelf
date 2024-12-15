@@ -6,7 +6,7 @@
 }
 
 .content-container {
-    width: 85%;
+    width: 82%;
     display: flex;
     flex-direction: column;
     padding: 10px; /* Reduce padding */
@@ -60,6 +60,7 @@
     display: flex;
     justify-content: space-between;
     padding: 10px 0;
+    width:82%;
 }
 
 .pagination-buttons a {

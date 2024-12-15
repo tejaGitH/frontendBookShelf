@@ -8,7 +8,7 @@
     border: 1px solid #ddd;
     border-radius: 8px;
     height: 100%; /* Full height to contain the book list */
-    width: 100%; /* Full width of the parent container */
+    width: 93%; /* Full width of the parent container */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     overflow: hidden;
 }

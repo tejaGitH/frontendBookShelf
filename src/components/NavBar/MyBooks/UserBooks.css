@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+    
 }
 
 .books-list {
@@ -18,6 +19,7 @@
     padding: 10px;
     background-color: #fff;
     border-radius: 8px;
+
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     transition: transform 0.2s;
@@ -62,6 +64,8 @@
     z-index: 1000;
     max-width: 400px;
     text-align: center;
+
+    filter: blur(0px);
 }
 
 .book-card-image {
@@ -69,10 +73,17 @@
     margin-bottom: 15px;
 }
 
-.book-card-info {
+/* .book-card-info {
     display: flex;
     flex-direction: column;
     gap: 10px;
+} */
+
+.book-card-info {
+    flex: 1;  /* Make sure the details take up available space */
+    display: flex;
+    flex-direction: column;
+    gap: 15px;  /* Space between the title, author, rating, and description */
 }
 
 .mark-as-reading-button,
@@ -89,7 +100,6 @@
 .remove-book-button {
     background-color: #FF4D4D;
 }
-
 .close-button {
     position: absolute;
     top: 10px;
@@ -98,4 +108,8 @@
     background: transparent;
     border: none;
     cursor: pointer;
+}
+
+.user-books .blur-background {
+    filter: blur(4px);
 }

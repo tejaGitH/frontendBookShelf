@@ -11,7 +11,6 @@ const UserBooks = () => {
     // Redux State Selectors
     const userBooks = useSelector((state) => state.books.userBooks) || [];
     const userBooksSearchResults = useSelector((state) => state.books.userBooksSearchResults) || [];
-    const currentlyReading = useSelector((state) => state.books.currentlyReading) || [];  // Add this line to get currentlyReading
     const loading = useSelector((state) => state.books.loading);
     const error = useSelector((state) => state.books.error);
 
@@ -43,25 +42,18 @@ const UserBooks = () => {
         setSelectedBook(null); // Close the book details after removing
     };
 
-    const handleMarkAsCurrentlyReading = (book) => {
-        // Check if the book is already in the currentlyReading list
-        const bookExists = currentlyReading.find(b => b._id === book._id);
-        if (bookExists) {
-            console.log('Book is already marked as Currently Reading');
-            return; // Don't proceed if the book is already in the list
-        }
+    const handleMarkAsCurrentlyReading = (bookId) => {
+        dispatch(markBookAsCurrentlyReading(bookId));
+        setSelectedBook(null); // Close the book details after marking
+      };
     
-        // Proceed with marking the book as currently reading
-        dispatch(markBookAsCurrentlyReading(book._id));
-        setSelectedBook(null);
-    };
-
     // Determine which list to render
     const booksToDisplay = searchQuery.length > 2 ? userBooksSearchResults : userBooks;
 
     return (
         <div className="user-books">
             <h3 className="header">Your Books</h3>
+            
 
             {/* Search Input */}
             <input
@@ -99,37 +91,51 @@ const UserBooks = () => {
                     <p>No books found.</p>
                 )}
             </div>
-
-            {/* Detailed Book Card */}
-            {selectedBook && (
-                <div className="book-card-details">
-                    <button className="close-button" onClick={() => setSelectedBook(null)}>X</button>
-                    <img
-                        src={selectedBook.image || defaultBookImage}
-                        alt={selectedBook.title}
-                        className="book-card-image"
-                    />
-                    <div className="book-card-info">
-                        <h4>{selectedBook.title}</h4>
-                        <p><strong>Author:</strong> {selectedBook.author}</p>
-                        <p>{selectedBook.about || 'No description available.'}</p>
-                        <button
-                            className="mark-as-reading-button"
-                            onClick={() => handleMarkAsCurrentlyReading(selectedBook)}
-                        >
-                            Mark as Currently Reading
-                        </button>
-                        <button
-                            className="remove-book-button"
-                            onClick={() => handleRemoveBook(selectedBook._id)}
-                        >
-                            Remove Book
-                        </button>
-                    </div>
-                </div>
+ {/* Detailed Book Card */}
+ {selectedBook && (
+        <div className="book-card-details">
+          <button
+            className="close-button"
+            onClick={() => setSelectedBook(null)}
+          >
+            X
+          </button>
+          <img
+            src={selectedBook.image || defaultBookImage}
+            alt={selectedBook.title}
+            className="book-card-image"
+          />
+          <div className="book-card-info">
+            <h4>{selectedBook.title}</h4>
+            <p>
+              <strong>Author:</strong> {selectedBook.author}
+            </p>
+            <p>
+              {selectedBook.about || 'No description available.'}
+            </p>
+            {selectedBook.currentlyReading ? (
+              <button className="currently-reading-button">
+                Book Marked as Currently Reading
+              </button>
+            ) : (
+              <button
+                className="mark-as-reading-button"
+                onClick={() => handleMarkAsCurrentlyReading(selectedBook._id)}
+              >
+                Mark as Currently Reading
+              </button>
             )}
+            <button
+              className="remove-book-button"
+              onClick={() => handleRemoveBook(selectedBook._id)}
+            >
+              Remove Book
+            </button>
+          </div>
         </div>
-    );
+      )}
+    </div>
+  );
 };
 
 export default UserBooks;

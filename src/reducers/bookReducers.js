@@ -24,7 +24,6 @@ const initialState = {
   friendsBooks: [],
   currentlyReading:[],
   finishedBooks: [],
-  readingProgress:{},
   selectedBook: null,
   readingProgress:{},
   loading: false,
@@ -125,30 +124,25 @@ const bookSlice = createSlice({
         state.error = action.payload;
       })
 
-     
-      .addCase(fetchCurrentBooks.pending, (state) => {
-        state.loading = true;
-        console.log("current Pending");
-      })
-      .addCase(fetchCurrentBooks.fulfilled, (state, action) => {
-        state.loading = false;
-        state.currentlyReading = action.payload.books;
-        state.readingProgress = action.payload.readingProgress; // Store the reading progress in the state
-    })
-      .addCase(fetchCurrentBooks.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload || 'Failed to fetch currently reading books';
-        console.log("current rejected", state.error);
-      })
+
       .addCase(fetchReadingProgress.pending, (state) => {
          state.loading = true;
          
       }) 
-      builder.addCase(fetchReadingProgress.fulfilled, (state, action) => {
+      // .addCase(fetchReadingProgress.fulfilled, (state, action) => {
+      //    state.loading = false;
+      //    state.readingProgress[action.payload.book._id] = action.payload; 
+      //    console.log("fetchCureentReducere",action.payload);
+      // }) 
+      .addCase(fetchReadingProgress.fulfilled, (state, action) => {
         state.loading = false;
-        console.log("fetchReadingProgress", action.payload);
-        state.readingProgress[action.payload.book._id] = action.payload; // Update the readingProgress state
-    })
+        const { book, progress, comments } = action.payload;
+        const bookToUpdate = state.currentlyReading.find((bookItem) => bookItem._id === book._id);
+        if (bookToUpdate) {
+          bookToUpdate.progress = progress;
+          bookToUpdate.comments = comments; // Make sure to also update comments if needed
+        }
+      })
       .addCase(fetchReadingProgress.rejected, (state, action) => {
          state.loading = false; 
          state.error = action.payload; 
@@ -156,29 +150,24 @@ const bookSlice = createSlice({
       .addCase(updateReadingProgress.pending, (state) => {
         state.loading = true;
       })
-      .addCase(updateReadingProgress.fulfilled, (state, action) => {
-        const updatedBook = action.payload;
-        const bookIndex = state.userBooks.findIndex((book) => book._id === updatedBook._id);
-        if (bookIndex !== -1) {
-            state.userBooks[bookIndex] = updatedBook; // Update the book in the list
-        }
-    })
-    //   builder.addCase(updateReadingProgress.fulfilled, (state, action) => {
-    //     state.loading = false;
-    //     const { bookId, progress, comments } = action.payload;
-    //     const book = state.currentlyReading.find((book) => book._id === bookId);
-    //     console.log("updateReadingProgress", action.payload);
-
-    //     if (book) {
-    //         // Update the book's progress and comments directly
-    //         book.progress = progress;
-    //         book.comments = comments;
-    //         console.log("updated progress", progress, comments);
-    //     }
-
-    //     // Optionally, you may want to update the readingProgress object as well
-    //     state.readingProgress[bookId] = { progress, comments }; // This will store progress and comments by bookId
-    // })
+//      .addCase(updateReadingProgress.fulfilled, (state, action) => {
+//     state.loading = false;
+//     const { book, progress, comments } = action.payload.readingProgress;
+//     console.log("updateProgress", action.payload.readingProgress);
+//     const bookToUpdate = state.currentlyReading.find((bookItem) => bookItem._id === book);
+//     if (bookToUpdate) {
+//         bookToUpdate.progress = progress;
+//         bookToUpdate.comments = comments;
+//     }
+// })
+.addCase(updateReadingProgress.fulfilled, (state, action) => {
+  state.loading = false;
+  const updatedBookIndex = state.currentlyReading.findIndex(book => book._id === action.payload.bookId);
+  if (updatedBookIndex !== -1) {
+    state.currentlyReading[updatedBookIndex].progress = action.payload.progress;
+    state.currentlyReading[updatedBookIndex].comments = action.payload.comments;
+  }
+})
       .addCase(updateReadingProgress.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload || 'Failed to update reading progress';
@@ -186,14 +175,19 @@ const bookSlice = createSlice({
       .addCase(markBookAsFinished.pending,(state)=>{
         state.loading= true;
       })
-      .addCase(markBookAsFinished.fulfilled,(state,action)=>{
-        state.loading=false;
-        const {_id: bookId} = action.payload;
-        console.log("umarkAsFinished",action.payload);
-        const bookIndex = state.currentlyReading.findIndex((book)=>book._id ===bookId);
-        if(bookIndex !== -1){
+      .addCase(markBookAsFinished.fulfilled, (state, action) => {
+        state.loading = false;
+        const { _id: bookId } = action.payload;
+        console.log("markFinished", action.payload);
+      
+        // Remove book from `currentlyReading`
+        const bookIndex = state.currentlyReading.findIndex((book) => book._id === bookId);
+        if (bookIndex !== -1) {
           state.currentlyReading.splice(bookIndex, 1);
-        } 
+        }
+      
+        // Re-fetch finished books
+        // Ensure fetchFinishedBooks action is dispatched after marking as finished
       })
       .addCase(markBookAsFinished.rejected,(state,action)=>{
         state.loading=false;
@@ -217,6 +211,7 @@ const bookSlice = createSlice({
       .addCase(markBookAsCurrentlyReading.fulfilled, (state, action) => {
          state.loading = false;
           const updatedBook = action.payload.book;
+          console.log("markCurrent", action.payload);
            const existingBook = state.currentlyReading.find((book) => book._id === updatedBook._id);
             if (!existingBook) { 
               state.currentlyReading.push(updatedBook); 
@@ -228,6 +223,30 @@ const bookSlice = createSlice({
       .addCase(markBookAsCurrentlyReading.rejected,(state,action)=>{
         state.loading=false;
         state.error = action.payload || 'failed to mark book as currently reading'
+      })
+           
+      .addCase(fetchCurrentBooks.pending, (state) => {
+        state.loading = true;
+        console.log("current Pending");
+      })
+    //   .addCase(fetchCurrentBooks.fulfilled, (state, action) => {
+    //     state.loading = false;
+    //     console.log("Payload for currently reading books:", action.payload);
+    
+    //     state.currentlyReading = action.payload?.filter((book) => book.currentlyReading) || [];
+    //     console.log("Filtered currently reading books:", state.currentlyReading);
+    // })
+    .addCase(fetchCurrentBooks.fulfilled, (state, action) => {
+      state.loading = false;
+      console.log("Payload for currently reading books:", action.payload);
+      //state.currentlyReading = action.payload?.filter((book) => book.currentlyReading && book.progress !== null && book.progress !== undefined) || [];
+      state.currentlyReading = action.payload;
+      console.log("Filtered currently reading books:", state.currentlyReading);
+    })
+      .addCase(fetchCurrentBooks.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload || 'Failed to fetch currently reading books';
+        console.log("current rejected", state.error);
       })
       .addCase(fetchFinishedBooks.pending,(state)=>{
         state.loading = true;
@@ -242,6 +261,7 @@ const bookSlice = createSlice({
         state.loading= false;
         state.error=action.payload;
       })
+
       .addCase(fetchFriendsBooks.pending, (state) => {
         state.loading = true;
     })

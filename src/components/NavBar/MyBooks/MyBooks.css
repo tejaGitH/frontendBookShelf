@@ -21,7 +21,6 @@
     padding: 10px;
     overflow-y: auto; /* Ensure the navbar is scrollable if content overflows */
     display: flex;
-    flex-direction: column;
 }
 
 .book-sections {
@@ -45,6 +44,7 @@
     flex-direction: column;
     overflow-y: auto;
     overflow-x: hidden;
+    width: 92%;
   /* Add a little gap between components */
 }
 

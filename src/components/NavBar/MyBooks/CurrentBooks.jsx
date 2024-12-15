@@ -1,98 +1,119 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCurrentBooks, markBookAsFinished } from '../../../actions/bookActions';
-import { addReview } from "../../../actions/reviewActions";
+import { fetchCurrentBooks, updateReadingProgress, markBookAsFinished, markBookAsCurrentlyReading, fetchReadingProgressForCurrentBooks } from '../../../actions/bookActions';
+import { addReview } from '../../../actions/reviewActions';
 import './CurrentBooks.css';
 
-const CurrentBooks = ({ onSelectBook }) => {
+const CurrentBooks = ({ onSelectBook, handleMarkAsFinished, handleUpdateProgressMyBooks, handleMarkAsCurrentlyReading, selectedBook }) => {
     const dispatch = useDispatch();
-    const { currentlyReading = [], loading, error, readingProgress = {} } = useSelector((state) => state.books);
-    const [selectedBookForReview, setSelectedBookForReview] = useState(null);
+    const currentlyReading = useSelector(state => state.books.currentlyReading || []);
+    const progress = useSelector(state => state.books.progress || {});
     const [review, setReview] = useState('');
     const [rating, setRating] = useState(0);
+    const [showReviewForm, setShowReviewForm] = useState(false);
+    const [progressInput, setProgressInput] = useState('');
+    const [message, setMessage] = useState('');
+    const [progressUpdated, setProgressUpdated] = useState(false);
 
-    // Fetch current books when component loads
-    useEffect(() => {
+  useEffect(() => {
+    dispatch(fetchCurrentBooks());
+    //dispatch(fetchReadingProgressForCurrentBooks());
+    console.log("selected ",selectedBook)
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (progressUpdated) {
         dispatch(fetchCurrentBooks());
-    }, [dispatch]);
+        setProgressUpdated(false); // Reset flag after refetch
+    }
+}, [progressUpdated, dispatch]);
 
-    const handleMarkAsFinished = (book) => {
-        setSelectedBookForReview(book); // Set the selected book for review modal
-    };
 
-    const handleAddReview = () => {
-        if (review && rating > 0 && selectedBookForReview) {
-            // Add review and mark book as finished
-            dispatch(addReview({ bookId: selectedBookForReview._id, reviewData: { review, rating } }));
-            dispatch(markBookAsFinished(selectedBookForReview._id)); // Mark as finished
-            setSelectedBookForReview(null); // Close the review modal
-            setReview('');
-            setRating(0);
-        } else {
-            alert('Please provide both a review and a rating.');
-        }
-    };
+  const handleBookClick = (book) => {
+    onSelectBook(book);
+  };
 
-    const handleBookClick = (book) => {
-        onSelectBook(book); // Pass the selected book back to the parent component
-    };
+  const handleSubmitReview = () => {
+    dispatch(addReview({ bookId: selectedBook._id, reviewData: { review, rating } }));
+    setShowReviewForm(false);
+  };
+  
+  const handleUpdateProgress = (bookId) => {
+    if (progressInput === '' || isNaN(progressInput) || parseInt(progressInput) < 0 || parseInt(progressInput) > 100) {
+      setMessage('Please enter a valid progress percentage.');
+      return;
+    }
+  
+    // Dispatch the progress update action
+    dispatch(updateReadingProgress({ bookId, progress: progressInput }));
+    
+    // Trigger a re-fetch of current books
+    dispatch(fetchCurrentBooks());
+    
+    setMessage('Progress updated successfully!');
+    setProgressInput('');
+  };
 
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>{`Error: ${error}`}</div>;
 
-    return (
-        <div className="current-books">
-            <h3>Currently Reading</h3>
-            <div className="books-list">
-                {currentlyReading.length > 0 ? (
-                    currentlyReading.map((book) => (
-                        <div key={book._id} className="book-card" onClick={() => handleBookClick(book)}>
-                            <img src={book.image || "https://via.placeholder.com/150"} alt={book.title} />
-                            <div className="book-info">
-                                <p><strong>{book.title}</strong></p>
-                                <p>{book.author}</p>
-                                {/* Handle reading progress with fallback */}
-                                <p>Progress: {readingProgress[book._id]?.progress ?? "N/A"}%</p>
 
-                                {/* Only show "Mark as Finished" if this book is the selected book for review */}
-                                {selectedBookForReview && selectedBookForReview._id === book._id && (
-                                    <button onClick={(e) => { e.stopPropagation(); handleMarkAsFinished(book); }}>
-                                        Mark as Finished
-                                    </button>
-                                )}
-                            </div>
-                        </div>
-                    ))
-                ) : (
-                    <div>No books currently reading.</div>
-                )}
+  return (
+    <div className="current-books">
+      <h3>Currently Reading Books</h3>
+      <div className="books-list">
+        {currentlyReading.map((book) => {
+          const bookProgress = book.progress || 0;
+          return (
+            <div key={book._id} className="book-card" onClick={() => handleBookClick(book)}>
+              <img src={book.image} alt={book.title} />
+              <div className="book-info">
+                <p><strong>{book.title}</strong></p>
+                <p>{book.author}</p>
+                <p>Progress: {bookProgress}%</p>
+              </div>
             </div>
-
-            {/* Review Modal */}
-            {selectedBookForReview && (
-                <div className="review-modal">
-                    <h4>Add a Review for "{selectedBookForReview.title}"</h4>
-                    <textarea
-                        value={review}
-                        onChange={(e) => setReview(e.target.value)}
-                        placeholder="Write your review"
-                    />
-                    <select value={rating} onChange={(e) => setRating(Number(e.target.value))}>
-                        <option value={0}>Select a Rating</option>
-                        <option value={1}>1</option>
-                        <option value={2}>2</option>
-                        <option value={3}>3</option>
-                        <option value={4}>4</option>
-                        <option value={5}>5</option>
-                    </select>
-                    <div className="modal-actions">
-                        <button onClick={handleAddReview}>Submit Review</button>
-                        <button onClick={() => setSelectedBookForReview(null)}>Cancel</button>
-                    </div>
+          );
+        })}
+      </div>
+      {selectedBook && (
+        <div className="book-card-container">
+          <div className="book-card">
+            <img src={selectedBook.image} alt={selectedBook.title} />
+            <div className="book-info">
+              <p><strong>{selectedBook.title}</strong></p>
+              <p>{selectedBook.author}</p>
+              <p>Rating: {selectedBook.rating}</p>
+              <p>Progress: {selectedBook.progress}%</p>
+              <input type="number" value={progressInput} onChange={(e) => setProgressInput(e.target.value)} placeholder="Enter progress" />
+              <div className="dropdown">
+                <button className="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Options
+                </button>
+                <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <button className="dropdown-item" onClick={() => handleUpdateProgress(selectedBook._id)}>Update Progress</button>
+                  <button className="dropdown-item" onClick={() => handleMarkAsFinished(selectedBook._id)}>Mark as Finished</button>
+                  <button className="dropdown-item" onClick={() => handleMarkAsCurrentlyReading(selectedBook._id)}>Mark as Currently Reading</button>
                 </div>
-            )}
+              </div>
+              {showReviewForm && (
+                <div className="review-form">
+                  <textarea value={review} onChange={(e) => setReview(e.target.value)} placeholder="Write your review" />
+                  <select value={rating} onChange={(e) => setRating(e.target.value)}>
+                    <option value="0">Select a rating</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                  </select>
+                  <button onClick={handleSubmitReview}>Submit Review</button>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
-    );
+      )}
+    </div>
+  );
 };
 
 export default CurrentBooks;
