@@ -44,18 +44,7 @@ const NavBar = ({ children }) => {
         >
           Social Updates
         </button>
-        <button
-          className={isActive('/about') ? 'active' : ''}
-          onClick={() => navigate('/about')}
-        >
-          About
-        </button>
-        <button
-          className={isActive('/profile') ? 'active' : ''}
-          onClick={() => navigate('/profile')}
-        >
-          Profile
-        </button>
+       
         <button onClick={handleLogout}>Logout</button>
       </div>
       <div className="main-content">{children}</div>

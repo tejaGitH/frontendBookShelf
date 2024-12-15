@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchCurrentBooks, updateReadingProgress, markBookAsFinished, markBookAsCurrentlyReading, fetchReadingProgressForCurrentBooks } from '../../../actions/bookActions';
 import { addReview } from '../../../actions/reviewActions';
 import './CurrentBooks.css';
+import defaultBookImage from '../../images/default-book-image.jpg';
 
 const CurrentBooks = ({ onSelectBook, handleMarkAsFinished, handleUpdateProgressMyBooks, handleMarkAsCurrentlyReading, selectedBook }) => {
     const dispatch = useDispatch();
@@ -64,7 +65,7 @@ const CurrentBooks = ({ onSelectBook, handleMarkAsFinished, handleUpdateProgress
           const bookProgress = book.progress || 0;
           return (
             <div key={book._id} className="book-card" onClick={() => handleBookClick(book)}>
-              <img src={book.image} alt={book.title} />
+              <img src={book.image || defaultBookImage} alt={book.title} />
               <div className="book-info">
                 <p><strong>{book.title}</strong></p>
                 <p>{book.author}</p>
