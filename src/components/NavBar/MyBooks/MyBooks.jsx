@@ -167,18 +167,18 @@ const MyBooks = () => {
                 </div>
               ) : (
                 <div>
-                  <input
+                  <input class="common"
                     type="number"
                     value={progressInput}
                     onChange={(e) => setProgressInput(e.target.value)}
                     placeholder="Enter progress"
                   />
-                  <textarea
+                  <input class="common"
                     value={comments}
                     onChange={(e) => setComments(e.target.value)}
                     placeholder="Enter comments"
                   />
-                  <button onClick={() => handleUpdateProgress(selectedBook._id, comments)}>
+                  <button class="common" onClick={() => handleUpdateProgress(selectedBook._id, comments)}>
                     Update Progress
                   </button>
                   <button onClick={() => handleMarkAsFinished(selectedBook._id)}>
@@ -190,7 +190,7 @@ const MyBooks = () => {
           </div>
         </div>
       )}
-      <div className="navbar-container">
+      <div >
         <NavBar />
       </div>
     </div>

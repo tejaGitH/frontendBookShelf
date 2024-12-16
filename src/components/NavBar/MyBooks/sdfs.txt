@@ -1,0 +1,871 @@
+/* Outer Container */
+.navbar-component {
+    display: flex;
+    flex-direction: row;
+    height: 100vh; /* Full viewport height */
+    overflow: hidden; /* Prevent unwanted scrolling */
+    background-color: #ffffed; /* Pale yellow background */
+  }
+  
+  /* NavBar Container */
+  .navbar {
+    flex-shrink: 0; /* Prevent NavBar from resizing */
+    width: 250px; /* Fixed width for NavBar */
+    background-color: #ffef00; /* Canary Yellow */
+    height: 100%; /* Full height within the layout */
+    position: sticky; /* Keep NavBar visible during scroll */
+    top: 0;
+    padding: 20px;
+    box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1); /* Shadow for separation */
+  }
+  
+  /* NavBar Buttons */
+  .navbar button {
+    background-color: #FFF36D; /* Lemon Yellow for inactive buttons */
+    color: #333;
+    border: none;
+    padding: 15px 20px;
+    margin: 10px 0;
+    cursor: pointer;
+    text-align: center;
+    font-size: 16px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, background-color 0.2s;
+    width: 100%; /* Full width of NavBar */
+  }
+  
+  /* Active Button Highlight */
+  .navbar button.active {
+    background-color: #ccff00; /* Fluorescent Yellow for the active button */
+    font-weight: bold; /* Emphasize the active button */
+    border-left: 5px solid #333; /* Add a highlight border */
+  }
+  
+  /* Button Hover Effect */
+  .navbar button:hover {
+    background-color: #ccff00; /* Fluorescent Yellow */
+  }
+  
+  .navbar button:active {
+    transform: scale(0.95); /* Shrink slightly on click */
+  }
+  
+  /* Main Content Area */
+  .my-books {
+    flex-grow: 1; /* Ensure content takes up remaining space */
+    overflow-y: auto; /* Scrollable content */
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  /* Content Container (For Additional Styling) */
+  .content-container {
+    margin: 0 auto;
+    max-width: 1200px; /* Set a max width for content */
+    background-color: #fff; /* White background for content */
+    padding: 20px;
+    border-radius: 8px; /* Optional rounded corners */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  }
+  
+  /* Blur effect when a book is selected */
+  .blur-background {
+    filter: blur(4px);
+    pointer-events: none;
+  }
+  
+  /* Selected Book Modal */
+  .selected-book {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-width: 600px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+    z-index: 100;
+  }
+  
+  .selected-book .close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #ff4d4d;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+  }.       .user-books {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    
+}
+
+.books-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.user-books .book-card {
+    flex:1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 8px;
+
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.user-books .book-card:hover {
+    transform: scale(1.02);
+}
+
+.user-books .book-image {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+.user-books .book-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.user-books .book-title {
+    font-weight: bold;
+}
+
+.book-author {
+    color: gray;
+    font-size: 0.9em;
+}
+
+.book-card-details {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    max-width: 400px;
+    text-align: center;
+
+    filter: blur(0px);
+}
+
+.book-card-image {
+    width: 100px;
+    margin-bottom: 15px;
+}
+
+/* .book-card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+} */
+
+.book-card-info {
+    flex: 1;  /* Make sure the details take up available space */
+    display: flex;
+    flex-direction: column;
+    gap: 15px;  /* Space between the title, author, rating, and description */
+}
+
+.mark-as-reading-button,
+.remove-book-button {
+    padding: 8px;
+    margin: 5px 0;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.remove-book-button {
+    background-color: #FF4D4D;
+}
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 16px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}. 
+   
+   .current-books {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    height: 100%;
+    width: 100%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+h3 {
+    margin: 0;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.current-books .books-list {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 10px;
+    overflow-y: auto;
+    width: 100%;
+}
+
+.current-books .book-card {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    width: 100%;
+    max-width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+    cursor: pointer;
+    gap: 10px;
+}
+
+.current-books .book-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
+}
+
+.current-books .book-card:hover {
+    transform: scale(1.02);
+}
+
+.current-books .book-image {
+    width: 100%; /* Ensure it spans the full width of the container */
+    height: auto; /* Maintain aspect ratio */
+    max-width: 150px; /* Limit maximum width to avoid overly large images */
+    max-height: 500px; /* Limit maximum height to avoid overly tall images */
+    object-fit: contain; /* Ensures the image fits within the container without distortion */
+    border-radius: 8px; /* Optional: Add rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Add a slight shadow for aesthetics */
+}
+
+.current-books .book-image:hover {
+    transform: scale(1.2);
+    z-index: 1;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.current-books .book-info p {
+    margin: 0;
+    font-size: 14px;
+}
+
+.current-books .dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.current-books .dropdown-toggle {
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.current-books .dropdown-toggle:hover {
+    background-color: #0056b3;
+}
+
+.current-books .dropdown-menu {
+    display: none;
+    position: absolute;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    padding: 10px;
+    z-index: 1;
+}
+
+.current-books .dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.current-books .dropdown-item {
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.current-books .dropdown-item:hover {
+    background-color: #ddd;
+}
+
+.current-books .review-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.current-books .review-form textarea {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 100%;
+    height: 100px;
+}
+
+.current-books .review-form select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.current-books .review-form button {
+    padding: 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.current-books .review-form button:hover {
+    background-color: #218838;
+}
+.best-sellers {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    height: 100%; /* Full height to contain the book list */
+    width: 93%; /* Full width of the parent container */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.header-container {
+    display: flex;
+    width: 100%;
+    justify-content: space-between; /* Spread items across the row */
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.best-sellers .search-container {
+    display: flex;
+    gap: 10px;
+}
+
+.best-sellers .search-bar {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.best-sellers .search-button {
+    padding: 8px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.best-sellers .search-button:hover {
+    background-color: #0056b3;
+}
+
+.best-sellers .books-list {
+    flex: 1; /* Make the books list take all remaining space */
+    display: flex;
+    flex-direction: column; /* Stack books vertically */
+    gap: 20px; /* Space between individual book cards */
+    padding: 10px;
+    overflow-y: auto; /* Enable vertical scrolling */
+    height: 100%; /* Allow the list to take up available height */
+    width: 100%; /* Full width for the list */
+}
+
+.best-sellers .book-card {
+    display: flex;
+    flex-direction: row; /* Align image and text side by side */
+    align-items: flex-start; /* Align items at the top */
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    width: 100%; /* Book card takes up full width of the list */
+    max-width: 100%; /* Prevent any overflow */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+    cursor: pointer;
+    gap: 10px; /* Reduced space between image and text */
+}
+
+.best-sellers .book-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Use space-between to fill vertical space */
+    flex: 1; /* Let the text section take the remaining space */
+}
+
+.best-sellers .book-title-author {
+    display: flex;
+    flex-direction: column; /* Stack title and author vertically */
+}
+
+.best-sellers .book-card:hover {
+    transform: scale(1.02); /* Slight hover effect for interactivity */
+}
+
+.best-sellers .book-image {
+    width: 150px;
+    height: 200px;
+    border-radius: 8px;
+    object-fit: cover;
+    flex-shrink: 0; /* Prevent the image from shrinking */
+    transition: transform 0.3s ease-in-out; /* Smooth transition for zoom effect */
+}
+
+.best-sellers .book-image:hover {
+    transform: scale(1.2); /* Magnify the image on hover */
+    z-index: 1; /* Ensure it appears above other content */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a shadow for emphasis */
+}
+
+.best-sellers .book-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.best-sellers .book-author {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+h3 {
+    margin: 0;
+    font-size: 16px;
+}
+
+.best-sellers .book-info p {
+    margin: 0;
+    font-size: 12px;
+}
+
+
+.user-books .blur-background {
+    filter: blur(4px);
+}. 
+
+.books-list {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto; /* Enable scrolling */
+    padding: 5px 0;
+}
+
+.book-card {
+    width: 100%;
+    margin-bottom: 5px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 5px;
+    background-color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.book-card img {
+    width: 50px; /* Adjust size as needed */
+    height: auto;
+    border-radius: 8px;
+    margin-right: 10px;
+}
+
+.book-info p {
+    margin: 0;
+    font-size: 12px;
+}
+
+
+
+
+const MyBooks =()=>{.........  return (
+    <div className="navbar-component">
+      <div className="my-books">
+        <div className="content-container">
+          <h2>My Books</h2>
+          <div className={`book-sections ${selectedBook ? 'blur-background' : ''}`}>
+            <div className="column best-sellers-column shadow-box">
+              <button className="custom-button" onClick={() => setShowAddBook(!showAddBook)}>
+                {showAddBook ? 'Hide Add Book' : 'Add Book'}
+              </button>
+              {showAddBook && <AddBook />}
+              <BestSellers onSelectBook={handleSelectBook} />
+            </div>
+            <div className="column">
+              <div className="large-column">
+                <UserBooks onSelectBook={handleSelectBook} />
+              </div>
+              <div className="large-column">
+                <div className="toggle-section">
+                  <button onClick={() => setShowCurrentBooks(!showCurrentBooks)}>
+                    {showCurrentBooks ? 'Show Finished Books' : 'Show Currently Reading'}
+                  </button>
+                  <div className="book-section shadow-box">
+                    {showCurrentBooks ? (
+                      <CurrentBooks
+                        onSelectBook={handleSelectBook}
+                        handleMarkAsFinished={handleMarkAsFinished}
+                        handleUpdateProgress={handleUpdateProgress}
+                        handleMarkAsCurrentlyReading={handleMarkAsCurrentlyReading}
+                      />
+                    ) : (
+                      <FinishedBooks
+                        onSelectBook={(book) => {
+                          handleSelectBook(book);
+                          dispatch(fetchFinishedBooks());
+                          dispatch(getReviewsForBook(book._id));
+                        }}
+                        selectedBook={selectedBook}
+                      />
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {selectedBook && (
+        <div className="selected-book">
+          <button className="close-button" onClick={handleClearSelection}>
+            X
+          </button>
+          <div className="selected-book-content">
+            <img
+              src={selectedBook.book_image || '/default-image.jpg'}
+              alt={selectedBook.title}
+            />
+            <div className="book-details">
+              <h4>{selectedBook.title}</h4>
+              <p>
+                <strong>Author:</strong> {selectedBook.author}
+              </p>
+              {selectedBook.finished ? (
+                <div>
+                  <p>
+                    <strong>Rating:</strong> {selectedBook.rating}
+                  </p>
+                  <p>
+                    <strong>Review:</strong> {selectedBook.review}
+                  </p>
+                </div>
+              ) : (
+                <div>
+                  <input
+                    type="number"
+                    value={progressInput}
+                    onChange={(e) => setProgressInput(e.target.value)}
+                    placeholder="Enter progress"
+                  />
+                  <textarea
+                    value={comments}
+                    onChange={(e) => setComments(e.target.value)}
+                    placeholder="Enter comments"
+                  />
+                  <button onClick={() => handleUpdateProgress(selectedBook._id, comments)}>
+                    Update Progress
+                  </button>
+                  <button onClick={() => handleMarkAsFinished(selectedBook._id)}>
+                    Mark as Finished
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+      <div className="navbar-container">
+        <NavBar />
+      </div>
+    </div>
+  );
+};
+const UssrBooks = ()=>{  return (
+        <div className="user-books">
+            <h3 className="header">Your Books</h3>
+            
+
+            {/* Search Input */}
+            <input
+                type="text"
+                placeholder="Search books..."
+                value={searchQuery}
+                onChange={handleSearchChange}
+                className="search-input"
+            />
+
+            {/* Loading and Error States */}
+            {loading && <p>Loading...</p>}
+            {error && <p>Error: {typeof error === "string" ? error : "An unexpected error occurred."}</p>}
+
+            {/* Books List */}
+            <div className="books-list">
+                {booksToDisplay.length > 0 ? (
+                    booksToDisplay.map((book) => (
+                        <div key={book._id} className="book-card" onClick={() => setSelectedBook(book)}>
+                            {/* Book Image */}
+                            <img
+                                src={book.image || defaultBookImage}
+                                alt={book.title || 'Book cover'}
+                                className="book-image"
+                            />
+
+                            {/* Book Info */}
+                            <div className="book-info">
+                                <span className="book-title">{book.title}</span>
+                                <span className="book-author">by {book.author}</span>
+                            </div>
+                        </div>
+                    ))
+                ) : (
+                    <p>No books found.</p>
+                )}
+            </div>
+ {/* Detailed Book Card */}
+ {selectedBook && (
+        <div className="book-card-details">
+          <button
+            className="close-button"
+            onClick={() => setSelectedBook(null)}
+          >
+            X
+          </button>
+          <img
+            src={selectedBook.image || defaultBookImage}
+            alt={selectedBook.title}
+            className="book-card-image"
+          />
+          <div className="book-card-info">
+            <h4>{selectedBook.title}</h4>
+            <p>
+              <strong>Author:</strong> {selectedBook.author}
+            </p>
+            <p>
+              {selectedBook.about || 'No description available.'}
+            </p>
+            {selectedBook.currentlyReading ? (
+              <button className="currently-reading-button">
+                Book Marked as Currently Reading
+              </button>
+            ) : (
+              <button
+                className="mark-as-reading-button"
+                onClick={() => handleMarkAsCurrentlyReading(selectedBook._id)}
+              >
+                Mark as Currently Reading
+              </button>
+            )}
+            <button
+              className="remove-book-button"
+              onClick={() => handleRemoveBook(selectedBook._id)}
+            >
+              Remove Book
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default UserBooks;
+
+
+
+const CurrentBooks=()=>{
+  return (
+    <div className="current-books">
+      <h3>Currently Reading Books</h3>
+      <div className="books-list">
+        {currentlyReading.map((book) => {
+          const bookProgress = book.progress || 0;
+          return (
+            <div key={book._id} className="book-card" onClick={() => handleBookClick(book)}>
+              <img src={book.image || defaultBookImage} alt={book.title} />
+              <div className="book-info">
+                <p><strong>{book.title}</strong></p>
+                <p>{book.author}</p>
+                <p>Progress: {bookProgress}%</p>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+      {selectedBook && (
+        <div className="book-card-container">
+          <div className="book-card">
+            <img src={selectedBook.image} alt={selectedBook.title} />
+            <div className="book-info">
+              <p><strong>{selectedBook.title}</strong></p>
+              <p>{selectedBook.author}</p>
+              <p>Rating: {selectedBook.rating}</p>
+              <p>Progress: {selectedBook.progress}%</p>
+              <input type="number" value={progressInput} onChange={(e) => setProgressInput(e.target.value)} placeholder="Enter progress" />
+              <div className="dropdown">
+                <button className="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Options
+                </button>
+                <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <button className="dropdown-item" onClick={() => handleUpdateProgress(selectedBook._id)}>Update Progress</button>
+                  <button className="dropdown-item" onClick={() => handleMarkAsFinished(selectedBook._id)}>Mark as Finished</button>
+                  <button className="dropdown-item" onClick={() => handleMarkAsCurrentlyReading(selectedBook._id)}>Mark as Currently Reading</button>
+                </div>
+              </div>
+              {showReviewForm && (
+                <div className="review-form">
+                  <textarea value={review} onChange={(e) => setReview(e.target.value)} placeholder="Write your review" />
+                  <select value={rating} onChange={(e) => setRating(e.target.value)}>
+                    <option value="0">Select a rating</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                  </select>
+                  <button onClick={handleSubmitReview}>Submit Review</button>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default CurrentBooks;
+    const FinishedBooks=()=>{.  return (
+      <div className="finished-books">
+          <h3>Finished Books</h3>
+          <div className="books-list">
+              {finishedBooks.map((book) => (
+                  <div key={book._id} className="book-card" onClick={() => setSelectedBook(book)}>
+                      <img src={book.imageUrl || defaultBookImage} alt={book.title} />
+                      <div className="book-info">
+                          <p><strong>{book.title}</strong></p>
+                          <p>{book.author}</p>
+                      </div>
+                  </div>
+              ))}
+          </div>
+
+          {/* Selected Book Details */}
+          {selectedBook && (
+              <div className="selected-book">
+                  <h4>{selectedBook.title}</h4>
+                  <p><strong>Author:</strong> {selectedBook.author}</p>
+                  <p><strong>Rating:</strong> {selectedBook.rating}</p>
+
+                  {/* Reviews Section */}
+                  {Array.isArray(reviews) && reviews.map((review) => (
+                      <div key={review._id}>
+                          <p>{review.review}</p>
+                          <button onClick={() => {
+                              setReviewId(review._id);
+                              setReview(review.review);
+                          }}>Update Review</button>
+                          <button onClick={() => handleDeleteReview(review._id)}>Delete Review</button>
+                      </div>
+                  ))}
+                  
+                  {/* Review Input */}
+                  <textarea value={review} onChange={(e) => setReview(e.target.value)} placeholder="Enter review" />
+                  <select value={rating} onChange={(e) => setRating(e.target.value)}>
+                      <option value="0">Select a rating</option>
+                      {[1, 2, 3, 4, 5].map(num => (
+                          <option key={num} value={num}>{num}</option>
+                      ))}
+                  </select>
+                  <button onClick={handleUpdateReview}>Update Review</button>
+              </div>
+          )}
+      </div>
+  );
+};
+
+export default FinishedBooks;
+
+   const BestSellers=()=>{.   return (
+    <div className="best-sellers">
+      <div className="header-container">
+        <h3>Best Sellers</h3>
+        <div className="search-container">
+          <input type="text" className="search-bar" placeholder="Search Best Sellers by author or title..." value={query} onChange={handleSearchChange} />
+          <button className="search-button" onClick={handleSearch}>Search</button>
+          <button className="clear-button" onClick={() => setQuery('')}>Clear</button>
+        </div>
+      </div>
+      <div className="books-list">
+        {(query.length > 2 ? bestSellersSearchResults : bestSellers).map((book) => (
+          <div key={book.rank} className="book-card" onClick={() => onSelectBook(book)}>
+            <img src={book.book_image} alt={book.title} />
+            <div className="book-info">
+              <p><strong>{book.title}</strong></p>
+              <p>{book.author}</p>
+              <p>Rank: {book.rank}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default BestSellers; 
+
+
+******.  I am telling the code you given, lets keep NavBar as seperate in MyBooks , this is also need to be included in MyBooks and other Components should append it to it instead of going under or up of Nav Bar , also here I need Best Sellers in the first column occupying all the soace , in the next coplum, there will be two rows, each 50%, first 50% should be Use Books, 2nd 50% should be toggling between curret and Fin ished books lets make it with bootstrapo or any good enhancing css for react for good responsive design....or any of the ui libraries frameworks which are good and easy,, lets also make boooklist List inside the 4 components of MyBooks will lok same or good lets make it responsive 

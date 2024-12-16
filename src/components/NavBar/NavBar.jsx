@@ -18,7 +18,7 @@ const NavBar = ({ children }) => {
   const isActive = (path) => location.pathname === path;
 
   return (
-    <div className="navbar-container">
+    <div className="">
       <div className="navbar">
         <button
           className={isActive('/dashboard') ? 'active' : ''}
@@ -47,7 +47,7 @@ const NavBar = ({ children }) => {
        
         <button onClick={handleLogout}>Logout</button>
       </div>
-      <div className="main-content">{children}</div>
+      {/* <div className="main-content">{children}</div> */}
     </div>
   );
 };

@@ -78,7 +78,7 @@ const MyFriends = () => {
                         {successMessage && <div className="alert-success">{successMessage}</div>}
                         <div className="pagination-buttons">
                             <a href="#" onClick={() => handlePageChange({ selected: currentPage - 1 })} className={currentPage === 0 ? 'disabled' : ''}>Previous</a>
-                            <a href="#" onClick={() => handlePageChange({ selected: currentPage + 1 })} className={!hasMoreUsers ? 'disabled' : ''}>Next</a>
+                            <a class="styleNew"ref="#" onClick={() => handlePageChange({ selected: currentPage + 1 })} className={!hasMoreUsers ? 'disabled' : ''}>Next</a>
                         </div>
                     </div>
                     <div className="box small-column">

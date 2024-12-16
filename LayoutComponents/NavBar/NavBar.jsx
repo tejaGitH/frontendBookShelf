@@ -20,8 +20,8 @@ const NavBar = () => {
             <button onClick={() => navigate('/my-friends')}>My Friends</button>
             <button onClick={() => navigate('/best-sellers')}>Best Sellers</button>
             <button onClick={() => navigate('/social-updates')}>Social Updates</button>
-            <button onClick={() => navigate('/about')}>About</button>
-            <button onClick={() => navigate('/profile')}>Profile</button>
+            {/* <button onClick={() => navigate('/about')}>About</button>
+            <button onClick={() => navigate('/profile')}>Profile</button> */}
             <button onClick={handleLogout}>Logout</button>
         </div>
     );

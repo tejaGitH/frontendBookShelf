@@ -61,6 +61,7 @@
     justify-content: space-between;
     padding: 10px 0;
     width:82%;
+    max-height: 8%;
 }
 
 .pagination-buttons a {
@@ -77,4 +78,7 @@
 .alert-success {
     color: green;
     margin-top: 10px;
+}
+.styleNew{
+    margin-left: 39rem;
 }

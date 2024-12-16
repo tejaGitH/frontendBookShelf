@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, register } from '../actions/userActions';
 import { useNavigate } from 'react-router-dom';
+import './LandingPage.css';
 
 const LandingPage = () => {
     const dispatch = useDispatch();
@@ -80,7 +81,7 @@ const LandingPage = () => {
                         required
                     />
                 )}
-                <input
+                <input className="commonStyle1"
                     type="email"
                     name="email"
                     placeholder="Email"
@@ -88,7 +89,7 @@ const LandingPage = () => {
                     onChange={handleChange}
                     required
                 />
-                <input
+                <input className="commonStyle1"
                     type="password"
                     name="password"
                     placeholder="Password"
@@ -96,7 +97,7 @@ const LandingPage = () => {
                     onChange={handleChange}
                     required
                 />
-                <button type="submit" disabled={loading}>
+                <button className="commonStyle1" type="submit" disabled={loading}>
                     {isLogin ? "Login" : "Register"}
                 </button>
             </form>
