@@ -1,5 +1,7 @@
 import React from 'react';
 import './EligibleUsers.css';
+import defaultBookImage from '../../images/default-book-image.jpg';
+import defaultUserImage from '../../images/default-user-image.jpg';
 
 const EligibleUsers = ({
     availableUsers,
@@ -20,7 +22,7 @@ const EligibleUsers = ({
                 <ul>
                     {availableUsers.map((user) => (
                         <li key={user._id} className="user-item">
-                            <img src="https://via.placeholder.com/50" alt={user.username} className="profile-img" />
+                            <img src={"https://via.placeholder.com/50"||defaultUserImage} alt={user.username} className="profile-img" />
                             <div className="user-info">
                                 <p>
                                     <strong>{user.username}</strong> ({user.email})

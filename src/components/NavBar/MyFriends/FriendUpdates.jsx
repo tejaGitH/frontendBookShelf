@@ -12,18 +12,10 @@ const FriendUpdates = () => {
     }, [dispatch]);
 
     return (
-        <div className="friend-updates">
-            <h3>Friend Updates</h3>
-            <ul>
-                {friendUpdates.map((update) => (
-                    <li key={update._id}>
-                        <p>
-                            <strong>{update.username}</strong>: {update.update}
-                        </p>
-                    </li>
-                ))}
-            </ul>
-            {friendUpdates.length === 0 && <p>No updates from friends.</p>}
+        <div >
+            <h3>space for development</h3>
+           
+           
         </div>
     );
 };

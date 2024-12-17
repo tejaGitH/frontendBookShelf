@@ -28,3 +28,13 @@
     margin: 0;
     font-size: 12px;
 }
+
+.close-button {
+    position: absolute;
+    top: -9px;
+    right: -3px;
+    font-size: 30px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}

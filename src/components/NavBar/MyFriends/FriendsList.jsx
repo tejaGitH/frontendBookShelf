@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getFriends, removeFriend } from '../../../actions/friendshipActions';
 import './FriendsList.css';
+import defaultBookImage from '../../images/default-book-image.jpg';
+import defaultUserImage from '../../images/default-user-image.jpg';
 
 const FriendsList = () => {
     const dispatch = useDispatch();
@@ -25,7 +27,7 @@ const FriendsList = () => {
                     const friend = friendship.friend || friendship.user;
                     return (
                         <li key={friendship._id} className="user-item">
-                            <img src="https://via.placeholder.com/50" alt={friend.username} className="profile-img" />
+                            <img src={"https://via.placeholder.com/50" || defaultUserImage} alt={friend.username} className="profile-img" />
                             <div className="user-info">
                                 <p>
                                     <strong>{friend.username}</strong> ({friend.email})

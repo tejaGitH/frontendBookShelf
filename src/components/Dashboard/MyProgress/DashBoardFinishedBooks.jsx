@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchFinishedBooks } from '../../../actions/bookActions';
 import './DashBoardFinishedBooks.css';
+import defaultBookImage from '../../images/default-book-image.jpg';
+import defaultUserImage from '../../images/default-user-image.jpg';
 
 const DashBoardFinishedBooks = () => {
   const dispatch = useDispatch();
@@ -17,7 +19,7 @@ const DashBoardFinishedBooks = () => {
       <div className="finished-books-list">
         {finishedBooks?.map((book) => (
           <div key={book._id} className="finished-book-card">
-            <img src="https://via.placeholder.com/50" alt={book.title} />
+            <img src={"https://via.placeholder.com/50"||defaultBookImage} alt={book.title} />
             <div className="finished-book-info">
               <p><strong>{book.title}</strong></p>
               <p>By {book.author}</p>

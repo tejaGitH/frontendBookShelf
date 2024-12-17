@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCurrentBooks } from '../../../actions/bookActions';
 import './DashBoardCurrentBooks.css';
+import defaultBookImage from '../../images/default-book-image.jpg';
+import defaultUserImage from '../../images/default-user-image.jpg';
 
 const DashBoardCurrentBooks = ({ onSelect }) => {
   const dispatch = useDispatch();
@@ -17,7 +19,7 @@ const DashBoardCurrentBooks = ({ onSelect }) => {
       <div className="current-books-list">
         {currentBooks?.map((book) => (
           <div key={book._id} className="current-book-card" onClick={() => onSelect(book)}>
-            <img src="https://via.placeholder.com/50" alt={book.title} />
+            <img src={"https://via.placeholder.com/50" || defaultBookImage} alt={book.title} />
             <div className="current-book-info">
               <p><strong>{book.title}</strong></p>
               <p>By {book.author}</p>

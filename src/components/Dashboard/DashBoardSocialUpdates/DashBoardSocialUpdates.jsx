@@ -50,7 +50,7 @@ const DashboardSocialUpdates = () => {
                         )).reverse() // Reverse the updates to show the newest on top
                     )
                 )}
-                {error && <p className="error">{error}</p>}
+                {error && <p className="error">{error.message || error}</p>}
             </div>
         </div>
     );

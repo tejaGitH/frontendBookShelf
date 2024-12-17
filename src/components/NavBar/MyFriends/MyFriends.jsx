@@ -65,7 +65,6 @@ const MyFriends = () => {
                 <h2>My Friends</h2>
                 <div className="first-row">
                     <div className="box large-column">
-                        <h2>People You May Know</h2>
                         {filteredEligibleUsers.length === 0 ? (
                             <p>No available users to display.</p>
                         ) : (
@@ -76,10 +75,24 @@ const MyFriends = () => {
                             />
                         )}
                         {successMessage && <div className="alert-success">{successMessage}</div>}
-                        <div className="pagination-buttons">
-                            <a href="#" onClick={() => handlePageChange({ selected: currentPage - 1 })} className={currentPage === 0 ? 'disabled' : ''}>Previous</a>
-                            <a class="styleNew"ref="#" onClick={() => handlePageChange({ selected: currentPage + 1 })} className={!hasMoreUsers ? 'disabled' : ''}>Next</a>
-                        </div>
+                       
+<div className="pagination-buttons">
+    <a
+        href="#"
+        onClick={() => handlePageChange({ selected: currentPage - 1 })}
+        className={currentPage === 0 ? 'disabled' : ''}
+    >
+        Previous
+    </a>
+    <a
+        href="#"
+        onClick={() => handlePageChange({ selected: currentPage + 1 })}
+        className={!hasMoreUsers ? 'disabled' : 'styleNew'}
+    >
+        Next
+    </a>
+</div>
+                        
                     </div>
                     <div className="box small-column">
                         <FriendUpdates />
@@ -102,3 +115,8 @@ const MyFriends = () => {
 };
 
 export default MyFriends;
+
+
+
+
+

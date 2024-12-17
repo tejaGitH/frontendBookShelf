@@ -67,11 +67,22 @@ const reviewSlice = createSlice({
             .addCase(likeReview.pending, (state) => {
                 state.loading = true;
             })
+            // .addCase(likeReview.fulfilled, (state, action) => {
+            //     state.loading = false;
+            //     console.log("like",action.payload);
+            //     const index = state.reviews.findIndex((review) => review._id === action.payload._id);
+            //     if (index !== -1) {
+            //         state.reviews[index] = action.payload; // Update review with new like data
+            //     }
+            // })
             .addCase(likeReview.fulfilled, (state, action) => {
                 state.loading = false;
+            
+                // Find the review to update in the state
                 const index = state.reviews.findIndex((review) => review._id === action.payload._id);
                 if (index !== -1) {
-                    state.reviews[index] = action.payload; // Update review with new like data
+                    // Replace the old review with the updated one (including new likes)
+                    state.reviews[index] = action.payload;
                 }
             })
             .addCase(likeReview.rejected, (state, action) => {

@@ -40,7 +40,8 @@
 }
 
 .large-column {
-    flex: 7;
+    flex: 70%;
+
 }
 
 .small-column {
@@ -60,14 +61,16 @@
     display: flex;
     justify-content: space-between;
     padding: 10px 0;
-    width:82%;
-    max-height: 8%;
+    width:98%;
+    max-height: 3%;
 }
 
 .pagination-buttons a {
     color: #007BFF;
     cursor: pointer;
     text-decoration: none;
+    width: 98%;
+    height: 8%;
 }
 
 .pagination-buttons a.disabled {
@@ -78,6 +81,7 @@
 .alert-success {
     color: green;
     margin-top: 10px;
+    max-height: 3%;
 }
 .styleNew{
     margin-left: 39rem;

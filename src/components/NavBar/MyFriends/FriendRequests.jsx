@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPendingRequests, updateFriendshipStatus, getFriends } from '../../../actions/friendshipActions';
-import './FriendRequests.css';
+import './FriendRequests.css';import defaultBookImage from '../../images/default-book-image.jpg';
+import defaultUserImage from '../../images/default-user-image.jpg';
 
 const FriendRequests = () => {
     const dispatch = useDispatch();
@@ -30,7 +31,7 @@ const FriendRequests = () => {
             <ul>
                 {pendingRequests.map((request) => (
                     <li key={request._id} className="user-item">
-                        <img src="https://via.placeholder.com/50" alt={request.user?.username || 'Unknown User'} className="profile-img" />
+                    <img src= {"https://via.placeholder.com/50"||defaultUserImage} alt={request.user?.username || 'Unknown User'} className="profile-img" />
                         <div className="user-info">
                             <p>
                                 <strong>{request.user?.username || 'Unknown User'}</strong> ({request.user?.email || 'No Email Provided'})

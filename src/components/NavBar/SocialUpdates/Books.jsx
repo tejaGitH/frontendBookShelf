@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchFriendsBooks } from '../../../actions/bookActions';
 import BookCard from './BookCard';
 import './Books.css';
+import defaultBookImage from '../../images/default-book-image.jpg';
+import defaultUserImage from '../../images/default-user-image.jpg';
 
 const Books = ({ addSocialUpdate }) => {
     const dispatch = useDispatch();
@@ -44,7 +46,7 @@ const Books = ({ addSocialUpdate }) => {
                     friendsBooks.filter(book => book.title.includes(searchQuery) || book.author.includes(searchQuery)).map((book) => (
                         <div key={book._id} className="book-item-container">
                             <div className="book-item" onClick={() => handleBookClick(book)}>
-                                <img src="https://via.placeholder.com/100x140" alt={book.title} className="book-img" />
+                                <img src={"https://via.placeholder.com/100x140" || defaultBookImage} alt={book.title} className="book-img" />
                                 <div className="book-info">
                                     <p><strong>{book.title}</strong> by {book.author}</p>
                                     <p>Owned by: {book.userId.username}</p>
