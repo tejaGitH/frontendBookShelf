@@ -31,23 +31,26 @@ Bookshelf is an  social networking application designed for book lovers, enablin
 Follow these steps to set up and run the development server:
 
 1. **Copy the Script**  
-   Copy the `bookShelf.sh` file into the `bookShelfRoot` repository.
+   Copy the `bookShelf.sh` file into the `bookShelfRoot` / `bookShelf`  / `frontendBookShelf` repository.
 
 2. **Save the Script**  
-   Save the file with the name `filename.sh` (or any desired name).
+   Save the file with the name `bookShelf.sh` ( desired name).
 
 3. **Make the Script Executable**  
    Run the following command in your terminal to grant execute permissions:  
-   ```bash
-   chmod +x filename.sh
+   ```
 
+   chmod +x bookShelf.sh
+    
 4. **Run the Script**
     Execute the script to start the serve
-    ```bash
-    ./filename.sh
+    ```
+
+    ./bookShelf.sh
+    
     
 5. **Access the Server**
-    Once the Script complete, you can access bookShelf at "http://localhost:3002" ....!  
+    Once the Script complete, you can access bookShelf at <b>http://localhost:3002</b> ....!  
 
 ## Installation
 
