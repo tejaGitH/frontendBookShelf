@@ -42,16 +42,19 @@ const BestSellers = ({ onSelectBook }) => {
         </div>
       </div>
       <div className="books-list">
-        {(query.length > 2 ? bestSellersSearchResults : bestSellers).map((book) => (
-          <div key={book.rank} className="book-card" onClick={() => onSelectBook(book)}>
-            <img src={book.book_image} alt={book.title} />
-            <div className="book-info">
-              <p><strong>{book.title}</strong></p>
-              <p>{book.author}</p>
-              <p>Rank: {book.rank}</p>
-            </div>
-          </div>
-        ))}
+      {(Array.isArray(query.length > 2 ? bestSellersSearchResults : bestSellers) 
+  ? (query.length > 2 ? bestSellersSearchResults : bestSellers) 
+  : []
+).map((book) => (
+  <div key={book.rank} className="book-card" onClick={() => onSelectBook(book)}>
+    <img src={book.book_image} alt={book.title} />
+    <div className="book-info">
+      <p><strong>{book.title}</strong></p>
+      <p>{book.author}</p>
+      <p>Rank: {book.rank}</p>
+    </div>
+  </div>
+))}
       </div>
     </div>
   );
