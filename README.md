@@ -31,7 +31,7 @@ Bookshelf is an  social networking application designed for book lovers, enablin
 Follow these steps to set up and run the development server:
 
 1. **Copy the Script**  
-   Copy the `bookShelf.sh` file into the `bookShelfRoot` / `bookShelf`  / `frontendBookShelf` repository.
+   Copy the `bookShelf.sh` file from the `bookShelfRoot` / `bookShelf`  / `frontendBookShelf` repository.
 
 2. **Save the Script**  
    Save the file with the name `bookShelf.sh` ( desired name).
