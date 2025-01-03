@@ -132,3 +132,32 @@
     text-align: left;
     padding: 0;
 }
+.comment-timestamp {
+    font-size: 0.85rem;
+    color: gray;
+    margin-left: 10px;
+}
+
+.refresh-message-box {
+    background-color: #f0f8ff; /* Light blue background */
+    padding: 15px;
+    margin-top: 15px;
+    border-radius: 5px;
+    border: 1px solid #b0c4de; /* Light gray border */
+    font-size: 14px;
+    color: #333; /* Text color */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px; /* Spacing between the text and the link */
+}
+
+.refresh-link {
+    color: #1e90ff; /* Blue color for the link */
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.refresh-link:hover {
+    color: #4682b4; /* Darker blue on hover */
+}

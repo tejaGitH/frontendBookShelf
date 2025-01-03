@@ -15,27 +15,37 @@ const Dashboard = () => {
 
     return (
         <div className="dashboard">
-            <div className="navbar-container">
-                <NavBar />
-            </div>
             <div className="content-container">
                 <div className="first-row">
                     <div className="progress-container">
-                        <MyProgress onSelectBook={handleBookSelect} />
+                        <h3>My Progress</h3>
+                        <div className="scroll-content">
+                            <MyProgress onSelectBook={handleBookSelect} />
+                        </div>
                     </div>
                     <div className="profile-box">
-                        <DashBoardAddBook />
+                        <h3>Add a Book</h3>
+                        <div className="scroll-content">
+                            <DashBoardAddBook />
+                        </div>
                     </div>
                 </div>
                 <div className="second-row">
                     <div className="friends-box">
-                        <DashBoardFriendList />
+                        <h3>My Friends</h3>
+                        <div className="scroll-content">
+                            <DashBoardFriendList />
+                        </div>
                     </div>
                     <div className="updates-box">
-                        <DashBoardSocialUpdates />
+                        <h3>Social Updates</h3>
+                        <div className="scroll-content">
+                            <DashBoardSocialUpdates />
+                        </div>
                     </div>
                 </div>
             </div>
+            <NavBar />
         </div>
     );
 };

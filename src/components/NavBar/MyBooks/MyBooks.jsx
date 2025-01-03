@@ -95,7 +95,8 @@ const MyBooks = () => {
   };
 
   return (
-    <div className="navbar-component">
+    <div className="my-books-page">
+      
       <div className="my-books">
         <div className="content-container">
           <h2>My Books</h2>
@@ -135,10 +136,15 @@ const MyBooks = () => {
                       />
                     )}
                   </div>
+                  
                 </div>
+                
               </div>
+              
             </div>
+            
           </div>
+          
         </div>
       </div>
       {selectedBook && (
@@ -202,10 +208,8 @@ const MyBooks = () => {
       </div>
     </div>
   </div>
-)}
-      <div >
-        <NavBar />
-      </div>
+)}  
+<NavBar/>
     </div>
   );
 };

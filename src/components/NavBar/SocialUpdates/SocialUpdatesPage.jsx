@@ -27,9 +27,7 @@ const SocialUpdatesPage = () => {
                     </div>
                 </div>
             </div>
-            <div className="navbar-container">
-                <NavBar />
-            </div>
+           <NavBar />
         </div>
     );
 };

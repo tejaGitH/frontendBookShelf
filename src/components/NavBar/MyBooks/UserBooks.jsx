@@ -17,6 +17,7 @@ const UserBooks = () => {
     // Component State
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedBook, setSelectedBook] = useState(null);
+    const [showError, setShowError] = useState(false);  // State to control error visibility
 
     // Fetch books on mount
     useEffect(() => {
@@ -36,24 +37,40 @@ const UserBooks = () => {
         }
     };
 
-    // Handle removing a book
     const handleRemoveBook = (bookId) => {
-        dispatch(deleteBook(bookId));
-        setSelectedBook(null); // Close the book details after removing
+        dispatch(deleteBook(bookId)).then(() => {
+            dispatch(fetchBooks()); // Re-fetch books after delete
+            setSelectedBook(null); // Close the book details after removing
+        });
     };
 
     const handleMarkAsCurrentlyReading = (bookId) => {
-        dispatch(markBookAsCurrentlyReading(bookId));
-        setSelectedBook(null); // Close the book details after marking
-      };
-    
+        dispatch(markBookAsCurrentlyReading(bookId)).then(() => {
+            setSelectedBook((prev) => ({
+                ...prev,
+                currentlyReading: true,
+            }));
+            dispatch(fetchBooks());
+        });
+    };
+
+    // Error Display - Show error for 2 seconds
+    useEffect(() => {
+        if (error) {
+            setShowError(true);
+            const timer = setTimeout(() => {
+                setShowError(false);
+            }, 2000);  // Hide error after 2 seconds
+            return () => clearTimeout(timer);
+        }
+    }, [error]);
+
     // Determine which list to render
     const booksToDisplay = searchQuery.length > 2 ? userBooksSearchResults : userBooks;
 
     return (
         <div className="user-books">
             <h3 className="header">Your Books</h3>
-            
 
             {/* Search Input */}
             <input
@@ -64,9 +81,15 @@ const UserBooks = () => {
                 className="search-input"
             />
 
-            {/* Loading and Error States */}
+            {/* Loading State */}
             {loading && <p>Loading...</p>}
-            {error && <p>Error: {typeof error === "string" ? error : "An unexpected error occurred."}</p>}
+
+            {/* Error Message Display */}
+            {showError && error && (
+                <div className="error-message">
+                    Error: {typeof error === "string" ? error : "fetching NYT api data"}
+                </div>
+            )}
 
             {/* Books List */}
             <div className="books-list">
@@ -91,51 +114,52 @@ const UserBooks = () => {
                     <p>No books found.</p>
                 )}
             </div>
- {/* Detailed Book Card */}
- {selectedBook && (
-        <div className="book-card-details">
-          <button
-            className="close-button"
-            onClick={() => setSelectedBook(null)}
-          >
-            X
-          </button>
-          <img
-            src={selectedBook.image || defaultBookImage}
-            alt={selectedBook.title}
-            className="book-card-image"
-          />
-          <div className="book-card-info">
-            <h4>{selectedBook.title}</h4>
-            <p>
-              <strong>Author:</strong> {selectedBook.author}
-            </p>
-            <p>
-              {selectedBook.about || 'No description available.'}
-            </p>
-            {selectedBook.currentlyReading ? (
-              <button className="currently-reading-button">
-                Book Marked as Currently Reading
-              </button>
-            ) : (
-              <button
-                className="mark-as-reading-button"
-                onClick={() => handleMarkAsCurrentlyReading(selectedBook._id)}
-              >
-                Mark as Currently Reading
-              </button>
+
+            {/* Detailed Book Card */}
+            {selectedBook && (
+                <div className="book-card-details">
+                    <button
+                        className="close-button"
+                        onClick={() => setSelectedBook(null)}
+                    >
+                        X
+                    </button>
+                    <img
+                        src={selectedBook.image || defaultBookImage}
+                        alt={selectedBook.title}
+                        className="book-card-image"
+                    />
+                    <div className="book-card-info">
+                        <h4>{selectedBook.title}</h4>
+                        <p>
+                            <strong>Author:</strong> {selectedBook.author}
+                        </p>
+                        <p>
+                            {selectedBook.about || 'No description available.'}
+                        </p>
+                        {selectedBook.currentlyReading ? (
+                            <button className="currently-reading-button">
+                                Book Marked as Currently Reading
+                            </button>
+                        ) : (
+                            <button
+                                className="mark-as-reading-button"
+                                onClick={() => handleMarkAsCurrentlyReading(selectedBook._id)}
+                            >
+                                Mark as Currently Reading
+                            </button>
+                        )}
+                        <button
+                            className="remove-book-button"
+                            onClick={() => handleRemoveBook(selectedBook._id)}
+                        >
+                            Remove Book
+                        </button>
+                    </div>
+                </div>
             )}
-            <button
-              className="remove-book-button"
-              onClick={() => handleRemoveBook(selectedBook._id)}
-            >
-              Remove Book
-            </button>
-          </div>
         </div>
-      )}
-    </div>
-  );
+    );
 };
 
 export default UserBooks;

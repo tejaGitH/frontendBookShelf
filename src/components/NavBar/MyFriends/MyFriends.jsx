@@ -107,9 +107,9 @@ const MyFriends = () => {
                     </div>
                 </div>
             </div>
-            <div className="navbar-container">
+        
                 <NavBar />
-            </div>
+           
         </div>
     );
 };

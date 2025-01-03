@@ -1,110 +1,81 @@
-.my-books {
+.my-books-page {
     display: flex;
     height: 100vh;
-    width: 100vw;
-    overflow: hidden; /* Prevent overflow issues */
-}
-
-.content-container {
-    width: 85%;
+    position: relative;
+    width: 100%;  /* Ensure full width */
+  }
+  
+  .my-books {
+ 
     display: flex;
+    width:100%;
+    align-items: center;
     flex-direction: column;
-    padding: 10px;
-    height: 100vh; /* Ensure it fills the height of the viewport */
-    box-sizing: border-box; /* Include padding and border in the height and width */
-    overflow: hidden; /* Prevent internal overflow */
-}
-
-.navbar-container {
-    width: 15%;
-    background-color: #f4f4f4;
-    padding: 10px;
-    overflow-y: auto; /* Ensure the navbar is scrollable if content overflows */
+  }
+  
+  .book-sections {
     display: flex;
-}
-
-.book-sections {
-    display: flex;
-    gap: 5px; /* Reduced spacing between components */
+    gap: 100px;
+    width: 100%;  /* Subtract the width of the NavBar */
     height: 100%;
-    overflow: hidden; /* Prevent overflow in the main section */
-}
-
-.column {
-    flex: 1;
+    overflow: hidden;
+  }
+  
+  .column {
+    flex: 1; /* Ensure both columns take equal space */
     display: flex;
     flex-direction: column;
-    gap: 5px; /* Reduced spacing between components */
-    height: 100%; /* Ensure the columns take the full height */
-}
-
-.large-column {
+    gap: 5px;
+    height: 100%;
+    align-items: center
+  }
+  
+  .large-column {
     flex: 1;
     display: flex;
     flex-direction: column;
     overflow-y: auto;
     overflow-x: hidden;
-    width: 92%;
-  /* Add a little gap between components */
-}
-
-.large-column > div {
+    width: 100%;
+    
+  }
+  
+  .large-column > div {
     flex: 1;
     overflow-y: auto;
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a shadow effect */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 10px;
-    margin-bottom: 0px; /* Add a gap between components */
-}
-
-.custom-button {
+    margin-bottom: 0px;
+  }
+  
+  .custom-button {
     padding: 8px;
     background-color: #007BFF;
     color: white;
     border: none;
     border-radius: 4px;
+    align-self: normal;
     cursor: pointer;
-}
-
-.custom-button:hover {
+  }
+  
+  .custom-button:hover {
     background-color: #0056b3;
-}
-
-.search-bar {
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-
-.toggle-section {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 5px; /* Reduced spacing between components */
-    flex: 1;
-    overflow: hidden; /* Prevent the toggle section from scrolling */
-}
-
-.book-section {
-    flex: 1;
-    overflow-y: auto; /* Enable scrolling within book sections */
-    display: flex;
-    flex-direction: column;
-}
-
-.shadow-box {
+  }
+  
+  .shadow-box {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     padding: 10px;
     border-radius: 4px;
-}
-
-.blur-background {
+  }
+  
+  .blur-background {
     filter: blur(4px);
-}
-
-.selected-book {
+  }
+  
+  .selected-book {
     padding: 20px;
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -114,37 +85,37 @@
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 1000;
-    max-width: 80%;  /* Adjust width to fit the page */
+    max-width: 80%;
     display: flex;
-    align-items: center;  /* Align image and text horizontally */
-    gap: 20px;  /* Space between the image and book details */
+    align-items: center;
+    gap: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.selected-book img {
-    width: 200px;  /* Image size adjusted to fit neatly */
+  }
+  
+  .selected-book img {
+    width: 200px;
     border-radius: 8px;
-    object-fit: cover;  /* Ensure the image covers its container */
-}
-
-.book-details {
-    flex: 1;  /* Make sure the details take up available space */
+    object-fit: cover;
+  }
+  
+  .book-details {
+    flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 15px;  /* Space between the title, author, rating, and description */
-}
-
-.book-details h4 {
+    gap: 15px;
+  }
+  
+  .book-details h4 {
     margin-top: 0;
-    font-size: 28px;  /* Larger font size for book title */
-}
-
-.book-details p {
+    font-size: 28px;
+  }
+  
+  .book-details p {
     margin: 5px 0;
-    font-size: 18px;  /* Adjusted font size for readability */
-}
-
-.close-button {
+    font-size: 18px;
+  }
+  
+  .close-button {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -153,72 +124,76 @@
     font-size: 20px;
     cursor: pointer;
     color: #333;
-}
-
-.books-list {
+  }
+  
+  .books-list {
     display: flex;
     flex-direction: column;
-    overflow-y: auto; /* Enable scrolling */
+    overflow-y: auto;
     padding: 5px 0;
-    gap: 5px; /* Add gap between book cards */
-}
-
-.book-card {
+    gap: 5px;
+  }
+  
+  .book-card {
     display: flex;
     align-items: center;
-    gap: 10px; /* Spacing between image and text */
+    gap: 10px;
     padding: 10px;
     border-radius: 8px;
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     cursor: pointer;
-}
-
-.book-card img {
+  }
+  
+  .book-card img {
     width: 50px;
     height: auto;
     border-radius: 8px;
-}
-
-.book-info {
+  }
+  
+  .book-info {
     display: flex;
     flex-direction: column;
-    gap: 5px; /* Add spacing between text lines */
-}
-
-.book-info p {
+    gap: 5px;
+  }
+  
+  .book-info p {
     margin: 0;
-    font-size: 14px; /* Increased font size for better readability */
-}
-
-.best-sellers-column {
-    flex: 1; /* Take full height */
+    font-size: 14px;
+  }
+  
+  .best-sellers-column {
+    flex: 1;
     display: flex;
     flex-direction: column;
     gap: 10px;
-}
-
-.best-sellers {
-    flex: 1; /* Take remaining space in the column */
+    
+  }
+  
+  .best-sellers {
+    flex: 1;
     display: flex;
     flex-direction: column;
-    overflow-y: auto; /* Enable scrolling */
-}
-
-.best-sellers .books-list {
-    flex: 1; /* Make the books list take all remaining space */
+    overflow-y: auto;
+    align-items: center;
+  }
+  
+  .best-sellers .books-list {
+    flex: 1;
     display: flex;
     flex-direction: column;
     overflow-y: auto;
     padding: 5px 0;
-}
-
-.best-sellers h3 {
+    
+    align-items: center
+  }
+  
+  .best-sellers h3 {
     margin: 0;
     font-size: 16px;
-}
-
-.best-sellers .book-card {
+  }
+  
+  .best-sellers .book-card {
     width: 100%;
     margin-bottom: 5px;
     border: 1px solid #ddd;
@@ -228,82 +203,78 @@
     cursor: pointer;
     display: flex;
     align-items: center;
-}
-
-.best-sellers .book-card img {
+  }
+  
+  .best-sellers .book-card img {
     width: 50px;
     height: auto;
     border-radius: 8px;
     margin-right: 10px;
-}
-
-.best-sellers .book-info {
+  }
+  
+  .best-sellers .book-info {
     display: flex;
     flex-direction: column;
-    gap: 5px; /* Add spacing between text lines */
-}
-
-.best-sellers .book-info p {
+    gap: 5px;
+  }
+  
+  .best-sellers .book-info p {
     margin: 0;
-    font-size: 14px; /* Increased font size for better readability */
-}
-
-.search-button {
+    font-size: 14px;
+  }
+  
+  .search-bar {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .search-button {
     padding: 8px;
     background-color: #007BFF;
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    margin-top: 5px; /* Add some margin to separate from the search bar */
-}
-
-.search-button:hover {
+    margin-top: 5px;
+  }
+  
+  .search-button:hover {
     background-color: #0056b3;
-}
-
-.search-results {
+  }
+  
+  .search-results {
     display: flex;
     flex-direction: column;
-    gap: 5px; /* Add spacing between search results */
+    gap: 5px;
     overflow-y: auto;
     padding: 5px 0;
-}
-
-.search-results .book-card {
+  }
+  
+  .search-results .book-card {
     display: flex;
     align-items: center;
-    gap: 10px; /* Spacing between image and text */
+    gap: 10px;
     padding: 10px;
     border-radius: 8px;
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     cursor: pointer;
-}
-
-.search-results .book-card img {
+  }
+  
+  .search-results .book-card img {
     width: 50px;
     height: auto;
     border-radius: 8px;
-}
-
-.search-results .book-info {
+  }
+  
+  .search-results .book-info {
     display: flex;
     flex-direction: column;
-    gap: 5px; /* Add spacing between text lines */
-}
-
-.search-results .book-info p {
+    gap: 5px;
+  }
+  
+  .search-results .book-info p {
     margin: 0;
-    font-size: 14px; /* Increased font size for better readability */
-}
-.navbar-component {
-    background-color: #FFF36D; /* Lemon Yellow */
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 16px;
-    margin-bottom: 16px;
-}
-.common{
-    margin-right: 10px;
-}
+    font-size: 14px;
+  }

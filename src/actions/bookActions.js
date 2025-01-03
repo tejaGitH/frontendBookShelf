@@ -138,6 +138,7 @@ export const markBookAsFinished = createAsyncThunk(
       
       // Re-fetch finished books after marking as finished
       dispatch(fetchFinishedBooks());
+      dispatch(fetchBooks()); // Ensure UserBooks list is updated
 
       return response.data;
     } catch (error) {
@@ -157,6 +158,30 @@ export const markBookAsCurrentlyReading = createAsyncThunk(
     }
   }
 );
+
+// export const markBookAsFinished = createAsyncThunk(
+//   'readingProgress/markBookAsFinished',
+//   async (bookId, { rejectWithValue }) => {
+//     try {
+//       const response = await axiosInstance.put(`books/finish/${bookId}`);
+//       return response.data; // Ensure this returns the updated book
+//     } catch (error) {
+//       return rejectWithValue(error.response?.data || 'Failed to mark book as finished');
+//     }
+//   }
+// );
+
+// export const markBookAsCurrentlyReading = createAsyncThunk(
+//   'readingProgress/markBookAsCurrentlyReading',
+//   async (bookId, { rejectWithValue }) => {
+//     try {
+//       const response = await axiosInstance.put(`books/mark-as-reading/${bookId}`);
+//       return response.data; // Ensure this returns the updated book
+//     } catch (error) {
+//       return rejectWithValue(error.response?.data || 'Failed to mark book as currently reading');
+//     }
+//   }
+// );
 export const fetchCurrentBooks = createAsyncThunk(
   'readingProgress/fetchCurrentBooks',
   async (_, { rejectWithValue }) => {

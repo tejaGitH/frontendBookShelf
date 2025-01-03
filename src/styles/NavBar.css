@@ -1,65 +1,45 @@
-/* NavBar Container */
-.navbar-container {
-  display: flex;
-  flex-direction: row; /* Align NavBar and content side by side */
-  min-height: 100vh;
-  box-sizing: border-box;
-}
-
-/* NavBar */
-.navbar {
+.navbar-custom {
+  background-color: #ffd700; /* Gold */
+  height: 100vh;
+  width: 15%; /* Fixed width for right navbar */
+  position: fixed;
+  top: 0;
+  right: 0;
+  padding-top: 20px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start; /* Align buttons to the start */
-  width: 250px; /* Fixed width for NavBar */
-  background-color: #ffef00; /* Canary Yellow */
-  padding: 20px;
-  height: 100vh; /* Full height */
-  position: fixed;
-  right: 0; /* Move NavBar to the right */
-  top: 0;
-  z-index: 10;
-  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1); /* Shadow for separation */
 }
 
-/* NavBar Buttons */
-.navbar button {
-  background-color: #FFF36D; /* Lemon Yellow for inactive buttons */
-  color: #333;
-  border: none;
-  padding: 15px 20px;
-  margin: 10px 0;
-  cursor: pointer;
+.nav-link-custom {
+  color: #333 !important;
   text-align: center;
-  font-size: 16px;
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s, background-color 0.2s;
-  width: 100%; /* Full width of NavBar */
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 5px;
+  transition: all 0.3s ease;
 }
 
-/* Active Button Highlight */
-.navbar button.active {
-  background-color: #ccff00; /* Fluorescent Yellow for the active button */
-  font-weight: bold; /* Emphasize the active button */
-  border-left: 5px solid #333; /* Add a highlight border */
+.nav-link-custom.active {
+  background-color: #f0e68c;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-left: 4px solid black;
 }
 
-/* Button Hover Effect */
-.navbar button:hover {
-  background-color: #ccff00; /* Fluorescent Yellow */
+.nav-link-custom:hover {
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
-.navbar button:active {
-  transform: scale(0.95); /* Shrink slightly on click */
-}
+@media (max-width: 768px) {
+  .navbar-custom {
+    width: 100%; /* Full width on small screens */
+    height: auto;
+    flex-direction: row;
+    justify-content: space-around;
+  }
 
-/* Main Content Area */
-.main-content {
-  flex-grow: 1; /* Take up the remaining space */
-  margin-right: 250px; /* Offset for the fixed NavBar */
-  padding: 20px;
-  background-color: #ffffed; /* Pale Yellow background */
-  box-sizing: border-box;
-  min-height: 100vh;
+  .nav-link-custom {
+    margin: 0 5px;
+    padding: 10px;
+    flex: 1;
+  }
 }

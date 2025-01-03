@@ -14,7 +14,9 @@ const SocialUpdates = () => {
     const userId = useSelector((state) => state.auth?.user?.id);
 
     const [comments, setComments] = useState({});
-    const [expandedComments, setExpandedComments] = useState({}); // New state for expanded comments
+    const [expandedComments, setExpandedComments] = useState({});
+    const [showRefreshMessage, setShowRefreshMessage] = useState(false); // New state to show the refresh message
+    const [currentUpdateId, setCurrentUpdateId] = useState(null); // To track the update for which the refresh message should appear
 
     useEffect(() => {
         dispatch(fetchSocialUpdates());
@@ -26,25 +28,47 @@ const SocialUpdates = () => {
         });
     };
 
-    const handleAddComment = (reviewId, comment) => {
-        dispatch(addComment({ reviewId, comment })).then(() => {
-            setComments(prevComments => ({
-                ...prevComments,
-                [reviewId]: [...(prevComments[reviewId] || []), { user: { username: 'You' }, comment }]
-            }));
-        });
+    const handleAddComment = (reviewId, commentText) => {
+        dispatch(addComment({ reviewId, comment: commentText }))
+            .then((action) => {
+                if (action.type.endsWith("fulfilled")) {
+                    const { reviewId, comment } = action.payload; // Assuming payload contains reviewId and new comment
+                    const updatedSocialUpdates = socialUpdates.map((update) =>
+                        update._id === reviewId
+                            ? {
+                                ...update,
+                                comments: [...update.comments, comment], // Append the new comment locally
+                            }
+                            : update
+                    );
+                    setComments(updatedSocialUpdates); // Update local state
+                    setShowRefreshMessage(true); // Show the refresh message after adding a comment
+                    setCurrentUpdateId(reviewId); // Set the current update ID for showing the refresh message
+
+                    // Hide the refresh message after 3 seconds
+                    setTimeout(() => setShowRefreshMessage(false), 3000);
+                }
+            })
+            .catch((error) => {
+                console.error("Error adding comment:", error);
+            });
     };
 
     const toggleComments = (reviewId) => {
-        setExpandedComments(prevState => ({
+        setExpandedComments((prevState) => ({
             ...prevState,
-            [reviewId]: !prevState[reviewId] // Toggle expanded state
+            [reviewId]: !prevState[reviewId], // Toggle expanded state
         }));
+    };
+
+    const handleRefreshPage = () => {
+        window.location.reload(); // Refresh the page
     };
 
     return (
         <div className="social-updates">
             <h3>Social Updates</h3>
+
             <div className="updates-list">
                 {socialUpdatesLoading ? (
                     <p>Loading updates...</p>
@@ -112,25 +136,41 @@ const SocialUpdates = () => {
                                     </div>
                                     <div className="recent-comments">
                                         {expandedComments[update._id]
-                                            ? update.comments.map((comment, i) => (
-                                                <p key={i} className="comment">
-                                                    <strong>{comment.user?.username}:</strong> {comment.comment}
-                                                </p>
-                                              ))
-                                            : update.comments.slice(0, 1).map((comment, i) => (
-                                                <p key={i} className="comment">
-                                                    <strong>{comment.user?.username}:</strong> {comment.comment}
-                                                </p>
-                                              ))}
+                                            ? update.comments
+                                                .slice()
+                                                .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+                                                .map((comment, i) => (
+                                                    <p key={i} className="comment">
+                                                        <strong>{comment.user?.username}:</strong> {comment.comment}
+                                                        <span className="comment-timestamp">
+                                                            {new Date(comment.createdAt).toLocaleDateString(undefined, { day: 'numeric', month: 'short' })}
+                                                        </span>
+                                                    </p>
+                                                ))
+                                            : update.comments
+                                                .slice(0, 1)
+                                                .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+                                                .map((comment, i) => (
+                                                    <p key={i} className="comment">
+                                                        <strong>{comment.user?.username}:</strong> {comment.comment}
+                                                    </p>
+                                                ))}
                                         {update.comments.length > 1 && (
-                                            <button 
-                                                className="read-more-comments" 
+                                            <button
+                                                className="read-more-comments"
                                                 onClick={() => toggleComments(update._id)}
                                             >
-                                                {expandedComments[update._id] ? 'Show Less' : 'Read More Comments'}
+                                                {expandedComments[update._id] ? "Show Less" : "Read More Comments"}
                                             </button>
                                         )}
                                     </div>
+
+                                    {/* Refresh Message Box */}
+                                    {showRefreshMessage && currentUpdateId === update._id && (
+                                        <div className="refresh-message-box">
+                                            <p>Your comment has been updated. <a href="#" onClick={handleRefreshPage} className="refresh-link">Refresh the page</a></p>
+                                        </div>
+                                    )}
                                 </div>
                             );
                         }).reverse()

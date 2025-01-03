@@ -1,54 +1,54 @@
-import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { logout } from '../../actions/userActions';
-import '../../styles/NavBar.css';
+import React from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Navbar, Nav } from "react-bootstrap";
+import { logout } from "../../actions/userActions";
+import "../../styles/NavBar.css";
 
-const NavBar = ({ children }) => {
+const NavBar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
 
   const handleLogout = () => {
     dispatch(logout());
-    navigate('/');
+    navigate("/");
   };
 
-  // Function to determine if a button is active
   const isActive = (path) => location.pathname === path;
 
   return (
-    <div className="">
-      <div className="navbar">
-        <button
-          className={isActive('/dashboard') ? 'active' : ''}
-          onClick={() => navigate('/dashboard')}
+    <Navbar className="navbar-custom flex-column" fixed="right">
+      <Nav className="flex-column">
+        <Nav.Link
+          className={`nav-link-custom ${isActive("/dashboard") ? "active" : ""}`}
+          onClick={() => navigate("/dashboard")}
         >
-          Home
-        </button>
-        <button
-          className={isActive('/my-books') ? 'active' : ''}
-          onClick={() => navigate('/my-books')}
+          Dashboard
+        </Nav.Link>
+        <Nav.Link
+          className={`nav-link-custom ${isActive("/my-books") ? "active" : ""}`}
+          onClick={() => navigate("/my-books")}
         >
           My Books
-        </button>
-        <button
-          className={isActive('/my-friends') ? 'active' : ''}
-          onClick={() => navigate('/my-friends')}
+        </Nav.Link>
+        <Nav.Link
+          className={`nav-link-custom ${isActive("/my-friends") ? "active" : ""}`}
+          onClick={() => navigate("/my-friends")}
         >
           My Friends
-        </button>
-        <button
-          className={isActive('/social-updates') ? 'active' : ''}
-          onClick={() => navigate('/social-updates')}
+        </Nav.Link>
+        <Nav.Link
+          className={`nav-link-custom ${isActive("/social-updates") ? "active" : ""}`}
+          onClick={() => navigate("/social-updates")}
         >
           Social Updates
-        </button>
-       
-        <button onClick={handleLogout}>Logout</button>
-      </div>
-      {/* <div className="main-content">{children}</div> */}
-    </div>
+        </Nav.Link>
+        <Nav.Link className="nav-link-custom" onClick={handleLogout}>
+          Logout
+        </Nav.Link>
+      </Nav>
+    </Navbar>
   );
 };
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addBook } from '../../../actions/bookActions';
+import { addBook, fetchBooks } from '../../../actions/bookActions';
 import './AddBook.css';
 
 const AddBook = () => {
@@ -13,7 +13,13 @@ const AddBook = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         const bookData = { title, author, rating, about };
-        dispatch(addBook(bookData));
+        dispatch(addBook(bookData))  // Dispatch to add the book
+          .then(() => {
+            // Optional: Fetch books again to re-sync with backend
+            dispatch(fetchBooks());
+          });
+    
+        // Reset form fields
         setTitle('');
         setAuthor('');
         setRating('');

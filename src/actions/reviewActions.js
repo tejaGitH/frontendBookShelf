@@ -109,6 +109,7 @@ export const addComment = createAsyncThunk(
   async ({ reviewId, comment }, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.post(`/reviews/${reviewId}/comments`, { comment });
+      console.log('addComment', response.data);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || 'Failed to add comment');

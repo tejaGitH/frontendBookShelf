@@ -63,30 +63,20 @@ const bookSlice = createSlice({
       .addCase(fetchBookById.fulfilled, (state, action) => {
         state.selectedBook = action.payload;
       })
-      .addCase(addBook.fulfilled, (state, action) => {
-        console.log('Add Book Fulfilled Payload:', action.payload);
-        if (action.payload) {
-          state.books.push(action.payload);
-          state.userBooks = [action.payload, ...state.userBooks]; // Add new book to the top
-          // state.books.push({
-          //   _id: action.payload.bookId,
-          //   ...action.meta.arg //use input data from the actions mets
-          // });
-        }
-      })
+
       .addCase(addBook.rejected,(state, action)=>{
         state.error = action.error.message || "Failed to add book";
         console.error('Error adding book', action.error);
         console.log('Action payload:', action.payload);
       })
-      .addCase(updateBook.fulfilled, (state, action) => {
-        const index = state.books.findIndex(
-          (book) => book.id === action.payload.id
-        );
-        if (index !== -1) {
-          state.books[index] = action.payload;
+      .addCase(addBook.fulfilled, (state, action) => {
+        console.log("Add Book Fulfilled Payload:", action.payload);
+        if (action.payload) {
+            state.books.push(action.payload);  // Add the new book to the books array
+        } else {
+            console.warn("No payload in Add Book Fulfilled");
         }
-      })
+    })
       // .addCase(deleteBook.fulfilled, (state, action) => {
       //   state.books = state.books.filter((book) => book._id !== action.payload);
       // });
@@ -160,12 +150,18 @@ const bookSlice = createSlice({
 //         bookToUpdate.comments = comments;
 //     }
 // })
+// .addCase(updateReadingProgress.fulfilled, (state, action) => {
+//   state.loading = false;
+//   const updatedBookIndex = state.currentlyReading.findIndex(book => book._id === action.payload.bookId);
+//   if (updatedBookIndex !== -1) {
+//     state.currentlyReading[updatedBookIndex].progress = action.payload.progress;
+//     state.currentlyReading[updatedBookIndex].comments = action.payload.comments;
+//   }
+// })
 .addCase(updateReadingProgress.fulfilled, (state, action) => {
-  state.loading = false;
-  const updatedBookIndex = state.currentlyReading.findIndex(book => book._id === action.payload.bookId);
+  const updatedBookIndex = state.currentlyReading.findIndex(book => book._id === action.payload.book);
   if (updatedBookIndex !== -1) {
     state.currentlyReading[updatedBookIndex].progress = action.payload.progress;
-    state.currentlyReading[updatedBookIndex].comments = action.payload.comments;
   }
 })
       .addCase(updateReadingProgress.rejected, (state, action) => {
@@ -177,18 +173,16 @@ const bookSlice = createSlice({
       })
       .addCase(markBookAsFinished.fulfilled, (state, action) => {
         state.loading = false;
-        const { _id: bookId } = action.payload;
-        console.log("markFinished", action.payload);
-      
-        // Remove book from `currentlyReading`
-        const bookIndex = state.currentlyReading.findIndex((book) => book._id === bookId);
-        if (bookIndex !== -1) {
-          state.currentlyReading.splice(bookIndex, 1);
-        }
-      
-        // Re-fetch finished books
-        // Ensure fetchFinishedBooks action is dispatched after marking as finished
-      })
+        const finishedBook = action.payload.book;
+    
+        // Remove from currentlyReading
+        state.currentlyReading = state.currentlyReading.filter(
+            (book) => book._id !== finishedBook._id
+        );
+    
+        // Optionally, add to a 'finishedBooks' array if needed
+    })
+ 
       .addCase(markBookAsFinished.rejected,(state,action)=>{
         state.loading=false;
         state.error = action.payload || 'failed to mark book as finished'
@@ -208,18 +202,21 @@ const bookSlice = createSlice({
       //     state.currentlyReading.push(updatedBook);
       //   } 
       // })
-      .addCase(markBookAsCurrentlyReading.fulfilled, (state, action) => {
-         state.loading = false;
-          const updatedBook = action.payload.book;
-          console.log("markCurrent", action.payload);
-           const existingBook = state.currentlyReading.find((book) => book._id === updatedBook._id);
-            if (!existingBook) { 
-              state.currentlyReading.push(updatedBook); 
-            } else { 
-              // Update the existing book details if needed 
-              Object.assign(existingBook, updatedBook); 
-            }
-           })
+   .addCase(markBookAsCurrentlyReading.fulfilled, (state, action) => {
+    state.loading = false;
+    const updatedBook = action.payload.book;
+
+    // Add to currentlyReading if not already present
+    const existingIndex = state.currentlyReading.findIndex(
+        (book) => book._id === updatedBook._id
+    );
+
+    if (existingIndex === -1) {
+        state.currentlyReading.push(updatedBook);
+    } else {
+        state.currentlyReading[existingIndex] = updatedBook;
+    }
+})
       .addCase(markBookAsCurrentlyReading.rejected,(state,action)=>{
         state.loading=false;
         state.error = action.payload || 'failed to mark book as currently reading'
@@ -285,10 +282,11 @@ const bookSlice = createSlice({
       state.loading = true;
   })
   .addCase(fetchBooks.fulfilled, (state, action) => {
-      state.loading = false;
-      state.userBooks = action.payload.userBooks || [];
-      state.friendsBooks = action.payload.friendsBooks || [];
-  })
+    state.loading = false;
+    // Sort the books in descending order (latest first)
+    state.userBooks = action.payload.userBooks.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    state.friendsBooks = action.payload.friendsBooks || [];
+})
   .addCase(fetchBooks.rejected, (state, action) => {
       state.loading = false;
       state.error = action.error.message;

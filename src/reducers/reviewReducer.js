@@ -4,6 +4,7 @@ import { addReview, getReviewsForBook, updateReview, deleteReview, likeReview, a
 
 const initialState = {
     reviews: [],
+    socialUpdates: [],
     loading: false,
     error: null,
 };
@@ -23,6 +24,7 @@ const reviewSlice = createSlice({
                 if (action.payload && action.payload.message === "Review added successfully") {
                     state.reviews.push(action.payload.review);
                 }
+
             })
             .addCase(addReview.rejected, (state, action) => {
                 state.loading = false;
@@ -33,7 +35,9 @@ const reviewSlice = createSlice({
             })
             .addCase(getReviewsForBook.fulfilled, (state, action) => {
                 state.loading = false;
-                state.reviews = action.payload; // Set reviews for the book
+                console.log("Action Payload:", action.payload);
+console.log("Current State Reviews:", state.reviews);
+                state.reviews = action.payload || []; // Set reviews for the book
             })
             .addCase(getReviewsForBook.rejected, (state, action) => {
                 state.loading = false;
@@ -93,10 +97,15 @@ const reviewSlice = createSlice({
                 state.loading = true;
             })
             .addCase(addComment.fulfilled, (state, action) => {
-                state.loading = false;
-                const index = state.reviews.findIndex((review) => review._id === action.payload._id);
-                if (index !== -1) {
-                    state.reviews[index] = action.payload; // Update review with new comment data
+                const { reviewId, comment } = action.payload; // Assuming the payload contains reviewId and the new comment
+            
+                if (Array.isArray(state.socialUpdates)) {
+                    const reviewIndex = state.socialUpdates.findIndex((review) => review._id === reviewId);
+                    if (reviewIndex !== -1) {
+                        state.socialUpdates[reviewIndex].comments.push(comment); // Append the new comment
+                    }
+                } else {
+                    console.error("socialUpdates is not an array:", state.socialUpdates);
                 }
             })
             .addCase(addComment.rejected, (state, action) => {
