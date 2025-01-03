@@ -133,3 +133,21 @@
         opacity: 0;
     }
 }
+.add-to-favorites-button {
+    padding: 8px;
+    margin: 5px 0;
+    background-color: #FFD700;
+    color: black;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.favorites-section {
+    margin-top: 20px;
+}
+.add-to-favorites-button.favorite {
+    background-color: gray;
+    cursor: not-allowed;
+    pointer-events: none;
+}

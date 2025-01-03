@@ -1,9 +1,11 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
+const backendUrl =process.env.REACT_APP_BACKEND_URL;
+
 // Set up an Axios instance
 const api = axios.create({
-    baseURL: 'http://localhost:3000/api', // Your API base URL
+    baseURL: `${backendUrl}/api`, // Your API base URL
     withCredentials :true,
 });
 

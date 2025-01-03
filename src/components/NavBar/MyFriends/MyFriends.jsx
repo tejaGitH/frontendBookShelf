@@ -6,6 +6,7 @@ import EligibleUsers from './EligibleUsers';
 import FriendRequests from './FriendRequests';
 import FriendsList from './FriendsList';
 import FriendUpdates from './FriendUpdates';
+import FavoriteBooks from './FavoriteBooks';
 import './MyFriends.css';
 
 const MyFriends = () => {
@@ -95,7 +96,7 @@ const MyFriends = () => {
                         
                     </div>
                     <div className="box small-column">
-                        <FriendUpdates />
+                        <FavoriteBooks />
                     </div>
                 </div>
                 <div className="second-row">

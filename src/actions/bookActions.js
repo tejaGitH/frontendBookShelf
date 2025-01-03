@@ -11,11 +11,10 @@ export const fetchBookDetails = createApiAction(
     'books/fetchBookDetails',
     (isbn)=> axiosInstance.get(`/books/book-details/${isbn}`)
 )
-
 export const searchBooks = createApiAction(
-    'books/searchBooks',
-    (query)=> axiosInstance.get(`/books/search/${query}`)
-)
+  'books/searchBooks',
+  (query) => axiosInstance.get(`/books/search/${query}`)
+);
 
 // export const fetchBooks = createApiAction(
 //     "books/fetchUserBooks",
@@ -28,8 +27,9 @@ export const fetchBooks = createAsyncThunk(
     async () => {
         const response = await axiosInstance.get("/books/user-books");
         // Assuming the API returns an array of books
-        const userBooks = response.data.filter(book => !book.isFriendBook);
+        const userBooks = response.data;
         const friendsBooks = response.data.filter(book => book.isFriendBook);
+        console.log("friendsBooks",friendsBooks)
         return { userBooks, friendsBooks };
     }
 );
@@ -263,20 +263,26 @@ export const fetchReadingProgressForCurrentBooks = createAsyncThunk(
     await Promise.all(promises); // Ensure all progress fetches are completed
   }
 );
+export const addBookToFavorites = createAsyncThunk(
+  "books/addBookToFavorites",
+  async (bookId, { rejectWithValue }) => {
+      try {
+          const response = await axiosInstance.put(`/books/${bookId}/favorite`);
+          return response.data;
+      } catch (error) {
+          return rejectWithValue(error.response?.data || "Failed to add book to favorites");
+      }
+  }
+);
 
-// export const searchBooks = createAsyncThunk(
-//   "books/searchBooks",
-
-// )
-//   async (req, res) => {
-//     const query = req.params.query;
-//     try {
-//         const data = await api.searchBooks(query);
-//         res.json(data);
-//     } catch (error) {
-//         console.error('Error searching books:', error); // Log error details
-//         res.status(500).json({ message: 'Error searching books' });
-//     }
-// };
-
-
+export const fetchFavoriteBooks = createAsyncThunk(
+  "books/fetchFavoriteBooks",
+  async (_, { rejectWithValue }) => {
+      try {
+          const response = await axiosInstance.get("/books/favorites");
+          return response.data;
+      } catch (error) {
+          return rejectWithValue(error.response?.data || "Failed to fetch favorite books");
+      }
+  }
+);

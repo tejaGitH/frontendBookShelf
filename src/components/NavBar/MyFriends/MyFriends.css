@@ -45,7 +45,10 @@
 }
 
 .small-column {
-    flex: 3;
+    flex: 30%; /* Adjust the width ratio of the small column */
+    max-height: 100%; /* Ensure it takes the full height of its parent container */
+    display: flex;
+    flex-direction: column;
 }
 
 .half-column {
@@ -61,8 +64,8 @@
     display: flex;
     justify-content: space-between;
     padding: 10px 0;
-    width:98%;
-    max-height: 3%;
+    width:100%;
+    max-height: fit-content;
 }
 
 .pagination-buttons a {
@@ -84,5 +87,5 @@
     max-height: 3%;
 }
 .styleNew{
-    margin-left: 39rem;
+    display: contents;
 }

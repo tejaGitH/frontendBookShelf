@@ -2,8 +2,8 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from 'axios';
 
 //reducers handles state
-
-const API_URL= "http://localhost:3000/users";
+const backendUrl = process.env.REACT_APP_BACKEND_URL || `http://localhost:3000`;
+const API_URL= `${backendUrl}/users`;
 // Login action
 export const login = createAsyncThunk('users/login', async ({ email, password },{rejectWithValue}) => {
     try {

@@ -1,7 +1,9 @@
 import axios from "axios";
 
+const backendUrl =process.env.REACT_APP_BACKEND_URL || "http://localhost:3000";
+
 const axiosInstance = axios.create({
-    baseURL: "http://localhost:3000/api",
+    baseURL: `${backendUrl}/api`,
     timeout: 20000,
 });
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchBooks, deleteBook, searchUserBooks, markBookAsCurrentlyReading } from '../../../actions/bookActions';
+import { fetchBooks, deleteBook, searchUserBooks, markBookAsCurrentlyReading, addBookToFavorites } from '../../../actions/bookActions';
 import './UserBooks.css';
 import { clearUserBooksSearchResults } from '../../../reducers/bookReducers';
 import defaultBookImage from '../../images/default-book-image.jpg'; // Adjust the path as needed
@@ -82,14 +82,14 @@ const UserBooks = () => {
             />
 
             {/* Loading State */}
-            {loading && <p>Loading...</p>}
+            {/* {loading && <p>Loading...</p>} */}
 
             {/* Error Message Display */}
-            {showError && error && (
+            {/* {showError && error && (
                 <div className="error-message">
                     Error: {typeof error === "string" ? error : "fetching NYT api data"}
                 </div>
-            )}
+            )} */}
 
             {/* Books List */}
             <div className="books-list">
@@ -155,6 +155,22 @@ const UserBooks = () => {
                         >
                             Remove Book
                         </button>
+                        <button
+    className={`add-to-favorites-button ${selectedBook.isFavorite ? 'favorite' : ''}`}
+    onClick={() => {
+        if (!selectedBook.isFavorite) {
+            dispatch(addBookToFavorites(selectedBook._id)).then(() => {
+                setSelectedBook((prev) => ({
+                    ...prev,
+                    isFavorite: true,
+                }));
+            });
+        }
+    }}
+    disabled={selectedBook.isFavorite}
+>
+    {selectedBook.isFavorite ? 'Book Added to Favorites' : 'Add to Favorites'}
+</button>
                     </div>
                 </div>
             )}

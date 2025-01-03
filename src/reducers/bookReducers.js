@@ -12,6 +12,8 @@ import {
   fetchFinishedBooks,
   fetchFriendsBooks,
   addFriendBookToUser,
+  addBookToFavorites,
+  fetchFavoriteBooks
 } from "../actions/bookActions";
 import { act } from "react";
 
@@ -318,7 +320,16 @@ const bookSlice = createSlice({
   .addCase(searchBooks.rejected, (state, action) => {
     state.loading = false;
     state.error = action.payload;
-  });
+  })
+  .addCase(addBookToFavorites.fulfilled, (state, action) => {
+    const updatedBook = action.payload.book;
+    state.userBooks = state.userBooks.map(book =>
+        book._id === updatedBook._id ? updatedBook : book
+    );
+})
+.addCase(fetchFavoriteBooks.fulfilled, (state, action) => {
+    state.favoriteBooks = action.payload;
+});
   },
 });
 
